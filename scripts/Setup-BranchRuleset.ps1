@@ -54,7 +54,7 @@
 [CmdletBinding()]
 param(
     [Parameter()]
-    [string]$Repository = "{{GITHUB_USERNAME}}/{{REPO_NAME}}",
+    [string]$Repository = "Chris-Wolfgang/In-memory-Logger",
     
     [Parameter()]
     [string]$BranchName = "main"
@@ -83,7 +83,7 @@ try {
 }
 
 # Determine repository
-if ($Repository -eq "{{GITHUB_USERNAME}}/{{REPO_NAME}}" -or -not $Repository) {
+if ($Repository -eq "Chris-Wolfgang/In-memory-Logger" -or -not $Repository) {
     # Placeholders not replaced or no repository specified - auto-detect
     Write-Host "🔍 Detecting current repository..." -ForegroundColor Cyan
     try {
@@ -91,7 +91,7 @@ if ($Repository -eq "{{GITHUB_USERNAME}}/{{REPO_NAME}}" -or -not $Repository) {
         $Repository = $repoInfo.nameWithOwner
         Write-Host "✅ Using repository: $Repository" -ForegroundColor Green
     } catch {
-        if ($Repository -eq "{{GITHUB_USERNAME}}/{{REPO_NAME}}") {
+        if ($Repository -eq "Chris-Wolfgang/In-memory-Logger") {
             Write-Error "❌ Could not detect repository. Please run the setup script (pwsh ./scripts/setup.ps1) first to replace placeholders, or specify -Repository parameter."
         } else {
             Write-Error "❌ Could not detect repository. Please run from within a git repository or specify -Repository parameter."
@@ -197,10 +197,9 @@ $rulesetConfig = @{
                 # rule below - see that section for details on how CodeQL handles graceful skipping.
                 required_status_checks = @(
                     @{ context = "Stage 1: Linux Tests (.NET 5.0-10.0) + Coverage Gate" },
-                    @{ context = "Stage 2: Windows Tests (.NET 5.0-10.0, Framework 4.6.2-4.8.1)" },
-                    @{ context = "Stage 3: macOS Tests (.NET 6.0-10.0)" },
-                    @{ context = "Security Scan (DevSkim)" },
-                    @{ context = "CodeQL Security Analysis / Security Scan (CodeQL) (csharp) (pull_request)" }
+                    @{ context = "Stage 2a: Windows Tests (.NET 5.0-10.0)" },
+                    @{ context = "Stage 2b: macOS Tests (.NET 6.0-10.0)" },
+                    @{ context = "Security Scan (DevSkim)" }
                 )
             }
         },
@@ -278,10 +277,10 @@ try {
         }
         Write-Host "   ✅ Required status checks (must pass before merging):" -ForegroundColor Gray
         Write-Host "      - Stage 1: Linux Tests (.NET 5.0-10.0) + Coverage Gate" -ForegroundColor DarkGray
-        Write-Host "      - Stage 2: Windows Tests (.NET 5.0-10.0, Framework 4.6.2-4.8.1)" -ForegroundColor DarkGray
-        Write-Host "      - Stage 3: macOS Tests (.NET 6.0-10.0)" -ForegroundColor DarkGray
+        Write-Host "      - Stage 2a: Windows Tests (.NET 5.0-10.0)" -ForegroundColor DarkGray
+        Write-Host "      - Stage 2b: macOS Tests (.NET 6.0-10.0)" -ForegroundColor DarkGray
+        Write-Host "      - Stage 3: Windows .NET Framework Tests (4.6.2-4.8.1)" -ForegroundColor DarkGray
         Write-Host "      - Security Scan (DevSkim)" -ForegroundColor DarkGray
-        Write-Host "      - CodeQL Security Analysis / Security Scan (CodeQL) (csharp) (pull_request)" -ForegroundColor DarkGray
         Write-Host "   ✅ Branches must be up to date before merging" -ForegroundColor Gray
         Write-Host "   ✅ Conversation resolution required before merging" -ForegroundColor Gray
         Write-Host "   ✅ Stale reviews dismissed when new commits are pushed" -ForegroundColor Gray
