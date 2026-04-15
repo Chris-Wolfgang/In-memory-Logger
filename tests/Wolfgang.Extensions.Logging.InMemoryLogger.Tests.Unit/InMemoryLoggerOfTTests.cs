@@ -148,4 +148,46 @@ public class InMemoryLoggerOfTTests
         Assert.NotNull(scope);
         scope.Dispose();
     }
+
+
+    [Fact]
+    public void BeginScope_when_active_Scopes_contains_scope_state()
+    {
+        var sut = new InMemoryLogger<InMemoryLoggerOfTTests>();
+
+        using (sut.BeginScope("outer"))
+        {
+            Assert.Single(sut.Scopes);
+            Assert.Equal("outer", sut.Scopes[0]);
+        }
+    }
+
+
+    [Fact]
+    public void BeginScope_when_nested_Scopes_contains_outermost_to_innermost()
+    {
+        var sut = new InMemoryLogger<InMemoryLoggerOfTTests>();
+
+        using (sut.BeginScope("outer"))
+        using (sut.BeginScope("inner"))
+        {
+            Assert.Equal(2, sut.Scopes.Length);
+            Assert.Equal("outer", sut.Scopes[0]);
+            Assert.Equal("inner", sut.Scopes[1]);
+        }
+    }
+
+
+    [Fact]
+    public void BeginScope_when_disposed_Scopes_is_empty()
+    {
+        var sut = new InMemoryLogger<InMemoryLoggerOfTTests>();
+
+        using (sut.BeginScope("scope"))
+        {
+            Assert.Single(sut.Scopes);
+        }
+
+        Assert.Empty(sut.Scopes);
+    }
 }
