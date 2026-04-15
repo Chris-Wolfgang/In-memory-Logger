@@ -38,6 +38,11 @@ public class InMemoryLoggerProvider : ILoggerProvider
 	/// <returns>An <see cref="ILogger"/> instance.</returns>
 	public ILogger CreateLogger(string categoryName)
 	{
+		if (categoryName == null)
+		{
+			throw new ArgumentNullException(nameof(categoryName));
+		}
+
 		return _loggers.GetOrAdd
 		(
 			categoryName,
@@ -48,8 +53,8 @@ public class InMemoryLoggerProvider : ILoggerProvider
 
 
 	/// <summary>
-	/// Returns all log entries from all loggers created by this provider,
-	/// ordered by the sequence they were logged.
+	/// Returns all log entries from all loggers created by this provider.
+	/// Entries are grouped by logger category; ordering across categories is not guaranteed.
 	/// </summary>
 	public IReadOnlyList<LogEntry<object>> LogEntries
 	{

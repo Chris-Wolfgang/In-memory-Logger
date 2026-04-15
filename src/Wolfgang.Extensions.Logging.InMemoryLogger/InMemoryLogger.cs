@@ -236,7 +236,12 @@ public class InMemoryLogger : ILogger
 		{
 			if (Interlocked.CompareExchange(ref _disposed, 1, 0) == 0)
 			{
-				_logger._scopeStack.Value = _scope.Parent;
+				// Only pop if this scope is still the current top-of-stack.
+				// Out-of-order disposal is silently ignored to avoid corrupting the stack.
+				if (ReferenceEquals(_logger._scopeStack.Value, _scope))
+				{
+					_logger._scopeStack.Value = _scope.Parent;
+				}
 			}
 		}
 	}
