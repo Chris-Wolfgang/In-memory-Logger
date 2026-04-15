@@ -88,7 +88,7 @@ public class InMemoryLogger<T> : ILogger<T>
     /// <returns><see langword="true"/> if the log level is enabled; otherwise, <see langword="false"/>.</returns>
     public bool IsEnabled(LogLevel logLevel)
     {
-        if (MinimumLogLevel == LogLevel.None)
+        if (logLevel == LogLevel.None || MinimumLogLevel == LogLevel.None)
         {
             return false;
         }
@@ -134,7 +134,16 @@ public class InMemoryLogger<T> : ILogger<T>
     /// <summary>
     /// The capacity of the internal log entries collection.
     /// </summary>
-    public int Capacity => _logEntries.Capacity;
+    public int Capacity
+    {
+        get
+        {
+            lock (_lock)
+            {
+                return _logEntries.Capacity;
+            }
+        }
+    }
 
 
 

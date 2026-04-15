@@ -97,6 +97,15 @@ public class InMemoryLoggerOfTTests
     }
 
 
+    [Fact]
+    public void IsEnabled_when_logLevel_is_None_returns_false()
+    {
+        var sut = new InMemoryLogger<InMemoryLoggerOfTTests>(LogLevel.Trace);
+
+        Assert.False(sut.IsEnabled(LogLevel.None));
+    }
+
+
 
     [Fact]
     public void Ctor_when_capacity_is_less_than_1_throws_ArgumentOutOfRangeException()
