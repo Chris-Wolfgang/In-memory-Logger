@@ -49,7 +49,7 @@
 [CmdletBinding()]
 param(
     [Parameter()]
-    [string]$Repository = "Chris-Wolfgang/In-memory-Logger",
+    [string]$Repository,
     
     [Parameter()]
     [switch]$EnablePages,
@@ -61,6 +61,19 @@ param(
 # Enable strict mode
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
+
+# Auto-detect repository if not provided
+if (-not $Repository) {
+    try {
+        $Repository = (gh repo view --json nameWithOwner --jq '.nameWithOwner' 2>$null)
+        if (-not $Repository) {
+            throw "Could not auto-detect repository"
+        }
+    } catch {
+        Write-Error "Repository not specified and auto-detection failed. Use -Repository 'owner/repo'."
+        exit 1
+    }
+}
 
 # Color output functions
 function Write-Success {
