@@ -629,11 +629,10 @@ function Start-Setup {
                 return $false
             }
             
-            # Exclude hidden files (starting with .) except those in .github or at the repository root
+            # Exclude hidden files (starting with .) except those in .github directory
             $fileName = [System.IO.Path]::GetFileName($relativePath)
             $isInGitHubDir = $relativePath -like '.github/*'
-            $isAtRepoRoot = -not $relativePath.Contains('/')
-            if ($fileName.StartsWith('.') -and -not $isInGitHubDir -and -not $isAtRepoRoot) {
+            if ($fileName.StartsWith('.') -and -not $isInGitHubDir) {
                 return $false
             }
             
