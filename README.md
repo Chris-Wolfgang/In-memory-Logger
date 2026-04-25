@@ -1,4 +1,4 @@
-# Wolfgang.InMemoryLogger
+# Wolfgang.Extensions.Logging.InMemoryLogger
 
 Implementations of ILogger and ILogger<T> that write log events to an in-memory list. Useful for testing
 
@@ -11,7 +11,7 @@ Implementations of ILogger and ILogger<T> that write log events to an in-memory 
 ## 📦 Installation
 
 ```bash
-dotnet add package Wolfgang.InMemoryLogger
+dotnet add package Wolfgang.Extensions.Logging.InMemoryLogger
 ```
 
 **NuGet Package:** Coming soon to NuGet.org
