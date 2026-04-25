@@ -49,7 +49,7 @@
 [CmdletBinding()]
 param(
     [Parameter()]
-    [string]$Repository,
+    [string]$Repository = "{{GITHUB_USERNAME}}/{{REPO_NAME}}",
     
     [Parameter()]
     [switch]$EnablePages,
@@ -61,19 +61,6 @@ param(
 # Enable strict mode
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
-
-# Auto-detect repository if not provided
-if (-not $Repository) {
-    try {
-        $Repository = (gh repo view --json nameWithOwner --jq '.nameWithOwner' 2>$null)
-        if (-not $Repository) {
-            throw "Could not auto-detect repository"
-        }
-    } catch {
-        Write-Error "Repository not specified and auto-detection failed. Use -Repository 'owner/repo'."
-        exit 1
-    }
-}
 
 # Color output functions
 function Write-Success {
@@ -224,7 +211,7 @@ try {
 }
 
 # Determine repository
-if ($Repository -eq "Chris-Wolfgang/In-memory-Logger" -or -not $Repository) {
+if ($Repository -eq "{{GITHUB_USERNAME}}/{{REPO_NAME}}" -or -not $Repository) {
     # Placeholders not replaced or no repository specified - auto-detect
     Write-Info "Detecting current repository..."
     try {
@@ -232,7 +219,7 @@ if ($Repository -eq "Chris-Wolfgang/In-memory-Logger" -or -not $Repository) {
         $Repository = $repoInfo.nameWithOwner
         Write-Success "Using repository: $Repository"
     } catch {
-        if ($Repository -eq "Chris-Wolfgang/In-memory-Logger") {
+        if ($Repository -eq "{{GITHUB_USERNAME}}/{{REPO_NAME}}") {
             Write-Error-Custom "Could not detect repository. Please run the setup script (scripts/setup.ps1 or scripts/setup.sh) first to replace placeholders, or specify -Repository parameter."
         } else {
             Write-Error-Custom "Could not detect repository. Please run from within a git repository or specify -Repository parameter."
