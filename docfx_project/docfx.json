@@ -5,7 +5,7 @@
       "src": [
         {
           "files": [
-			"src/<path>/<project>.csproj"
+			"src/**/*.csproj"
           ],
           "src": "../"
         }
@@ -37,8 +37,8 @@
       "default"
     ],
     "globalMetadata": {
-      "_appName": "",
-      "_appTitle": "<title>",
+      "_appName": "Wolfgang.Extensions.Logging.InMemoryLogger",
+      "_appTitle": "Wolfgang.Extensions.Logging.InMemoryLogger Documentation",
       "_enableSearch": true,
       "pdf": true
     }

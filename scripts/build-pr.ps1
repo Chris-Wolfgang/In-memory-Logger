@@ -84,7 +84,8 @@ if (-not $SkipTests -and $failed.Count -eq 0) {
     $testProjects = @(Get-ChildItem -Path './tests' -Recurse -File -Include '*.csproj', '*.vbproj', '*.fsproj' -ErrorAction SilentlyContinue)
 
     if ($testProjects.Count -eq 0) {
-        Write-Host "No test projects found in ./tests — skipping"
+        Write-Fail "No test projects found in ./tests"
+        $failed += "Tests"
     }
     else {
         foreach ($testProj in $testProjects) {
@@ -267,7 +268,10 @@ if (-not $SkipSecurity) {
         else {
             $archive = "gitleaks_${version}_linux_x64.tar.gz"
             $url = "https://github.com/gitleaks/gitleaks/releases/download/v${version}/$archive"
-            curl -sSfL $url | tar xz -C /usr/local/bin gitleaks
+            $dest = Join-Path $HOME ".local/bin"
+            New-Item -ItemType Directory -Force -Path $dest | Out-Null
+            curl -sSfL $url | tar xz -C $dest gitleaks
+            $env:PATH = "$dest$([IO.Path]::PathSeparator)$env:PATH"
         }
     }
 
