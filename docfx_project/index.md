@@ -2,7 +2,7 @@
 _layout: landing
 ---
 
-# Title
+# Wolfgang.Extensions.Logging.InMemoryLogger
 
 ## Quick Start Notes:
 
