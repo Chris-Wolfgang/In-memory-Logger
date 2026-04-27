@@ -11,7 +11,7 @@ namespace Wolfgang.Extensions.Logging.InMemoryLogger;
 /// An <see cref="ILoggerProvider"/> that creates <see cref="InMemoryLogger"/> instances
 /// and provides access to all log entries across all loggers.
 /// </summary>
-public class InMemoryLoggerProvider : ILoggerProvider
+public sealed class InMemoryLoggerProvider : ILoggerProvider
 {
 	private readonly ConcurrentDictionary<string, InMemoryLogger> _loggers =
 		new ConcurrentDictionary<string, InMemoryLogger>(StringComparer.Ordinal);
@@ -36,6 +36,9 @@ public class InMemoryLoggerProvider : ILoggerProvider
 	/// </summary>
 	/// <param name="categoryName">The category name for messages produced by the logger.</param>
 	/// <returns>An <see cref="ILogger"/> instance.</returns>
+	/// <exception cref="ArgumentNullException">
+	/// Thrown when <paramref name="categoryName"/> is <see langword="null"/>.
+	/// </exception>
 	public ILogger CreateLogger(string categoryName)
 	{
 		if (categoryName == null)
