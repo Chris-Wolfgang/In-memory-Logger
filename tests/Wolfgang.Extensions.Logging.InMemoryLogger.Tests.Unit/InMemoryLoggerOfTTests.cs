@@ -30,12 +30,12 @@ public class InMemoryLoggerOfTTests
             LogLevel.Information,
             new EventId(1, "TestEvent"),
             "Test message",
-            null,
-            (state, exception) => state
+            exception: null,
+            (state, _) => state
         );
 
         Assert.Single(sut.LogEntries);
-        var logEntry = sut.LogEntries.First();
+        var logEntry = sut.LogEntries[0];
         Assert.Equal(LogLevel.Information, logEntry.LogLevel);
         Assert.Equal(1, logEntry.EventId.Id);
         Assert.Equal("TestEvent", logEntry.EventId.Name);
