@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -9,10 +10,16 @@ namespace Wolfgang.Extensions.Logging.InMemoryLogger;
 /// <summary>
 /// An implementation of <see cref="ILogger"/> that logs messages to an in-memory collection.
 /// </summary>
+[SuppressMessage("Style", "MA0049:Type name should not match containing namespace",
+	Justification = "The package, namespace, and type intentionally share a name; the namespace is named after the project's primary type.")]
 public class InMemoryLogger : ILogger
 {
 	private readonly List<LogEntry<object>> _logEntries;
+#if NET9_0_OR_GREATER
+	private readonly System.Threading.Lock _lock = new();
+#else
 	private readonly object _lock = new object();
+#endif
 	private readonly AsyncLocal<ScopeStack?> _scopeStack = new AsyncLocal<ScopeStack?>();
 
 
@@ -234,14 +241,13 @@ public class InMemoryLogger : ILogger
 
 		public void Dispose()
 		{
-			if (Interlocked.CompareExchange(ref _disposed, 1, 0) == 0)
+			// Only pop if this is the first dispose AND this scope is still the
+			// current top-of-stack. Out-of-order disposal is silently ignored to
+			// avoid corrupting the stack.
+			if (Interlocked.CompareExchange(ref _disposed, 1, 0) == 0
+				&& ReferenceEquals(_logger._scopeStack.Value, _scope))
 			{
-				// Only pop if this scope is still the current top-of-stack.
-				// Out-of-order disposal is silently ignored to avoid corrupting the stack.
-				if (ReferenceEquals(_logger._scopeStack.Value, _scope))
-				{
-					_logger._scopeStack.Value = _scope.Parent;
-				}
+				_logger._scopeStack.Value = _scope.Parent;
 			}
 		}
 	}

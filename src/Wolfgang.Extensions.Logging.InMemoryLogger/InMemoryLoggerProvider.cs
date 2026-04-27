@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -59,6 +60,12 @@ public sealed class InMemoryLoggerProvider : ILoggerProvider
 	/// Returns all log entries from all loggers created by this provider.
 	/// Entries are grouped by logger category; ordering across categories is not guaranteed.
 	/// </summary>
+	/// <remarks>
+	/// Each access materializes a snapshot of the entries across all loggers; the cost is
+	/// O(n) in the total entry count. Test code typically reads this once per assertion.
+	/// </remarks>
+	[SuppressMessage("Major Code Smell", "S2365:Properties should not make collection or array copies",
+		Justification = "This is a test-helper property whose entire purpose is to return a snapshot view; the copy semantics are intentional and idiomatic for assertion code.")]
 	public IReadOnlyList<LogEntry<object>> LogEntries
 	{
 		get
@@ -74,8 +81,14 @@ public sealed class InMemoryLoggerProvider : ILoggerProvider
 	/// <summary>
 	/// Returns all logger instances created by this provider.
 	/// </summary>
+	/// <remarks>
+	/// Each access materializes a snapshot copy of the underlying logger map; cost is O(n)
+	/// in the number of distinct categories logged through this provider.
+	/// </remarks>
+	[SuppressMessage("Major Code Smell", "S2365:Properties should not make collection or array copies",
+		Justification = "This is a test-helper property whose entire purpose is to return a snapshot view; the copy semantics are intentional and idiomatic for assertion code.")]
 	public IReadOnlyDictionary<string, InMemoryLogger> Loggers =>
-		new Dictionary<string, InMemoryLogger>(_loggers);
+		new Dictionary<string, InMemoryLogger>(_loggers, StringComparer.Ordinal);
 
 
 

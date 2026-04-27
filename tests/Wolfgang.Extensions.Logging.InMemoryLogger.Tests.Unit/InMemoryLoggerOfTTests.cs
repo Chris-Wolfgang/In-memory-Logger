@@ -7,8 +7,9 @@ public class InMemoryLoggerOfTTests
     [Fact]
     public void Ctor_when_default_parameters_creates_instance()
     {
-        // ReSharper disable once UnusedVariable
         var sut = new InMemoryLogger<InMemoryLoggerOfTTests>();
+
+        Assert.NotNull(sut);
     }
 
 

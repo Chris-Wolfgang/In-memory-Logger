@@ -86,6 +86,8 @@ public class InMemoryLoggerProviderTests
     {
         var sut = new InMemoryLoggerProvider();
 
-        sut.Dispose();
+        var ex = Record.Exception(() => sut.Dispose());
+
+        Assert.Null(ex);
     }
 }
