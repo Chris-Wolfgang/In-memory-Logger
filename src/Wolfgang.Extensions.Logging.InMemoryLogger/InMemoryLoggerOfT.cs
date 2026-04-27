@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 
@@ -9,6 +10,8 @@ namespace Wolfgang.Extensions.Logging.InMemoryLogger;
 /// An implementation of <see cref="ILogger{TCategoryName}"/> that logs messages to an in-memory collection.
 /// </summary>
 /// <typeparam name="T">The type whose name is used for the logger category name.</typeparam>
+[SuppressMessage("Style", "MA0049:Type name should not match containing namespace",
+	Justification = "The package, namespace, and type intentionally share a name; the namespace is named after the project's primary type.")]
 public class InMemoryLogger<T> : ILogger<T>
 {
 	private readonly InMemoryLogger _innerLogger;
