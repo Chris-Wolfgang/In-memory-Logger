@@ -1,24 +1,31 @@
 <Solution>
   <Folder Name="/.root/">
     <File Path=".editorconfig" />
+    <File Path=".gitattributes" />
     <File Path=".gitignore" />
+    <File Path=".globalconfig" />
+    <File Path="BannedSymbols.txt" />
     <File Path="CODE_OF_CONDUCT.md" />
     <File Path="CONTRIBUTING.md" />
+    <File Path="Directory.Build.props" />
     <File Path="LICENSE" />
     <File Path="README.md" />
-    <File Path="SETUP.md" />
+    <File Path="SECURITY.md" />
   </Folder>
   <Folder Name="/.root/.github/">
     <File Path=".github/CODEOWNERS" />
     <File Path=".github/copilot-instructions.md" />
     <File Path=".github/dependabot.yml" />
     <File Path=".github/pull_request_template.md" />
+    <File Path=".github/version-picker-template.html" />
   </Folder>
   <Folder Name="/.root/.github/ISSUE_TEMPLATE/">
     <File Path=".github/ISSUE_TEMPLATE/BUG_REPORT.yaml" />
-    <File Path=".github/ISSUE_TEMPLATE/feature_request.md" />
+    <File Path=".github/ISSUE_TEMPLATE/feature_request.yaml" />
   </Folder>
   <Folder Name="/.root/.github/workflows/">
+    <File Path=".github/workflows/build-all-versions.yaml" />
+    <File Path=".github/workflows/codeql.yaml" />
     <File Path=".github/workflows/create-labels.yaml" />
     <File Path=".github/workflows/docfx.yaml" />
     <File Path=".github/workflows/pr.yaml" />
@@ -26,6 +33,10 @@
   </Folder>
   <Folder Name="/benchmarks/" />
   <Folder Name="/examples/" />
-  <Folder Name="/src/" />
-  <Folder Name="/tests/" />
+  <Folder Name="/src/">
+    <Project Path="src/Wolfgang.Extensions.Logging.InMemoryLogger/Wolfgang.Extensions.Logging.InMemoryLogger.csproj" Id="44f43cd5-6d56-4f06-86ab-f0a0779e785c" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Wolfgang.Extensions.Logging.InMemoryLogger.Tests.Unit/Wolfgang.Extensions.Logging.InMemoryLogger.Tests.Unit.csproj" Id="2b259f57-3bfb-4349-a94a-7a4646e8f0c7" />
+  </Folder>
 </Solution>

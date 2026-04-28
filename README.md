@@ -1,181 +1,43 @@
 # Wolfgang.Extensions.Logging.InMemoryLogger
 
-Implementations of ILogger and ILogger<T> that write log events to an in-memory list. Useful for testing
+An implementation of `ILogger<T>` from `Microsoft.Extensions.Logging` that writes log entries to an in-memory collection. Designed for use in unit and integration tests where you need to assert against logged messages.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![.NET](https://img.shields.io/badge/.NET-Multi--Targeted-purple.svg)](https://dotnet.microsoft.com/)
-[![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?logo=github)](https://github.com/Chris-Wolfgang/In-memory-Logger)
+## Features
 
----
+- Thread-safe in-memory log entry storage
+- Configurable minimum log level
+- Configurable initial capacity
+- Supports all .NET log levels (Trace through Critical)
+- Returns log entries as `IReadOnlyList<LogEntry<object>>` for easy assertion
 
-## 📦 Installation
+## Installation
 
-```bash
+```shell
 dotnet add package Wolfgang.Extensions.Logging.InMemoryLogger
 ```
 
-**NuGet Package:** Coming soon to NuGet.org
+## Usage
 
----
+```csharp
+var logger = new InMemoryLogger<MyService>(LogLevel.Information);
 
-## 📄 License
+// Use the logger in your code under test
+var service = new MyService(logger);
+service.DoWork();
 
-This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
-
----
-
-## 📚 Documentation
-
-- **GitHub Repository:** [https://github.com/Chris-Wolfgang/In-memory-Logger](https://github.com/Chris-Wolfgang/In-memory-Logger)
-- **API Documentation:** https://Chris-Wolfgang.github.io/In-memory-Logger/
-- **Formatting Guide:** [README-FORMATTING.md](README-FORMATTING.md)
-- **Contributing Guide:** [CONTRIBUTING.md](CONTRIBUTING.md)
-
----
-
-## 🚀 Quick Start
-
-{{QUICK_START_EXAMPLE}}
-
----
-
-## ✨ Features
-
-{{FEATURES_TABLE}}
-
-**Examples:**
-{{FEATURE_EXAMPLES}}
-
----
-
-## 🎯 Target Frameworks
-
-| Framework | Versions |
-|-----------|----------|
-| .NET Framework | .NET 4.6.2, .NET 4.7.0, .NET 4.7.1, .NET 4.7.2, .NET 4.8, .NET 4.8.1 |
-| .NET Core | .NET Core 3.1 |
-| .NET | .NET 5.0, .NET 6.0, .NET 7.0, .NET 8.0, .NET 9.0, .NET 10.0 |
-
----
-
-## 🔍 Code Quality & Static Analysis
-
-This project enforces **strict code quality standards** through **7 specialized analyzers** and custom async-first rules:
-
-### Analyzers in Use
-
-1. **Microsoft.CodeAnalysis.NetAnalyzers** - Built-in .NET analyzers for correctness and performance
-2. **Roslynator.Analyzers** - Advanced refactoring and code quality rules
-3. **AsyncFixer** - Async/await best practices and anti-pattern detection
-4. **Microsoft.VisualStudio.Threading.Analyzers** - Thread safety and async patterns
-5. **Microsoft.CodeAnalysis.BannedApiAnalyzers** - Prevents usage of banned synchronous APIs
-6. **Meziantou.Analyzer** - Comprehensive code quality rules
-7. **SonarAnalyzer.CSharp** - Industry-standard code analysis
-
-### Async-First Enforcement
-
-This library uses **`BannedSymbols.txt`** to prohibit synchronous APIs and enforce async-first patterns:
-
-**Blocked APIs Include:**
-- ❌ `Task.Wait()`, `Task.Result` - Use `await` instead
-- ❌ `Thread.Sleep()` - Use `await Task.Delay()` instead
-- ❌ Synchronous file I/O (`File.ReadAllText`) - Use async versions
-- ❌ Synchronous stream operations - Use `ReadAsync()`, `WriteAsync()`
-- ❌ `Parallel.For/ForEach` - Use `Task.WhenAll()` or `Parallel.ForEachAsync()`
-- ❌ Obsolete APIs (`WebClient`, `BinaryFormatter`)
-
-**Why?** To ensure all code is **truly async** and **non-blocking** for optimal performance in async contexts.
-
----
-
-## 🛠️ Building from Source
-
-### Prerequisites
-- [.NET 8.0 SDK](https://dotnet.microsoft.com/download) or later
-- Optional: [PowerShell Core](https://github.com/PowerShell/PowerShell) for formatting scripts
-
-### Build Steps
-
-```bash
-# Clone the repository
-git clone https://github.com/Chris-Wolfgang/In-memory-Logger.git
-cd In-memory-Logger
-
-# Restore dependencies
-dotnet restore
-
-# Build the solution
-dotnet build --configuration Release
-
-# Run tests
-dotnet test --configuration Release
-
-# Run code formatting (PowerShell Core)
-pwsh ./format.ps1
+// Assert against captured log entries
+Assert.Single(logger.LogEntries);
+Assert.Equal(LogLevel.Information, logger.LogEntries[0].LogLevel);
 ```
 
-### Code Formatting
+## Target Frameworks
 
-This project uses `.editorconfig` and `dotnet format`:
+- .NET Framework 4.6.2
+- .NET Standard 2.0
+- .NET Standard 2.1
+- .NET 8.0
+- .NET 10.0
 
-```bash
-# Format code
-dotnet format
+## License
 
-# Verify formatting (as CI does)
-dotnet format --verify-no-changes
-```
-
-See [README-FORMATTING.md](README-FORMATTING.md) for detailed formatting guidelines.
-
-### Building Documentation
-
-This project uses [DocFX](https://dotnet.github.io/docfx/) to generate API documentation:
-
-```bash
-# Install DocFX (one-time setup)
-dotnet tool install -g docfx
-
-# Generate API metadata and build documentation
-cd docfx_project
-docfx metadata  # Extract API metadata from source code
-docfx build     # Build HTML documentation
-
-# Documentation is generated in the docs/ folder at the repository root
-```
-
-The documentation is automatically built and deployed to GitHub Pages when changes are pushed to the `main` branch.
-
-**Local Preview:**
-```bash
-# Serve documentation locally (with live reload)
-cd docfx_project
-docfx build --serve
-
-# Open http://localhost:8080 in your browser
-```
-
-**Documentation Structure:**
-- `docfx_project/` - DocFX configuration and source files
-- `docs/` - Generated HTML documentation (published to GitHub Pages)
-- `docfx_project/index.md` - Main landing page content
-- `docfx_project/docs/` - Additional documentation articles
-- `docfx_project/api/` - Auto-generated API reference YAML files
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for:
-- Code quality standards
-- Build and test instructions
-- Pull request guidelines
-- Analyzer configuration details
-
----
-
-
-## 🙏 Acknowledgments
-
-{{ACKNOWLEDGMENTS}}
-
+[MIT](LICENSE)
