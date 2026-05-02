@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>Class InMemoryLogger&lt;T&gt; | Wolfgang.Extensions.Logging.InMemoryLogger Documentation </title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="title" content="Class InMemoryLogger&lt;T&gt; | Wolfgang.Extensions.Logging.InMemoryLogger Documentation ">
+    
+    <meta name="description" content="An implementation of  that logs messages to an in-memory collection.">
+      <link rel="shortcut icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../styles/docfx.vendor.min.css">
+      <link rel="stylesheet" href="../styles/docfx.css">
+      <link rel="stylesheet" href="../styles/main.css">
+      <meta property="docfx:navrel" content="../toc.html">
+      <meta property="docfx:tocrel" content="../toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="Wolfgang.Extensions.Logging.InMemoryLogger">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first=First data-prev=Previous data-next=Next data-last=Last></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1">
+
+
+
+  <h1 id="Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1" data-uid="Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1" class="text-break">Class InMemoryLogger&lt;T&gt;</h1>
+  <div class="markdown level0 summary"><p>An implementation of <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1">ILogger&lt;TCategoryName&gt;</a> that logs messages to an in-memory collection.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+    <div class="level1"><span class="xref">InMemoryLogger&lt;T&gt;</span></div>
+  </div>
+  <div class="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1">ILogger</a>&lt;T&gt;</div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger">ILogger</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Wolfgang.html">Wolfgang</a>.<a class="xref" href="Wolfgang.Extensions.html">Extensions</a>.<a class="xref" href="Wolfgang.Extensions.Logging.html">Logging</a>.<a class="xref" href="Wolfgang.Extensions.Logging.InMemoryLogger.html">InMemoryLogger</a></h6>
+  <h6><strong>Assembly</strong>: Wolfgang.Extensions.Logging.InMemoryLogger.dll</h6>
+  <h5 id="Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SuppressMessage(&quot;Style&quot;, &quot;MA0049:Type name should not match containing namespace&quot;, Justification = &quot;The package, namespace, and type intentionally share a name; the namespace is named after the project&#39;s primary type.&quot;)]
+public class InMemoryLogger&lt;T&gt; : ILogger&lt;T&gt;, ILogger</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type whose name is used for the logger category name.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="constructors">Constructors
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris-Wolfgang/In-memory-Logger/new/v0.1.0/apiSpec/new?filename=Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1__ctor_Microsoft_Extensions_Logging_LogLevel_System_Int32_.md&amp;value=---%0Auid%3A%20Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger%601.%23ctor(Microsoft.Extensions.Logging.LogLevel%2CSystem.Int32)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris-Wolfgang/In-memory-Logger/blob/v0.1.0/src/Wolfgang.Extensions.Logging.InMemoryLogger/InMemoryLoggerOfT.cs/#L27">View Source</a>
+  </span>
+  <a id="Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1__ctor_" data-uid="Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.#ctor*"></a>
+  <h4 id="Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1__ctor_Microsoft_Extensions_Logging_LogLevel_System_Int32_" data-uid="Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.#ctor(Microsoft.Extensions.Logging.LogLevel,System.Int32)">InMemoryLogger(LogLevel, int)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger-1.html">InMemoryLogger&lt;T&gt;</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public InMemoryLogger(LogLevel minLogLevel = LogLevel.Trace, int capacity = 16)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.loglevel">LogLevel</a></td>
+        <td><span class="parametername">minLogLevel</span></td>
+        <td><p>The minimum log level to log.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td><span class="parametername">capacity</span></td>
+        <td><p>The initial capacity of the log entries collection.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentoutofrangeexception">ArgumentOutOfRangeException</a></td>
+        <td><p>Thrown when capacity is less than 1.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris-Wolfgang/In-memory-Logger/new/v0.1.0/apiSpec/new?filename=Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_Capacity.md&amp;value=---%0Auid%3A%20Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger%601.Capacity%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris-Wolfgang/In-memory-Logger/blob/v0.1.0/src/Wolfgang.Extensions.Logging.InMemoryLogger/InMemoryLoggerOfT.cs/#L85">View Source</a>
+  </span>
+  <a id="Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_Capacity_" data-uid="Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.Capacity*"></a>
+  <h4 id="Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_Capacity" data-uid="Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.Capacity">Capacity</h4>
+  <div class="markdown level1 summary"><p>The capacity of the internal log entries collection.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Capacity { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris-Wolfgang/In-memory-Logger/new/v0.1.0/apiSpec/new?filename=Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_LogEntries.md&amp;value=---%0Auid%3A%20Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger%601.LogEntries%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris-Wolfgang/In-memory-Logger/blob/v0.1.0/src/Wolfgang.Extensions.Logging.InMemoryLogger/InMemoryLoggerOfT.cs/#L71">View Source</a>
+  </span>
+  <a id="Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_LogEntries_" data-uid="Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.LogEntries*"></a>
+  <h4 id="Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_LogEntries" data-uid="Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.LogEntries">LogEntries</h4>
+  <div class="markdown level1 summary"><p>Returns a readonly list of log entries that have been logged.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;LogEntry&lt;object&gt;&gt; LogEntries { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.abstractions.logentry-1">LogEntry</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris-Wolfgang/In-memory-Logger/new/v0.1.0/apiSpec/new?filename=Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_MinimumLogLevel.md&amp;value=---%0Auid%3A%20Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger%601.MinimumLogLevel%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris-Wolfgang/In-memory-Logger/blob/v0.1.0/src/Wolfgang.Extensions.Logging.InMemoryLogger/InMemoryLoggerOfT.cs/#L78">View Source</a>
+  </span>
+  <a id="Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_MinimumLogLevel_" data-uid="Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.MinimumLogLevel*"></a>
+  <h4 id="Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_MinimumLogLevel" data-uid="Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.MinimumLogLevel">MinimumLogLevel</h4>
+  <div class="markdown level1 summary"><p>Gets the minimum <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.loglevel">LogLevel</a> for this instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public LogLevel MinimumLogLevel { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.loglevel">LogLevel</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris-Wolfgang/In-memory-Logger/new/v0.1.0/apiSpec/new?filename=Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_Scopes.md&amp;value=---%0Auid%3A%20Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger%601.Scopes%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris-Wolfgang/In-memory-Logger/blob/v0.1.0/src/Wolfgang.Extensions.Logging.InMemoryLogger/InMemoryLoggerOfT.cs/#L92">View Source</a>
+  </span>
+  <a id="Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_Scopes_" data-uid="Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.Scopes*"></a>
+  <h4 id="Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_Scopes" data-uid="Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.Scopes">Scopes</h4>
+  <div class="markdown level1 summary"><p>Gets the currently active scopes as an array, from outermost to innermost.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public object[] Scopes { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris-Wolfgang/In-memory-Logger/new/v0.1.0/apiSpec/new?filename=Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_BeginScope__1___0_.md&amp;value=---%0Auid%3A%20Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger%601.BeginScope%60%601(%60%600)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris-Wolfgang/In-memory-Logger/blob/v0.1.0/src/Wolfgang.Extensions.Logging.InMemoryLogger/InMemoryLoggerOfT.cs/#L64">View Source</a>
+  </span>
+  <a id="Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_BeginScope_" data-uid="Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.BeginScope*"></a>
+  <h4 id="Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_BeginScope__1___0_" data-uid="Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.BeginScope``1(``0)">BeginScope&lt;TState&gt;(TState)</h4>
+  <div class="markdown level1 summary"><p>Begins a logical operation scope.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IDisposable BeginScope&lt;TState&gt;(TState state) where TState : notnull</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TState</span></td>
+        <td><span class="parametername">state</span></td>
+        <td><p>The identifier for the scope.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></td>
+        <td><p>An <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a> that ends the logical operation scope on dispose.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TState</span></td>
+        <td><p>The type of the state to begin scope for.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris-Wolfgang/In-memory-Logger/new/v0.1.0/apiSpec/new?filename=Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_IsEnabled_Microsoft_Extensions_Logging_LogLevel_.md&amp;value=---%0Auid%3A%20Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger%601.IsEnabled(Microsoft.Extensions.Logging.LogLevel)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris-Wolfgang/In-memory-Logger/blob/v0.1.0/src/Wolfgang.Extensions.Logging.InMemoryLogger/InMemoryLoggerOfT.cs/#L59">View Source</a>
+  </span>
+  <a id="Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_IsEnabled_" data-uid="Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.IsEnabled*"></a>
+  <h4 id="Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_IsEnabled_Microsoft_Extensions_Logging_LogLevel_" data-uid="Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.IsEnabled(Microsoft.Extensions.Logging.LogLevel)">IsEnabled(LogLevel)</h4>
+  <div class="markdown level1 summary"><p>Checks if the given <code class="paramref">logLevel</code> is enabled.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsEnabled(LogLevel logLevel)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.loglevel">LogLevel</a></td>
+        <td><span class="parametername">logLevel</span></td>
+        <td><p>Level to be checked.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if enabled.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris-Wolfgang/In-memory-Logger/new/v0.1.0/apiSpec/new?filename=Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_Log__1_Microsoft_Extensions_Logging_LogLevel_Microsoft_Extensions_Logging_EventId___0_System_Exception_System_Func___0_System_Exception_System_String__.md&amp;value=---%0Auid%3A%20Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger%601.Log%60%601(Microsoft.Extensions.Logging.LogLevel%2CMicrosoft.Extensions.Logging.EventId%2C%60%600%2CSystem.Exception%2CSystem.Func%7B%60%600%2CSystem.Exception%2CSystem.String%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Edit this page</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris-Wolfgang/In-memory-Logger/blob/v0.1.0/src/Wolfgang.Extensions.Logging.InMemoryLogger/InMemoryLoggerOfT.cs/#L44">View Source</a>
+  </span>
+  <a id="Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_Log_" data-uid="Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.Log*"></a>
+  <h4 id="Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_Log__1_Microsoft_Extensions_Logging_LogLevel_Microsoft_Extensions_Logging_EventId___0_System_Exception_System_Func___0_System_Exception_System_String__" data-uid="Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.Log``1(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,``0,System.Exception,System.Func{``0,System.Exception,System.String})">Log&lt;TState&gt;(LogLevel, EventId, TState, Exception?, Func&lt;TState, Exception?, string&gt;)</h4>
+  <div class="markdown level1 summary"><p>Writes a log entry.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Log&lt;TState&gt;(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func&lt;TState, Exception?, string&gt; formatter)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.loglevel">LogLevel</a></td>
+        <td><span class="parametername">logLevel</span></td>
+        <td><p>Entry will be written on this level.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.eventid">EventId</a></td>
+        <td><span class="parametername">eventId</span></td>
+        <td><p>Id of the event.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TState</span></td>
+        <td><span class="parametername">state</span></td>
+        <td><p>The entry to be written. Can be also an object.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.exception">Exception</a></td>
+        <td><span class="parametername">exception</span></td>
+        <td><p>The exception related to this entry.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;TState, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.exception">Exception</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</td>
+        <td><span class="parametername">formatter</span></td>
+        <td><p>Function to create a <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a> message of the <code class="paramref">state</code> and <code class="paramref">exception</code>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TState</span></td>
+        <td><p>The type of the object to be written.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger-1">ILogger&lt;TCategoryName&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.logging.ilogger">ILogger</a>
+  </div>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Chris-Wolfgang/In-memory-Logger/new/v0.1.0/apiSpec/new?filename=Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1.md&amp;value=---%0Auid%3A%20Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger%601%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Edit this page</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/Chris-Wolfgang/In-memory-Logger/blob/v0.1.0/src/Wolfgang.Extensions.Logging.InMemoryLogger/InMemoryLoggerOfT.cs/#L13" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In this article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
