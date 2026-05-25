@@ -5,7 +5,6 @@
 		<SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
 		<Version>0.1.0</Version>
 		<Title>$(AssemblyName)</Title>
-		<Authors>Chris Wolfgang</Authors>
 		<Description>Implementations of ILogger and ILogger&lt;T&gt; that write log entries to an in-memory collection</Description>
 		<Copyright>Copyright 2026 Chris Wolfgang</Copyright>
 		<PackageProjectUrl>https://github.com/Chris-Wolfgang/In-Memory-Logger</PackageProjectUrl>
