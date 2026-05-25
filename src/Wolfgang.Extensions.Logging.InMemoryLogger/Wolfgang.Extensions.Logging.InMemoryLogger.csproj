@@ -6,7 +6,6 @@
 		<Version>0.1.0</Version>
 		<Title>$(AssemblyName)</Title>
 		<Description>Implementations of ILogger and ILogger&lt;T&gt; that write log entries to an in-memory collection</Description>
-		<Copyright>Copyright 2026 Chris Wolfgang</Copyright>
 		<PackageProjectUrl>https://github.com/Chris-Wolfgang/In-Memory-Logger</PackageProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<AssemblyVersion>1.0.0</AssemblyVersion>
