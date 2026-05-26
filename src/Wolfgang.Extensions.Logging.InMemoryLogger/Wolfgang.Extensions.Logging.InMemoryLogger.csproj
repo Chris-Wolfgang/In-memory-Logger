@@ -10,6 +10,7 @@
 		<Description>Implementations of ILogger and ILogger&lt;T&gt; that write log entries to an in-memory collection</Description>
 		<Copyright>Copyright 2026 Chris Wolfgang</Copyright>
 		<PackageProjectUrl>https://github.com/Chris-Wolfgang/In-Memory-Logger</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/Chris-Wolfgang/In-memory-Logger.git</RepositoryUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
