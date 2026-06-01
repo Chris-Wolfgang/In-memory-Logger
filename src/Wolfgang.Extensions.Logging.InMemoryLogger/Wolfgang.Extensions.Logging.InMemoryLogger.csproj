@@ -7,8 +7,8 @@
 		<Title>$(AssemblyName)</Title>
 		<Description>Implementations of ILogger and ILogger&lt;T&gt; that write log entries to an in-memory collection</Description>
 		<PackageProjectUrl>https://github.com/Chris-Wolfgang/In-Memory-Logger</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/Chris-Wolfgang/In-memory-Logger.git</RepositoryUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<AssemblyVersion>1.0.0</AssemblyVersion>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
