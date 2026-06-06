@@ -5,7 +5,7 @@ Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.Capacity.get -> int
 Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.Category.get -> string
 Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.InMemoryLogger(string category, Microsoft.Extensions.Logging.LogLevel minLogLevel = Microsoft.Extensions.Logging.LogLevel.Trace, int capacity = 16) -> void
 Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.IsEnabled(Microsoft.Extensions.Logging.LogLevel logLevel) -> bool
-Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.Log<TState>(Microsoft.Extensions.Logging.LogLevel logLevel, Microsoft.Extensions.Logging.EventId eventId, TState state, System.Exception? exception, System.Func<TState, System.Exception?, string> formatter) -> void
+Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.Log<TState>(Microsoft.Extensions.Logging.LogLevel logLevel, Microsoft.Extensions.Logging.EventId eventId, TState state, System.Exception? exception, System.Func<TState, System.Exception, string> formatter) -> void
 Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.LogEntries.get -> System.Collections.Generic.IReadOnlyList<Microsoft.Extensions.Logging.Abstractions.LogEntry<object>>
 Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.MinimumLogLevel.get -> Microsoft.Extensions.Logging.LogLevel
 Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.Scopes.get -> object[]
@@ -14,7 +14,7 @@ Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>.BeginScope<TState>(
 Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>.Capacity.get -> int
 Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>.InMemoryLogger(Microsoft.Extensions.Logging.LogLevel minLogLevel = Microsoft.Extensions.Logging.LogLevel.Trace, int capacity = 16) -> void
 Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>.IsEnabled(Microsoft.Extensions.Logging.LogLevel logLevel) -> bool
-Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>.Log<TState>(Microsoft.Extensions.Logging.LogLevel logLevel, Microsoft.Extensions.Logging.EventId eventId, TState state, System.Exception? exception, System.Func<TState, System.Exception?, string> formatter) -> void
+Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>.Log<TState>(Microsoft.Extensions.Logging.LogLevel logLevel, Microsoft.Extensions.Logging.EventId eventId, TState state, System.Exception? exception, System.Func<TState, System.Exception, string> formatter) -> void
 Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>.LogEntries.get -> System.Collections.Generic.IReadOnlyList<Microsoft.Extensions.Logging.Abstractions.LogEntry<object>>
 Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>.MinimumLogLevel.get -> Microsoft.Extensions.Logging.LogLevel
 Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>.Scopes.get -> object[]
