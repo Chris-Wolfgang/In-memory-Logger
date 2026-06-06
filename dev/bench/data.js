@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1780771097581,
+  "lastUpdate": 1780781982586,
   "repoUrl": "https://github.com/Chris-Wolfgang/In-memory-Logger",
   "entries": {
     "BenchmarkDotNet": [
@@ -48,6 +48,54 @@ window.BENCHMARK_DATA = {
             "value": 7.242848818500836,
             "unit": "ns",
             "range": "± 0.025588675566224635"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "210299580+Chris-Wolfgang@users.noreply.github.com",
+            "name": "Chris Wolfgang",
+            "username": "Chris-Wolfgang"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "db78aaec349578a4b19b0dbd98da94204de31c9e",
+          "message": "Merge pull request #144 from Chris-Wolfgang/release/v0.1.2\n\nRelease v0.1.2: re-ship after release.yaml hotfix",
+          "timestamp": "2026-06-06T17:36:57-04:00",
+          "tree_id": "615e4fc94304b1c4bde90a5609e4066fb6147baa",
+          "url": "https://github.com/Chris-Wolfgang/In-memory-Logger/commit/db78aaec349578a4b19b0dbd98da94204de31c9e"
+        },
+        "date": 1780781982067,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogInformation",
+            "value": 196.44263950983682,
+            "unit": "ns",
+            "range": "± 57.857148725686386"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogBelowMinimum",
+            "value": 0.000040840357542037964,
+            "unit": "ns",
+            "range": "± 0.00007073757426208855"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.BeginScopeRoundtrip",
+            "value": 57.10422400633494,
+            "unit": "ns",
+            "range": "± 0.314746031649493"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogEntriesIndexer",
+            "value": 8.207390976448854,
+            "unit": "ns",
+            "range": "± 0.02914248589036996"
           }
         ]
       }
