@@ -39,6 +39,7 @@
     "globalMetadata": {
       "_appName": "Wolfgang.Extensions.Logging.InMemoryLogger",
       "_appTitle": "Wolfgang.Extensions.Logging.InMemoryLogger Documentation",
+      "_appLogoPath": "logo.svg",
       "_enableSearch": true,
       "pdf": true
     }
