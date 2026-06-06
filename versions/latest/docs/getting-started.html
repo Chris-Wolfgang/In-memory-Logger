@@ -72,6 +72,51 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="getting-started">Getting Started</h1>
 
+<p>This guide walks through installing the package and writing your first assertion against <code>InMemoryLogger&lt;T&gt;</code>.</p>
+<h2 id="install">Install</h2>
+<pre><code class="lang-bash">dotnet add package Wolfgang.Extensions.Logging.InMemoryLogger
+</code></pre>
+<h2 id="basic-usage">Basic usage</h2>
+<p>Construct an <code>InMemoryLogger&lt;T&gt;</code> and inject it wherever an <code>ILogger&lt;T&gt;</code> is expected:</p>
+<pre><code class="lang-csharp">using Microsoft.Extensions.Logging;
+using Wolfgang.Extensions.Logging.InMemoryLogger;
+
+var logger = new InMemoryLogger&lt;MyService&gt;(LogLevel.Information);
+
+// Production code under test
+var service = new MyService(logger);
+service.DoWork();
+
+// Assert what was logged
+Assert.Single(logger.LogEntries);
+Assert.Equal(LogLevel.Information, logger.LogEntries[0].LogLevel);
+</code></pre>
+<h2 id="non-generic-form">Non-generic form</h2>
+<p>When you need an <code>ILogger</code> and want to control the category string directly, use the non-generic constructor:</p>
+<pre><code class="lang-csharp">var logger = new InMemoryLogger(
+    category: &quot;MyApp.MyComponent&quot;,
+    minLogLevel: LogLevel.Warning,
+    capacity: 32);
+</code></pre>
+<h2 id="registering-with-the-standard-iloggerfactory">Registering with the standard ILoggerFactory</h2>
+<p><code>InMemoryLoggerBuilderExtensions.AddInMemoryLogger</code> plugs into the standard <code>ILoggingBuilder</code>:</p>
+<pre><code class="lang-csharp">using var loggerFactory = LoggerFactory.Create(b =&gt; b.AddInMemoryLogger());
+var logger = loggerFactory.CreateLogger&lt;MyService&gt;();
+</code></pre>
+<h2 id="asserting-on-scopes">Asserting on scopes</h2>
+<p>State passed to <code>BeginScope</code> is captured in the <code>Scopes</code> property:</p>
+<pre><code class="lang-csharp">using (logger.BeginScope(new { CorrelationId = &quot;abc-123&quot; }))
+{
+    logger.LogInformation(&quot;processing&quot;);
+}
+
+Assert.Single(logger.Scopes);
+</code></pre>
+<h2 id="next-steps">Next steps</h2>
+<ul>
+<li><a href="../api/Wolfgang.Extensions.Logging.InMemoryLogger.html">API Reference</a></li>
+<li><a href="https://github.com/Chris-Wolfgang/In-memory-Logger">GitHub repository</a></li>
+</ul>
 
 </article>
           </div>
@@ -81,7 +126,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/Chris-Wolfgang/In-memory-Logger/blob/v0.1.0/docfx_project/docs/getting-started.md/#L1" class="contribution-link">Edit this page</a>
+                    <a href="https://github.com/Chris-Wolfgang/In-memory-Logger/blob/v0.1.2/docfx_project/docs/getting-started.md/#L1" class="contribution-link">Edit this page</a>
                   </li>
                 </ul>
               </div>

@@ -72,6 +72,25 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="introduction">Introduction</h1>
 
+<p>Welcome to Wolfgang.Extensions.Logging.InMemoryLogger.</p>
+<h2 id="overview">Overview</h2>
+<p>Wolfgang.Extensions.Logging.InMemoryLogger is a .NET library that provides <code>ILogger</code> and <code>ILogger&lt;T&gt;</code> implementations which capture log entries in an in-memory buffer. It is designed for unit and integration tests where you need to assert that production code logged the messages you expect.</p>
+<h2 id="key-features">Key Features</h2>
+<ul>
+<li><strong>Two logger shapes.</strong> <code>InMemoryLogger</code> (non-generic, category passed as a string) and <code>InMemoryLogger&lt;T&gt;</code> (generic, category derived from <code>typeof(T)</code>) — matches the standard <code>Microsoft.Extensions.Logging</code> <code>ILogger</code> / <code>ILogger&lt;T&gt;</code> pair.</li>
+<li><strong>Captured entries.</strong> <code>LogEntries</code> returns <code>IReadOnlyList&lt;LogEntry&lt;object&gt;&gt;</code> from <code>Microsoft.Extensions.Logging.Abstractions</code> so the captured entries plug directly into LINQ and xUnit asserts.</li>
+<li><strong>Scope capture.</strong> <code>BeginScope</code> records the supplied state object into the <code>Scopes</code> property so scope-aware code paths can be asserted on.</li>
+<li><strong>Configurable.</strong> Constructor parameters control the minimum log level (defaults to <code>Trace</code>) and the initial buffer capacity (defaults to <code>16</code>).</li>
+<li><strong>Thread-safe.</strong> Concurrent <code>Log</code> calls append safely.</li>
+<li><strong>Multi-targeted.</strong> Ships for <code>net462</code>, <code>netstandard2.0</code>, <code>netstandard2.1</code>, <code>net8.0</code>, and <code>net10.0</code>.</li>
+</ul>
+<h2 id="getting-help">Getting Help</h2>
+<p>If you need help with Wolfgang.Extensions.Logging.InMemoryLogger, please:</p>
+<ul>
+<li>Browse the <a href="../api/Wolfgang.Extensions.Logging.InMemoryLogger.html">API Reference</a></li>
+<li>Read the <a href="getting-started.html">Getting Started</a> guide</li>
+<li>File an issue at <a href="https://github.com/Chris-Wolfgang/In-memory-Logger/issues">https://github.com/Chris-Wolfgang/In-memory-Logger/issues</a></li>
+</ul>
 
 </article>
           </div>
@@ -81,7 +100,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/Chris-Wolfgang/In-memory-Logger/blob/v0.1.0/docfx_project/docs/introduction.md/#L1" class="contribution-link">Edit this page</a>
+                    <a href="https://github.com/Chris-Wolfgang/In-memory-Logger/blob/v0.1.2/docfx_project/docs/introduction.md/#L1" class="contribution-link">Edit this page</a>
                   </li>
                 </ul>
               </div>
