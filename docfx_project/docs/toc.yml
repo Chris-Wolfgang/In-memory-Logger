@@ -1,8 +1,9 @@
 - name: Index
-  href: Index.md
+  href: index.md
 - name: Introduction
   href: introduction.md
 - name: Getting Started
   href: getting-started.md
 - name: Project website
-  href: https://github.com/Chris-Wolfgang/In-memory-Logger
+  href: 'https://github.com/Chris-Wolfgang/In-memory-Logger'
+
