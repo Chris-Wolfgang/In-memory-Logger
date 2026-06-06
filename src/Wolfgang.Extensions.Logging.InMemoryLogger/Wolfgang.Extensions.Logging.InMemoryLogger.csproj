@@ -20,20 +20,6 @@
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<SignAssembly>False</SignAssembly>
-
-		<!-- RS0017: Microsoft.CodeAnalysis.PublicApiAnalyzers v3.3.4 has a known
-		     false-positive on generic methods whose signature includes a nested
-		     nullable reference type — specifically `Func<TState, Exception?, string>`
-		     on this project's `Log<TState>` override of `ILogger.Log<TState>`. The
-		     analyzer's `GetApiName(ISymbol)` produces a slightly different string
-		     than the declared entry in PublicAPI.Shipped.txt for that one method,
-		     so it reports the (verbatim correct) declaration as "could not be
-		     found". The method IS public; the declaration IS correct; the symbol
-		     IS in the surface. Suppress this specific rule until the upstream
-		     analyzer is fixed or our PublicAPI files are migrated to whatever
-		     format a newer analyzer wants. Other RS00xx rules (RS0016 missing
-		     entries, RS0024 declared-but-removed, etc.) remain enforced. -->
-		<NoWarn>$(NoWarn);RS0017</NoWarn>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(TargetFramework)' == 'net8.0' OR '$(TargetFramework)' == 'net10.0'">
