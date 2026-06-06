@@ -108,9 +108,12 @@ public class ConcurrentProducersTests
 
         Assert.Equal(producerCount, byProducer.Count);
 
-        foreach (var (producerId, count) in byProducer)
+        // KeyValuePair<TKey,TValue> on the .NET Framework TFMs (net462–net481)
+        // doesn't have a built-in Deconstruct extension, so we iterate without
+        // tuple deconstruction here.
+        foreach (var kvp in byProducer)
         {
-            Assert.Equal(entriesPerProducer, count);
+            Assert.Equal(entriesPerProducer, kvp.Value);
         }
     }
 
