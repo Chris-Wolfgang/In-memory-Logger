@@ -1,162 +1,44 @@
-# Copilot Coding Agent Instructions
+# Copilot Instructions for Wolfgang.Extensions.Logging.InMemoryLogger
 
-## Repository Summary
+## Project Overview
+- **Package:** Wolfgang.Extensions.Logging.InMemoryLogger
+- **Namespace:** Wolfgang.Extensions.Logging.InMemoryLogger
+- **Purpose:** In-memory `ILogger` / `ILogger<T>` implementation for asserting against logged messages in unit and integration tests.
 
-This is a **repository template** for creating new .NET repositories. It provides a standardized structure with comprehensive GitHub integration, CI/CD workflows, and development tooling. The template is designed for .NET 8.0 projects using C# and follows Microsoft's recommended project organization patterns.
+## Key Types
+- `InMemoryLogger` — non-generic logger; takes a category string in its constructor.
+- `InMemoryLogger<T>` — generic logger; category derived from `typeof(T)`.
+- `InMemoryLoggerProvider` — `ILoggerProvider` that hands out `InMemoryLogger` instances per category.
+- `InMemoryLoggerBuilderExtensions` — `AddInMemoryLogger` extension for `ILoggingBuilder` registration.
 
-**Repository Type**: Template (not a working project)  
-**Target Platform**: .NET 8.0  
-**Primary Language**: C#  
-**Size**: Small template (~15 configuration files, empty project folders)  
+## Public surface (per `PublicAPI.Shipped.txt`)
+- Constructor: `InMemoryLogger(string category, LogLevel minLogLevel = Trace, int capacity = 16)`
+- Constructor: `InMemoryLogger<T>(LogLevel minLogLevel = Trace, int capacity = 16)`
+- Properties: `Category`, `MinimumLogLevel`, `Capacity`, `LogEntries`, `Scopes`
+- Methods: `Log<TState>(...)`, `IsEnabled(LogLevel)`, `BeginScope<TState>(TState)`
 
-## Build and Validation Instructions
+## Important Notes
+- Thread-safe append into the internal log-entry buffer.
+- `LogEntries` returns `IReadOnlyList<LogEntry<object>>` from `Microsoft.Extensions.Logging.Abstractions` — usable directly with LINQ + xUnit asserts.
+- `Scopes` captures objects passed to `BeginScope` for scope-aware assertions.
+- Public API is tracked by `PublicAPI.Shipped.txt` / `PublicAPI.Unshipped.txt` — additions surface as RS0016 at compile time.
 
-### Prerequisites
-- .NET 8.0.x SDK (always install if not present)
-- ReportGenerator tool (installed via `dotnet tool install -g dotnet-reportgenerator-globaltool`)
-- DevSkim CLI (installed via `dotnet tool install --global Microsoft.CST.DevSkim.CLI`)
+## Code Style
+- Allman brace style
+- 3 blank lines between members
+- File-scoped namespaces
+- Warnings as errors in Release builds
+- `var` when the type is obvious from the right-hand side
 
-### Build Process (For Repositories Created from This Template)
-**IMPORTANT**: This template has no buildable projects. These commands apply to repositories created FROM this template.
+## Target Frameworks
+- net462, netstandard2.0, netstandard2.1, net8.0, net10.0
 
-1. **Restore Dependencies** (always run first):
-   ```bash
-   dotnet restore
-   ```
+## Build / Test
+- `dotnet restore`
+- `dotnet build -c Release`
+- `dotnet test -c Release --no-build`
+- CI gates: 90% line coverage threshold, DevSkim security scan, gitleaks secrets scan, CodeQL security-extended.
 
-2. **Build Solution**:
-   ```bash
-   dotnet build --no-restore --configuration Release
-   ```
-
-3. **Run Tests with Coverage**:
-   ```bash
-   # Find and test all test projects
-   find ./tests -type f -name '*Test*.csproj' | while read proj; do
-     dotnet test "$proj" --no-build --configuration Release --collect:"XPlat Code Coverage" --results-directory "./TestResults"
-   done
-   ```
-
-4. **Generate Coverage Reports**:
-   ```bash
-   reportgenerator -reports:"TestResults/**/coverage.cobertura.xml" -targetdir:"CoverageReport" -reporttypes:"Html;TextSummary;MarkdownSummaryGithub;CsvSummary"
-   ```
-
-5. **Security Scanning**:
-   ```bash
-   devskim analyze --source-code . -f text --output-file devskim-results.txt -E
-   ```
-
-### Critical Build Requirements
-- **Code Coverage**: Minimum 80% line coverage required for all projects
-- **Security Scanning**: DevSkim must pass with no errors
-- **Build Configuration**: Always use Release configuration for CI
-- **Test Pattern**: Test projects must match `*Test*.csproj` pattern in `/tests` folder
-
-### Common Issues and Workarounds
-- **Timeout Issues**: Coverage and security scans can take 5-10 minutes for larger projects
-- **Coverage Threshold Failures**: If below 80%, the build will fail - this is by design
-- **Missing Test Projects**: The workflow expects at least one test project in `/tests` folder
-- **DevSkim False Positives**: Review `devskim-results.txt` for any security findings
-
-## Project Layout and Architecture
-
-### Standard Directory Structure
-```
-root/
-├── MySolution.sln              # Solution file (create in root)
-├── src/                        # Application projects
-│   ├── MyApp/
-│   │   └── MyApp.csproj
-│   └── MyLib/
-│       └── MyLib.csproj
-├── tests/                      # Test projects (required)
-│   ├── MyApp.Tests/
-│   │   └── MyApp.Tests.csproj
-│   └── MyLib.Tests/
-│       └── MyLib.Tests.csproj
-├── benchmarks/                 # Performance benchmarks (optional)
-│   └── MyApp.Benchmarks/
-│       └── MyApp.Benchmarks.csproj
-├── examples/                   # Example projects (optional)
-├── docs/                       # Documentation
-└── .github/                    # GitHub configuration
-```
-
-### Key Configuration Files
-- **`.editorconfig`**: Code style rules (C# file-scoped namespaces, var preferences, analyzer severity)
-- **`.gitignore`**: Comprehensive .NET gitignore (Visual Studio, build artifacts, packages)
-- **`SETUP.md`**: Detailed repository setup instructions (delete after setup)
-- **`CONTRIBUTING.md`**: Empty - populate with contribution guidelines
-- **`CODE_OF_CONDUCT.md`**: Standard Contributor Covenant v2.0
-
-### GitHub Integration
-- **Workflows**: `.github/workflows/pr.yaml` - Comprehensive CI/CD pipeline
-- **Issue Templates**: Bug reports (YAML) and feature requests (Markdown)
-- **PR Template**: Structured pull request template with checklists
-- **CODEOWNERS**: Default owner `@Chris-Wolfgang`, update usernames as needed
-- **Dependabot**: Configured for NuGet packages in all project directories
-
-### Continuous Integration Pipeline (`.github/workflows/pr.yaml`)
-The workflow runs on pull requests to `main` branch and includes:
-
-1. **Environment**: Ubuntu Latest with .NET 8.0.x
-2. **Build Steps**: Checkout → Setup .NET → Restore → Build → Test → Coverage → Security
-3. **Artifacts**: Coverage reports and DevSkim results uploaded
-4. **Branch Protection**: Configured to require this workflow to pass before merging
-
-**Security Note**: Workflow includes safeguard `if: github.repository != 'Chris-Wolfgang/repo-template'` to prevent running on the template itself.
-
-### Branch Protection Configuration
-When using this template, configure these settings in GitHub (detailed in `SETUP.md`):
-- Require status checks to pass before merging
-- Require branches to be up to date
-- Require pull request reviews (including Copilot reviews)
-- Restrict deletions and block force pushes
-- Require code scanning
-
-## Key Files and Locations
-
-### Root Directory Files
-- `README.md` - Basic template description (update for your project)
-- `LICENSE` - Mozilla Public License 2.0
-- `SETUP.md` - Template setup instructions (delete after setup)
-- `.editorconfig` - Code style configuration
-- `.gitignore` - .NET-specific gitignore
-
-### GitHub Directory (`.github/`)
-- `workflows/pr.yaml` - Main CI/CD pipeline
-- `ISSUE_TEMPLATE/` - Bug report (YAML) and feature request templates
-- `pull_request_template.md` - PR template with checklists
-- `CODEOWNERS` - Code ownership rules
-- `dependabot.yml` - Dependency update configuration
-
-### Project Directories (Currently Empty in Template)
-- `src/` - Application source code
-- `tests/` - Unit and integration tests
-- `benchmarks/` - Performance benchmarks
-- `examples/` - Example usage projects
-- `docs/` - Documentation (contains placeholder `index.html`)
-
-## Agent Guidelines
-
-### Trust These Instructions
-This information has been validated against the template structure and GitHub workflows. **Only search for additional information if these instructions are incomplete or found to be incorrect.**
-
-### When Working with This Template
-1. **Creating New Projects**: Follow the structure outlined in `SETUP.md`
-2. **Adding Dependencies**: Use `dotnet add package` commands
-3. **Code Style**: Follow `.editorconfig` rules (file-scoped namespaces, explicit typing)
-4. **Testing**: Ensure test projects follow `*Test*.csproj` naming convention
-5. **Coverage**: Aim for >80% code coverage to pass CI
-6. **Security**: Review DevSkim findings and address security concerns
-
-### Validation Steps
-Before submitting changes:
-1. Run `dotnet restore && dotnet build --configuration Release`
-2. Run tests with coverage collection
-3. Verify coverage meets 80% threshold
-4. Run DevSkim security scan
-5. Ensure all GitHub Actions checks pass
-
-This template provides a solid foundation for .NET projects with enterprise-grade CI/CD, security scanning, and development best practices built-in.
+## Release
+- Bump `<Version>` in `src/Wolfgang.Extensions.Logging.InMemoryLogger/Wolfgang.Extensions.Logging.InMemoryLogger.csproj`.
+- Publish a GitHub Release with the matching `v<version>` tag — `release.yaml` validates the tag against the csproj, runs multi-TFM tests, packs the .nupkg + .snupkg, publishes to NuGet, and deploys the versioned docs site.
