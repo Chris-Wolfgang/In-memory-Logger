@@ -1,0 +1,26 @@
+#nullable enable
+Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger
+Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.BeginScope<TState>(TState state) -> System.IDisposable
+Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.Capacity.get -> int
+Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.Category.get -> string
+Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.InMemoryLogger(string category, Microsoft.Extensions.Logging.LogLevel minLogLevel = Microsoft.Extensions.Logging.LogLevel.Trace, int capacity = 16) -> void
+Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.IsEnabled(Microsoft.Extensions.Logging.LogLevel logLevel) -> bool
+Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.LogEntries.get -> System.Collections.Generic.IReadOnlyList<Microsoft.Extensions.Logging.Abstractions.LogEntry<object>>
+Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.MinimumLogLevel.get -> Microsoft.Extensions.Logging.LogLevel
+Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.Scopes.get -> object[]
+Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>
+Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>.BeginScope<TState>(TState state) -> System.IDisposable
+Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>.Capacity.get -> int
+Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>.InMemoryLogger(Microsoft.Extensions.Logging.LogLevel minLogLevel = Microsoft.Extensions.Logging.LogLevel.Trace, int capacity = 16) -> void
+Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>.IsEnabled(Microsoft.Extensions.Logging.LogLevel logLevel) -> bool
+Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>.LogEntries.get -> System.Collections.Generic.IReadOnlyList<Microsoft.Extensions.Logging.Abstractions.LogEntry<object>>
+Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>.MinimumLogLevel.get -> Microsoft.Extensions.Logging.LogLevel
+Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>.Scopes.get -> object[]
+Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerBuilderExtensions
+Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider
+Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.CreateLogger(string categoryName) -> Microsoft.Extensions.Logging.ILogger
+Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.Dispose() -> void
+Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.InMemoryLoggerProvider(Microsoft.Extensions.Logging.LogLevel minLogLevel = Microsoft.Extensions.Logging.LogLevel.Trace) -> void
+Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.LogEntries.get -> System.Collections.Generic.IReadOnlyList<Microsoft.Extensions.Logging.Abstractions.LogEntry<object>>
+Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.Loggers.get -> System.Collections.Generic.IReadOnlyDictionary<string, Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger>
+static Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerBuilderExtensions.AddInMemoryLogger(this Microsoft.Extensions.Logging.ILoggingBuilder builder, Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider provider) -> Microsoft.Extensions.Logging.ILoggingBuilder
