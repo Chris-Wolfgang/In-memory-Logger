@@ -50,7 +50,7 @@ This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) f
 
 ---
 
-## 🚀 Usage
+## 🚀 Quick Start
 
 ```csharp
 using Microsoft.Extensions.Logging;
@@ -85,3 +85,34 @@ var logger = new InMemoryLogger("MyCategory", LogLevel.Warning, capacity: 32);
 | `netstandard2.1` | ✅ |
 | `net8.0` | ✅ |
 | `net10.0` | ✅ |
+
+---
+
+## 🔍 Code Quality & Static Analysis
+
+This project is held to the canonical analyzer set used across all `Chris-Wolfgang` .NET libraries. Analyzers run on every build and are treated as errors in `Release`.
+
+### Analyzers in Use
+
+1. **Microsoft.CodeAnalysis.NetAnalyzers** — built-in .NET analyzers (correctness and performance)
+2. **Roslynator.Analyzers** — refactoring and code quality
+3. **AsyncFixer** — async/await best practices
+4. **Microsoft.VisualStudio.Threading.Analyzers** — thread safety
+5. **Microsoft.CodeAnalysis.BannedApiAnalyzers** — enforces the `BannedSymbols.txt` policy
+6. **Meziantou.Analyzer** — broad code-quality rules
+7. **SonarAnalyzer.CSharp** — industry-standard analysis
+8. **Microsoft.CodeAnalysis.PublicApiAnalyzers** — public-API surface tracking via `PublicAPI.Shipped.txt` / `PublicAPI.Unshipped.txt`
+
+### Banned-API policy
+
+`BannedSymbols.txt` is the canonical fleet baseline. Banned categories include blocking sync-over-async (`Task.Result`, `Task.Wait()`), `Thread.Sleep`, synchronous file I/O, and several legacy / deprecated APIs.
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for:
+- Code quality standards
+- Build and test instructions
+- Pull request guidelines
+- Analyzer configuration details
