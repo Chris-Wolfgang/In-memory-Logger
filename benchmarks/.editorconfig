@@ -1,0 +1,58 @@
+# Curated editorconfig for the benchmarks/ tree.
+#
+# The repo-wide TWEA-Release (in the root Directory.Build.props) applies to
+# every project, including benchmarks. BenchmarkDotNet code legitimately
+# trips several analyzers that the production code does not — benchmark
+# entry-point methods are reflection-invoked, they often live on instance
+# classes for state-sharing across [Benchmark] methods, and SetUp/TearDown
+# fields are deliberately mutable between iterations.
+#
+# Rather than turn off TWEA for the whole benchmark project, suppress only
+# the genuinely-benchmark-inappropriate rules below. Production-quality
+# rules (security, correctness, async) remain enforced.
+#
+# When extending: add the rule id, a one-sentence "why this is OK for
+# benchmark code" comment, and the severity flip — do NOT bulk-disable
+# entire categories.
+
+[*.cs]
+
+# CA1051 — Do not declare visible instance fields.
+# BenchmarkDotNet [GlobalSetup] populates instance fields that the
+# [Benchmark] methods read on the hot path; adding a property accessor
+# would change what the benchmark measures.
+dotnet_diagnostic.CA1051.severity = none
+
+# CA1822 — Mark members as static.
+# BenchmarkDotNet discovers [Benchmark] methods by reflection on an
+# instance; making them static would prevent BDN from calling them
+# correctly.
+dotnet_diagnostic.CA1822.severity = none
+
+# CA1707 — Identifiers should not contain underscores.
+# BenchmarkDotNet [Benchmark] method names follow the same
+# MethodUnderTest_when_condition pattern as the test suite; renaming
+# them would lose the parallel naming convention.
+dotnet_diagnostic.CA1707.severity = none
+
+# S3923 — All branches in a conditional structure should not have
+# exactly the same implementation. BDN [Benchmark] methods are
+# intentionally minimal and may compile-down to identical IL across
+# overloads under measurement comparison; that is the point of the
+# benchmark.
+dotnet_diagnostic.S3923.severity = none
+
+# S1144 — Unused private members. BDN [GlobalSetup]/[GlobalCleanup]
+# fixture methods are invoked by reflection; the analyzer doesn't see
+# the call sites.
+dotnet_diagnostic.S1144.severity = none
+
+# CS1591 — Missing XML doc comment on public type/member. Benchmark
+# entry points are not part of the public API surface — they don't
+# need XML docs.
+dotnet_diagnostic.CS1591.severity = none
+
+# MA0011 — IFormatProvider is missing. The BDN ratio/mean/etc.
+# columns are produced internally by BDN; benchmark code rarely
+# emits user-visible strings.
+dotnet_diagnostic.MA0011.severity = none
