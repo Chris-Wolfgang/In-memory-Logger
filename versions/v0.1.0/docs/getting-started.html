@@ -1,115 +1,168 @@
 <!DOCTYPE html>
-<!--[if IE]><![endif]-->
 <html>
-
   <head>
     <meta charset="utf-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
       <title>Getting Started | Wolfgang.Extensions.Logging.InMemoryLogger Documentation </title>
-      <meta name="viewport" content="width=device-width">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Getting Started | Wolfgang.Extensions.Logging.InMemoryLogger Documentation ">
-    
-    
-      <link rel="shortcut icon" href="../favicon.ico">
-      <link rel="stylesheet" href="../styles/docfx.vendor.min.css">
-      <link rel="stylesheet" href="../styles/docfx.css">
-      <link rel="stylesheet" href="../styles/main.css">
-      <meta property="docfx:navrel" content="../toc.html">
-      <meta property="docfx:tocrel" content="../toc.html">
-    
-    <meta property="docfx:rel" content="../">
-    
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
   </head>
-  <body data-spy="scroll" data-target="#affix" data-offset="120">
-    <div id="wrapper">
-      <header>
 
-        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
-          <div class="container">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-
-              <a class="navbar-brand" href="../index.html">
-                <img id="logo" class="svg" src="../logo.svg" alt="Wolfgang.Extensions.Logging.InMemoryLogger">
-              </a>
-            </div>
-            <div class="collapse navbar-collapse" id="navbar">
-              <form class="navbar-form navbar-right" role="search" id="search">
-                <div class="form-group">
-                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
-                </div>
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="Wolfgang.Extensions.Logging.InMemoryLogger">
+            Wolfgang.Extensions.Logging.InMemoryLogger
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
               </form>
             </div>
           </div>
-        </nav>
-
-        <div class="subnav navbar navbar-default">
-          <div class="container hide-when-search" id="breadcrumb">
-            <ul class="breadcrumb">
-              <li></li>
-            </ul>
-          </div>
         </div>
-      </header>
-      <div class="container body-content">
+      </nav>
+    </header>
 
-        <div id="search-results">
-          <div class="search-list">Search Results for <span></span></div>
-          <div class="sr-items">
-            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
-          </div>
-          <ul id="pagination" data-first=First data-prev=Previous data-next=Next data-last=Last></ul>
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
         </div>
-      </div>
-      <div role="main" class="container body-content hide-when-search">
-        <div class="article row grid">
-          <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="">
+
+        <article data-uid="">
 <h1 id="getting-started">Getting Started</h1>
 
+<p>This guide will help you quickly get up and running with Wolfgang.Extensions.Logging.InMemoryLogger.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>The .NET 10.0 SDK is required to build the highest TFM.</li>
+<li>Building the <code>net462</code> target additionally requires the .NET Framework 4.6.2 reference assemblies / targeting pack (typically installed via Visual Studio's &quot;.NET desktop development&quot; workload on Windows; the SDK alone does not include them, and <code>net462</code> builds are Windows-only).</li>
+<li>The <code>netstandard2.0</code>, <code>netstandard2.1</code>, and <code>net8.0</code> targets build with the .NET 10 SDK alone on any OS.</li>
+</ul>
+<p>The library ships against <code>net462</code>, <code>netstandard2.0</code>, <code>netstandard2.1</code>, <code>net8.0</code>, and <code>net10.0</code>.</p>
+<h2 id="installation">Installation</h2>
+<h3 id="via-nuget-package-manager">Via NuGet Package Manager</h3>
+<pre><code class="lang-bash">dotnet add package Wolfgang.Extensions.Logging.InMemoryLogger
+</code></pre>
+<h3 id="via-package-manager-console">Via Package Manager Console</h3>
+<pre><code class="lang-powershell">Install-Package Wolfgang.Extensions.Logging.InMemoryLogger
+</code></pre>
+<h2 id="quick-start">Quick Start</h2>
+<p>Construct an <code>InMemoryLogger&lt;T&gt;</code> and inject it wherever an <code>ILogger&lt;T&gt;</code> is expected:</p>
+<pre><code class="lang-csharp">using Microsoft.Extensions.Logging;
+using Wolfgang.Extensions.Logging.InMemoryLogger;
+
+var logger = new InMemoryLogger&lt;MyService&gt;(LogLevel.Information);
+
+// Production code under test
+var service = new MyService(logger);
+service.DoWork();
+
+// Assert what was logged
+Assert.Single(logger.LogEntries);
+Assert.Equal(LogLevel.Information, logger.LogEntries[0].LogLevel);
+</code></pre>
+<p>When you need a non-generic <code>ILogger</code> and want to control the category string directly:</p>
+<pre><code class="lang-csharp">var logger = new InMemoryLogger(
+    category: &quot;MyApp.MyComponent&quot;,
+    minLogLevel: LogLevel.Warning,
+    capacity: 32);
+</code></pre>
+<p>To register with the standard <code>ILoggerFactory</code>:</p>
+<pre><code class="lang-csharp">using var loggerFactory = LoggerFactory.Create(b =&gt; b.AddInMemoryLogger());
+var logger = loggerFactory.CreateLogger&lt;MyService&gt;();
+</code></pre>
+<p>State passed to <code>BeginScope</code> is captured in the <code>Scopes</code> property:</p>
+<pre><code class="lang-csharp">using (logger.BeginScope(new { CorrelationId = &quot;abc-123&quot; }))
+{
+    logger.LogInformation(&quot;processing&quot;);
+}
+
+Assert.Single(logger.Scopes);
+</code></pre>
+<h2 id="next-steps">Next Steps</h2>
+<ul>
+<li>Explore the <a href="https://chris-wolfgang.github.io/In-memory-Logger/versions/latest/api/Wolfgang.Extensions.Logging.InMemoryLogger.html">API Reference</a> for detailed documentation</li>
+<li>Read the <a href="introduction.html">Introduction</a> to learn more about Wolfgang.Extensions.Logging.InMemoryLogger</li>
+<li>Check out example projects in the <a href="https://github.com/Chris-Wolfgang/In-memory-Logger">GitHub repository</a></li>
+</ul>
+<h2 id="common-issues">Common Issues</h2>
+<h3 id="logentries-is-empty-even-though-my-code-logged"><code>LogEntries</code> is empty even though my code logged</h3>
+<p>The <code>InMemoryLogger</code> constructor takes a <code>minLogLevel</code> (defaults to <code>LogLevel.Trace</code>). Anything below that threshold is filtered before reaching <code>LogEntries</code>. If you constructed the logger with <code>LogLevel.Warning</code> and the code under test only emits <code>Information</code>, no entries are captured. Lower the threshold or check <code>IsEnabled</code> first.</p>
+<h3 id="scopes-is-empty-after-beginscope"><code>Scopes</code> is empty after <code>BeginScope</code></h3>
+<p>The scope must be active <em>while</em> the log call runs — the <code>using</code> block has to wrap the <code>Log*</code> call, not just the <code>BeginScope</code> invocation. The library captures scope state when an entry is appended, not when the scope opens.</p>
+<h3 id="enumerating-logentries-from-another-thread">Enumerating <code>LogEntries</code> from another thread</h3>
+<p><code>LogEntries</code> is safe to read while a producer thread is still appending — the underlying buffer is thread-safe, and the property returns an <code>IReadOnlyList&lt;LogEntry&lt;object&gt;&gt;</code> snapshot prefix. You do not need to lock or copy before asserting.</p>
+<h2 id="additional-resources">Additional Resources</h2>
+<ul>
+<li><a href="https://github.com/Chris-Wolfgang/In-memory-Logger">GitHub Repository</a></li>
+<li><a href="https://github.com/Chris-Wolfgang/In-memory-Logger/blob/main/CONTRIBUTING.md">Contributing Guidelines</a></li>
+<li><a href="https://github.com/Chris-Wolfgang/In-memory-Logger/issues">Report an Issue</a></li>
+</ul>
 
 </article>
-          </div>
 
-          <div class="hidden-sm col-md-2" role="complementary">
-            <div class="sideaffix">
-              <div class="contribution">
-                <ul class="nav">
-                  <li>
-                    <a href="https://github.com/Chris-Wolfgang/In-memory-Logger/blob/v0.1.0/docfx_project/docs/getting-started.md/#L1" class="contribution-link">Edit this page</a>
-                  </li>
-                </ul>
-              </div>
-              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-                <h5>In this article</h5>
-                <div></div>
-              </nav>
-            </div>
-          </div>
+        <div class="contribution d-print-none">
         </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
       </div>
 
-      <footer>
-        <div class="grad-bottom"></div>
-        <div class="footer">
-          <div class="container">
-            <span class="pull-right">
-              <a href="#top">Back to top</a>
-            </span>
-      
-      <span>Generated by <strong>DocFX</strong></span>
-          </div>
-        </div>
-      </footer>
-    </div>
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
 
-    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
-    <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Made with DocFX <script>(function(){var r='/';if(window.location.hostname.endsWith('.github.io')){var s=window.location.pathname.split('/').filter(Boolean);if(s.length)r='/'+s[0]+'/';}var t=document.createElement('script');t.src=r+'public/version-picker.js';t.async=true;document.head.appendChild(t);})();</script>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
