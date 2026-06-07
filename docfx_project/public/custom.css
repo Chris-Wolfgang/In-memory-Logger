@@ -1,0 +1,11 @@
+/* Top-align the navbar logo within the Bootstrap-5 (modern template) navbar.
+   Without this rule the logo's wrapper <a class="navbar-brand"> is vertically
+   centered by Bootstrap's flex layout, which leaves visible padding above the
+   logo. Pinning align-self:flex-start removes that padding so the glyph sits
+   flush against the top of the navbar. */
+.navbar-brand,
+.navbar-brand img {
+  align-self: flex-start !important;
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
