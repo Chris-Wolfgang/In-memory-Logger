@@ -72,11 +72,22 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="getting-started">Getting Started</h1>
 
-<p>This guide walks through installing the package and writing your first assertion against <code>InMemoryLogger&lt;T&gt;</code>.</p>
-<h2 id="install">Install</h2>
+<p>This guide will help you quickly get up and running with Wolfgang.Extensions.Logging.InMemoryLogger.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>The .NET 10.0 SDK is required to build the highest TFM.</li>
+<li>Building the <code>net462</code> target additionally requires the .NET Framework 4.6.2 reference assemblies / targeting pack (typically installed via Visual Studio's &quot;.NET desktop development&quot; workload on Windows; the SDK alone does not include them, and <code>net462</code> builds are Windows-only).</li>
+<li>The <code>netstandard2.0</code>, <code>netstandard2.1</code>, and <code>net8.0</code> targets build with the .NET 10 SDK alone on any OS.</li>
+</ul>
+<p>The library ships against <code>net462</code>, <code>netstandard2.0</code>, <code>netstandard2.1</code>, <code>net8.0</code>, and <code>net10.0</code>.</p>
+<h2 id="installation">Installation</h2>
+<h3 id="via-nuget-package-manager">Via NuGet Package Manager</h3>
 <pre><code class="lang-bash">dotnet add package Wolfgang.Extensions.Logging.InMemoryLogger
 </code></pre>
-<h2 id="basic-usage">Basic usage</h2>
+<h3 id="via-package-manager-console">Via Package Manager Console</h3>
+<pre><code class="lang-powershell">Install-Package Wolfgang.Extensions.Logging.InMemoryLogger
+</code></pre>
+<h2 id="quick-start">Quick Start</h2>
 <p>Construct an <code>InMemoryLogger&lt;T&gt;</code> and inject it wherever an <code>ILogger&lt;T&gt;</code> is expected:</p>
 <pre><code class="lang-csharp">using Microsoft.Extensions.Logging;
 using Wolfgang.Extensions.Logging.InMemoryLogger;
@@ -91,19 +102,16 @@ service.DoWork();
 Assert.Single(logger.LogEntries);
 Assert.Equal(LogLevel.Information, logger.LogEntries[0].LogLevel);
 </code></pre>
-<h2 id="non-generic-form">Non-generic form</h2>
-<p>When you need an <code>ILogger</code> and want to control the category string directly, use the non-generic constructor:</p>
+<p>When you need a non-generic <code>ILogger</code> and want to control the category string directly:</p>
 <pre><code class="lang-csharp">var logger = new InMemoryLogger(
     category: &quot;MyApp.MyComponent&quot;,
     minLogLevel: LogLevel.Warning,
     capacity: 32);
 </code></pre>
-<h2 id="registering-with-the-standard-iloggerfactory">Registering with the standard ILoggerFactory</h2>
-<p><code>InMemoryLoggerBuilderExtensions.AddInMemoryLogger</code> plugs into the standard <code>ILoggingBuilder</code>:</p>
+<p>To register with the standard <code>ILoggerFactory</code>:</p>
 <pre><code class="lang-csharp">using var loggerFactory = LoggerFactory.Create(b =&gt; b.AddInMemoryLogger());
 var logger = loggerFactory.CreateLogger&lt;MyService&gt;();
 </code></pre>
-<h2 id="asserting-on-scopes">Asserting on scopes</h2>
 <p>State passed to <code>BeginScope</code> is captured in the <code>Scopes</code> property:</p>
 <pre><code class="lang-csharp">using (logger.BeginScope(new { CorrelationId = &quot;abc-123&quot; }))
 {
@@ -112,10 +120,24 @@ var logger = loggerFactory.CreateLogger&lt;MyService&gt;();
 
 Assert.Single(logger.Scopes);
 </code></pre>
-<h2 id="next-steps">Next steps</h2>
+<h2 id="next-steps">Next Steps</h2>
 <ul>
-<li><a href="../api/Wolfgang.Extensions.Logging.InMemoryLogger.html">API Reference</a></li>
-<li><a href="https://github.com/Chris-Wolfgang/In-memory-Logger">GitHub repository</a></li>
+<li>Explore the <a href="https://chris-wolfgang.github.io/In-memory-Logger/versions/latest/api/Wolfgang.Extensions.Logging.InMemoryLogger.html">API Reference</a> for detailed documentation</li>
+<li>Read the <a href="introduction.html">Introduction</a> to learn more about Wolfgang.Extensions.Logging.InMemoryLogger</li>
+<li>Check out example projects in the <a href="https://github.com/Chris-Wolfgang/In-memory-Logger">GitHub repository</a></li>
+</ul>
+<h2 id="common-issues">Common Issues</h2>
+<h3 id="logentries-is-empty-even-though-my-code-logged"><code>LogEntries</code> is empty even though my code logged</h3>
+<p>The <code>InMemoryLogger</code> constructor takes a <code>minLogLevel</code> (defaults to <code>LogLevel.Trace</code>). Anything below that threshold is filtered before reaching <code>LogEntries</code>. If you constructed the logger with <code>LogLevel.Warning</code> and the code under test only emits <code>Information</code>, no entries are captured. Lower the threshold or check <code>IsEnabled</code> first.</p>
+<h3 id="scopes-is-empty-after-beginscope"><code>Scopes</code> is empty after <code>BeginScope</code></h3>
+<p>The scope must be active <em>while</em> the log call runs — the <code>using</code> block has to wrap the <code>Log*</code> call, not just the <code>BeginScope</code> invocation. The library captures scope state when an entry is appended, not when the scope opens.</p>
+<h3 id="enumerating-logentries-from-another-thread">Enumerating <code>LogEntries</code> from another thread</h3>
+<p><code>LogEntries</code> is safe to read while a producer thread is still appending — the underlying buffer is thread-safe, and the property returns an <code>IReadOnlyList&lt;LogEntry&lt;object&gt;&gt;</code> snapshot prefix. You do not need to lock or copy before asserting.</p>
+<h2 id="additional-resources">Additional Resources</h2>
+<ul>
+<li><a href="https://github.com/Chris-Wolfgang/In-memory-Logger">GitHub Repository</a></li>
+<li><a href="https://github.com/Chris-Wolfgang/In-memory-Logger/blob/main/CONTRIBUTING.md">Contributing Guidelines</a></li>
+<li><a href="https://github.com/Chris-Wolfgang/In-memory-Logger/issues">Report an Issue</a></li>
 </ul>
 
 </article>
@@ -126,7 +148,7 @@ Assert.Single(logger.Scopes);
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/Chris-Wolfgang/In-memory-Logger/blob/v0.1.2/docfx_project/docs/getting-started.md/#L1" class="contribution-link">Edit this page</a>
+                    <a href="https://github.com/Chris-Wolfgang/In-memory-Logger/blob/main/docfx_project/docs/getting-started.md/#L1" class="contribution-link">Edit this page</a>
                   </li>
                 </ul>
               </div>
@@ -146,8 +168,8 @@ Assert.Single(logger.Scopes);
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
+      Made with DocFX <script>(function(){var r='/';if(window.location.hostname.endsWith('.github.io')){var s=window.location.pathname.split('/').filter(Boolean);if(s.length)r='/'+s[0]+'/';}var t=document.createElement('script');t.src=r+'public/version-picker.js';t.async=true;document.head.appendChild(t);})();</script>
       
-      <span>Generated by <strong>DocFX</strong></span>
           </div>
         </div>
       </footer>
