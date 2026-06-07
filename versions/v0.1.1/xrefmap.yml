@@ -1,0 +1,392 @@
+### YamlMime:XRefMap
+sorted: true
+references:
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger
+  name: Wolfgang.Extensions.Logging.InMemoryLogger
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.html
+  commentId: N:Wolfgang.Extensions.Logging.InMemoryLogger
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger
+  nameWithType: Wolfgang.Extensions.Logging.InMemoryLogger
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger
+  name: InMemoryLogger
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.html
+  commentId: T:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger
+  nameWithType: InMemoryLogger
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.#ctor(System.String,Microsoft.Extensions.Logging.LogLevel,System.Int32)
+  name: InMemoryLogger(string, LogLevel, int)
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger__ctor_System_String_Microsoft_Extensions_Logging_LogLevel_System_Int32_
+  commentId: M:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.#ctor(System.String,Microsoft.Extensions.Logging.LogLevel,System.Int32)
+  name.vb: New(String, LogLevel, Integer)
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.InMemoryLogger(string, Microsoft.Extensions.Logging.LogLevel, int)
+  fullName.vb: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.New(String, Microsoft.Extensions.Logging.LogLevel, Integer)
+  nameWithType: InMemoryLogger.InMemoryLogger(string, LogLevel, int)
+  nameWithType.vb: InMemoryLogger.New(String, LogLevel, Integer)
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.#ctor*
+  name: InMemoryLogger
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger__ctor_
+  commentId: Overload:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.InMemoryLogger
+  fullName.vb: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.New
+  nameWithType: InMemoryLogger.InMemoryLogger
+  nameWithType.vb: InMemoryLogger.New
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.BeginScope*
+  name: BeginScope
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_BeginScope_
+  commentId: Overload:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.BeginScope
+  isSpec: "True"
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.BeginScope
+  nameWithType: InMemoryLogger.BeginScope
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.BeginScope``1(``0)
+  name: BeginScope<TState>(TState)
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_BeginScope__1___0_
+  commentId: M:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.BeginScope``1(``0)
+  name.vb: BeginScope(Of TState)(TState)
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.BeginScope<TState>(TState)
+  fullName.vb: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.BeginScope(Of TState)(TState)
+  nameWithType: InMemoryLogger.BeginScope<TState>(TState)
+  nameWithType.vb: InMemoryLogger.BeginScope(Of TState)(TState)
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.Capacity
+  name: Capacity
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_Capacity
+  commentId: P:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.Capacity
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.Capacity
+  nameWithType: InMemoryLogger.Capacity
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.Capacity*
+  name: Capacity
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_Capacity_
+  commentId: Overload:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.Capacity
+  isSpec: "True"
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.Capacity
+  nameWithType: InMemoryLogger.Capacity
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.Category
+  name: Category
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_Category
+  commentId: P:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.Category
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.Category
+  nameWithType: InMemoryLogger.Category
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.Category*
+  name: Category
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_Category_
+  commentId: Overload:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.Category
+  isSpec: "True"
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.Category
+  nameWithType: InMemoryLogger.Category
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.IsEnabled(Microsoft.Extensions.Logging.LogLevel)
+  name: IsEnabled(LogLevel)
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_IsEnabled_Microsoft_Extensions_Logging_LogLevel_
+  commentId: M:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.IsEnabled(Microsoft.Extensions.Logging.LogLevel)
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.IsEnabled(Microsoft.Extensions.Logging.LogLevel)
+  nameWithType: InMemoryLogger.IsEnabled(LogLevel)
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.IsEnabled*
+  name: IsEnabled
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_IsEnabled_
+  commentId: Overload:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.IsEnabled
+  isSpec: "True"
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.IsEnabled
+  nameWithType: InMemoryLogger.IsEnabled
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.Log*
+  name: Log
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_Log_
+  commentId: Overload:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.Log
+  isSpec: "True"
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.Log
+  nameWithType: InMemoryLogger.Log
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.LogEntries
+  name: LogEntries
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_LogEntries
+  commentId: P:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.LogEntries
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.LogEntries
+  nameWithType: InMemoryLogger.LogEntries
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.LogEntries*
+  name: LogEntries
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_LogEntries_
+  commentId: Overload:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.LogEntries
+  isSpec: "True"
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.LogEntries
+  nameWithType: InMemoryLogger.LogEntries
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.Log``1(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,``0,System.Exception,System.Func{``0,System.Exception,System.String})
+  name: Log<TState>(LogLevel, EventId, TState, Exception?, Func<TState, Exception?, string>)
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_Log__1_Microsoft_Extensions_Logging_LogLevel_Microsoft_Extensions_Logging_EventId___0_System_Exception_System_Func___0_System_Exception_System_String__
+  commentId: M:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.Log``1(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,``0,System.Exception,System.Func{``0,System.Exception,System.String})
+  name.vb: Log(Of TState)(LogLevel, EventId, TState, Exception, Func(Of TState, Exception, String))
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.Log<TState>(Microsoft.Extensions.Logging.LogLevel, Microsoft.Extensions.Logging.EventId, TState, System.Exception?, System.Func<TState, System.Exception?, string>)
+  fullName.vb: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.Log(Of TState)(Microsoft.Extensions.Logging.LogLevel, Microsoft.Extensions.Logging.EventId, TState, System.Exception, System.Func(Of TState, System.Exception, String))
+  nameWithType: InMemoryLogger.Log<TState>(LogLevel, EventId, TState, Exception?, Func<TState, Exception?, string>)
+  nameWithType.vb: InMemoryLogger.Log(Of TState)(LogLevel, EventId, TState, Exception, Func(Of TState, Exception, String))
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.MinimumLogLevel
+  name: MinimumLogLevel
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_MinimumLogLevel
+  commentId: P:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.MinimumLogLevel
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.MinimumLogLevel
+  nameWithType: InMemoryLogger.MinimumLogLevel
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.MinimumLogLevel*
+  name: MinimumLogLevel
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_MinimumLogLevel_
+  commentId: Overload:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.MinimumLogLevel
+  isSpec: "True"
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.MinimumLogLevel
+  nameWithType: InMemoryLogger.MinimumLogLevel
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.Scopes
+  name: Scopes
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_Scopes
+  commentId: P:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.Scopes
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.Scopes
+  nameWithType: InMemoryLogger.Scopes
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.Scopes*
+  name: Scopes
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_Scopes_
+  commentId: Overload:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.Scopes
+  isSpec: "True"
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger.Scopes
+  nameWithType: InMemoryLogger.Scopes
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerBuilderExtensions
+  name: InMemoryLoggerBuilderExtensions
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerBuilderExtensions.html
+  commentId: T:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerBuilderExtensions
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerBuilderExtensions
+  nameWithType: InMemoryLoggerBuilderExtensions
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerBuilderExtensions.AddInMemoryLogger(Microsoft.Extensions.Logging.ILoggingBuilder,Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider)
+  name: AddInMemoryLogger(ILoggingBuilder, InMemoryLoggerProvider)
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerBuilderExtensions.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLoggerBuilderExtensions_AddInMemoryLogger_Microsoft_Extensions_Logging_ILoggingBuilder_Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLoggerProvider_
+  commentId: M:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerBuilderExtensions.AddInMemoryLogger(Microsoft.Extensions.Logging.ILoggingBuilder,Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider)
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerBuilderExtensions.AddInMemoryLogger(Microsoft.Extensions.Logging.ILoggingBuilder, Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider)
+  nameWithType: InMemoryLoggerBuilderExtensions.AddInMemoryLogger(ILoggingBuilder, InMemoryLoggerProvider)
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerBuilderExtensions.AddInMemoryLogger*
+  name: AddInMemoryLogger
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerBuilderExtensions.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLoggerBuilderExtensions_AddInMemoryLogger_
+  commentId: Overload:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerBuilderExtensions.AddInMemoryLogger
+  isSpec: "True"
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerBuilderExtensions.AddInMemoryLogger
+  nameWithType: InMemoryLoggerBuilderExtensions.AddInMemoryLogger
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider
+  name: InMemoryLoggerProvider
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.html
+  commentId: T:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider
+  nameWithType: InMemoryLoggerProvider
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.#ctor(Microsoft.Extensions.Logging.LogLevel)
+  name: InMemoryLoggerProvider(LogLevel)
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLoggerProvider__ctor_Microsoft_Extensions_Logging_LogLevel_
+  commentId: M:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.#ctor(Microsoft.Extensions.Logging.LogLevel)
+  name.vb: New(LogLevel)
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.InMemoryLoggerProvider(Microsoft.Extensions.Logging.LogLevel)
+  fullName.vb: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.New(Microsoft.Extensions.Logging.LogLevel)
+  nameWithType: InMemoryLoggerProvider.InMemoryLoggerProvider(LogLevel)
+  nameWithType.vb: InMemoryLoggerProvider.New(LogLevel)
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.#ctor*
+  name: InMemoryLoggerProvider
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLoggerProvider__ctor_
+  commentId: Overload:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.InMemoryLoggerProvider
+  fullName.vb: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.New
+  nameWithType: InMemoryLoggerProvider.InMemoryLoggerProvider
+  nameWithType.vb: InMemoryLoggerProvider.New
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.CreateLogger(System.String)
+  name: CreateLogger(string)
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLoggerProvider_CreateLogger_System_String_
+  commentId: M:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.CreateLogger(System.String)
+  name.vb: CreateLogger(String)
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.CreateLogger(string)
+  fullName.vb: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.CreateLogger(String)
+  nameWithType: InMemoryLoggerProvider.CreateLogger(string)
+  nameWithType.vb: InMemoryLoggerProvider.CreateLogger(String)
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.CreateLogger*
+  name: CreateLogger
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLoggerProvider_CreateLogger_
+  commentId: Overload:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.CreateLogger
+  isSpec: "True"
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.CreateLogger
+  nameWithType: InMemoryLoggerProvider.CreateLogger
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.Dispose
+  name: Dispose()
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLoggerProvider_Dispose
+  commentId: M:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.Dispose
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.Dispose()
+  nameWithType: InMemoryLoggerProvider.Dispose()
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.Dispose*
+  name: Dispose
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLoggerProvider_Dispose_
+  commentId: Overload:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.Dispose
+  isSpec: "True"
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.Dispose
+  nameWithType: InMemoryLoggerProvider.Dispose
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.LogEntries
+  name: LogEntries
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLoggerProvider_LogEntries
+  commentId: P:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.LogEntries
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.LogEntries
+  nameWithType: InMemoryLoggerProvider.LogEntries
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.LogEntries*
+  name: LogEntries
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLoggerProvider_LogEntries_
+  commentId: Overload:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.LogEntries
+  isSpec: "True"
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.LogEntries
+  nameWithType: InMemoryLoggerProvider.LogEntries
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.Loggers
+  name: Loggers
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLoggerProvider_Loggers
+  commentId: P:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.Loggers
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.Loggers
+  nameWithType: InMemoryLoggerProvider.Loggers
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.Loggers*
+  name: Loggers
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLoggerProvider_Loggers_
+  commentId: Overload:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.Loggers
+  isSpec: "True"
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider.Loggers
+  nameWithType: InMemoryLoggerProvider.Loggers
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1
+  name: InMemoryLogger<T>
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger-1.html
+  commentId: T:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1
+  name.vb: InMemoryLogger(Of T)
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>
+  fullName.vb: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger(Of T)
+  nameWithType: InMemoryLogger<T>
+  nameWithType.vb: InMemoryLogger(Of T)
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.#ctor(Microsoft.Extensions.Logging.LogLevel,System.Int32)
+  name: InMemoryLogger(LogLevel, int)
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger-1.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1__ctor_Microsoft_Extensions_Logging_LogLevel_System_Int32_
+  commentId: M:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.#ctor(Microsoft.Extensions.Logging.LogLevel,System.Int32)
+  name.vb: New(LogLevel, Integer)
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>.InMemoryLogger(Microsoft.Extensions.Logging.LogLevel, int)
+  fullName.vb: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger(Of T).New(Microsoft.Extensions.Logging.LogLevel, Integer)
+  nameWithType: InMemoryLogger<T>.InMemoryLogger(LogLevel, int)
+  nameWithType.vb: InMemoryLogger(Of T).New(LogLevel, Integer)
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.#ctor*
+  name: InMemoryLogger
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger-1.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1__ctor_
+  commentId: Overload:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>.InMemoryLogger
+  fullName.vb: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger(Of T).New
+  nameWithType: InMemoryLogger<T>.InMemoryLogger
+  nameWithType.vb: InMemoryLogger(Of T).New
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.BeginScope*
+  name: BeginScope
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger-1.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_BeginScope_
+  commentId: Overload:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.BeginScope
+  isSpec: "True"
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>.BeginScope
+  fullName.vb: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger(Of T).BeginScope
+  nameWithType: InMemoryLogger<T>.BeginScope
+  nameWithType.vb: InMemoryLogger(Of T).BeginScope
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.BeginScope``1(``0)
+  name: BeginScope<TState>(TState)
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger-1.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_BeginScope__1___0_
+  commentId: M:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.BeginScope``1(``0)
+  name.vb: BeginScope(Of TState)(TState)
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>.BeginScope<TState>(TState)
+  fullName.vb: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger(Of T).BeginScope(Of TState)(TState)
+  nameWithType: InMemoryLogger<T>.BeginScope<TState>(TState)
+  nameWithType.vb: InMemoryLogger(Of T).BeginScope(Of TState)(TState)
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.Capacity
+  name: Capacity
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger-1.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_Capacity
+  commentId: P:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.Capacity
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>.Capacity
+  fullName.vb: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger(Of T).Capacity
+  nameWithType: InMemoryLogger<T>.Capacity
+  nameWithType.vb: InMemoryLogger(Of T).Capacity
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.Capacity*
+  name: Capacity
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger-1.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_Capacity_
+  commentId: Overload:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.Capacity
+  isSpec: "True"
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>.Capacity
+  fullName.vb: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger(Of T).Capacity
+  nameWithType: InMemoryLogger<T>.Capacity
+  nameWithType.vb: InMemoryLogger(Of T).Capacity
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.IsEnabled(Microsoft.Extensions.Logging.LogLevel)
+  name: IsEnabled(LogLevel)
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger-1.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_IsEnabled_Microsoft_Extensions_Logging_LogLevel_
+  commentId: M:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.IsEnabled(Microsoft.Extensions.Logging.LogLevel)
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>.IsEnabled(Microsoft.Extensions.Logging.LogLevel)
+  fullName.vb: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger(Of T).IsEnabled(Microsoft.Extensions.Logging.LogLevel)
+  nameWithType: InMemoryLogger<T>.IsEnabled(LogLevel)
+  nameWithType.vb: InMemoryLogger(Of T).IsEnabled(LogLevel)
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.IsEnabled*
+  name: IsEnabled
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger-1.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_IsEnabled_
+  commentId: Overload:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.IsEnabled
+  isSpec: "True"
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>.IsEnabled
+  fullName.vb: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger(Of T).IsEnabled
+  nameWithType: InMemoryLogger<T>.IsEnabled
+  nameWithType.vb: InMemoryLogger(Of T).IsEnabled
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.Log*
+  name: Log
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger-1.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_Log_
+  commentId: Overload:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.Log
+  isSpec: "True"
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>.Log
+  fullName.vb: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger(Of T).Log
+  nameWithType: InMemoryLogger<T>.Log
+  nameWithType.vb: InMemoryLogger(Of T).Log
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.LogEntries
+  name: LogEntries
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger-1.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_LogEntries
+  commentId: P:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.LogEntries
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>.LogEntries
+  fullName.vb: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger(Of T).LogEntries
+  nameWithType: InMemoryLogger<T>.LogEntries
+  nameWithType.vb: InMemoryLogger(Of T).LogEntries
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.LogEntries*
+  name: LogEntries
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger-1.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_LogEntries_
+  commentId: Overload:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.LogEntries
+  isSpec: "True"
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>.LogEntries
+  fullName.vb: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger(Of T).LogEntries
+  nameWithType: InMemoryLogger<T>.LogEntries
+  nameWithType.vb: InMemoryLogger(Of T).LogEntries
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.Log``1(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,``0,System.Exception,System.Func{``0,System.Exception,System.String})
+  name: Log<TState>(LogLevel, EventId, TState, Exception?, Func<TState, Exception?, string>)
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger-1.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_Log__1_Microsoft_Extensions_Logging_LogLevel_Microsoft_Extensions_Logging_EventId___0_System_Exception_System_Func___0_System_Exception_System_String__
+  commentId: M:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.Log``1(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,``0,System.Exception,System.Func{``0,System.Exception,System.String})
+  name.vb: Log(Of TState)(LogLevel, EventId, TState, Exception, Func(Of TState, Exception, String))
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>.Log<TState>(Microsoft.Extensions.Logging.LogLevel, Microsoft.Extensions.Logging.EventId, TState, System.Exception?, System.Func<TState, System.Exception?, string>)
+  fullName.vb: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger(Of T).Log(Of TState)(Microsoft.Extensions.Logging.LogLevel, Microsoft.Extensions.Logging.EventId, TState, System.Exception, System.Func(Of TState, System.Exception, String))
+  nameWithType: InMemoryLogger<T>.Log<TState>(LogLevel, EventId, TState, Exception?, Func<TState, Exception?, string>)
+  nameWithType.vb: InMemoryLogger(Of T).Log(Of TState)(LogLevel, EventId, TState, Exception, Func(Of TState, Exception, String))
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.MinimumLogLevel
+  name: MinimumLogLevel
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger-1.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_MinimumLogLevel
+  commentId: P:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.MinimumLogLevel
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>.MinimumLogLevel
+  fullName.vb: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger(Of T).MinimumLogLevel
+  nameWithType: InMemoryLogger<T>.MinimumLogLevel
+  nameWithType.vb: InMemoryLogger(Of T).MinimumLogLevel
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.MinimumLogLevel*
+  name: MinimumLogLevel
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger-1.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_MinimumLogLevel_
+  commentId: Overload:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.MinimumLogLevel
+  isSpec: "True"
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>.MinimumLogLevel
+  fullName.vb: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger(Of T).MinimumLogLevel
+  nameWithType: InMemoryLogger<T>.MinimumLogLevel
+  nameWithType.vb: InMemoryLogger(Of T).MinimumLogLevel
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.Scopes
+  name: Scopes
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger-1.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_Scopes
+  commentId: P:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.Scopes
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>.Scopes
+  fullName.vb: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger(Of T).Scopes
+  nameWithType: InMemoryLogger<T>.Scopes
+  nameWithType.vb: InMemoryLogger(Of T).Scopes
+- uid: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.Scopes*
+  name: Scopes
+  href: api/Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger-1.html#Wolfgang_Extensions_Logging_InMemoryLogger_InMemoryLogger_1_Scopes_
+  commentId: Overload:Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1.Scopes
+  isSpec: "True"
+  fullName: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger<T>.Scopes
+  fullName.vb: Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger(Of T).Scopes
+  nameWithType: InMemoryLogger<T>.Scopes
+  nameWithType.vb: InMemoryLogger(Of T).Scopes

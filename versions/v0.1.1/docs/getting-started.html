@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Getting Started | Wolfgang.Extensions.Logging.InMemoryLogger Documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Getting Started | Wolfgang.Extensions.Logging.InMemoryLogger Documentation ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Chris-Wolfgang/In-memory-Logger/blob/v0.1.1/docfx_project/docs/getting-started.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="Wolfgang.Extensions.Logging.InMemoryLogger">
+            Wolfgang.Extensions.Logging.InMemoryLogger
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="getting-started">Getting Started</h1>
+
+<p>This guide walks through installing the package and writing your first assertion against <code>InMemoryLogger&lt;T&gt;</code>.</p>
+<h2 id="install">Install</h2>
+<pre><code class="lang-bash">dotnet add package Wolfgang.Extensions.Logging.InMemoryLogger
+</code></pre>
+<h2 id="basic-usage">Basic usage</h2>
+<p>Construct an <code>InMemoryLogger&lt;T&gt;</code> and inject it wherever an <code>ILogger&lt;T&gt;</code> is expected:</p>
+<pre><code class="lang-csharp">using Microsoft.Extensions.Logging;
+using Wolfgang.Extensions.Logging.InMemoryLogger;
+
+var logger = new InMemoryLogger&lt;MyService&gt;(LogLevel.Information);
+
+// Production code under test
+var service = new MyService(logger);
+service.DoWork();
+
+// Assert what was logged
+Assert.Single(logger.LogEntries);
+Assert.Equal(LogLevel.Information, logger.LogEntries[0].LogLevel);
+</code></pre>
+<h2 id="non-generic-form">Non-generic form</h2>
+<p>When you need an <code>ILogger</code> and want to control the category string directly, use the non-generic constructor:</p>
+<pre><code class="lang-csharp">var logger = new InMemoryLogger(
+    category: &quot;MyApp.MyComponent&quot;,
+    minLogLevel: LogLevel.Warning,
+    capacity: 32);
+</code></pre>
+<h2 id="registering-with-the-standard-iloggerfactory">Registering with the standard ILoggerFactory</h2>
+<p><code>InMemoryLoggerBuilderExtensions.AddInMemoryLogger</code> plugs into the standard <code>ILoggingBuilder</code>:</p>
+<pre><code class="lang-csharp">using var loggerFactory = LoggerFactory.Create(b =&gt; b.AddInMemoryLogger());
+var logger = loggerFactory.CreateLogger&lt;MyService&gt;();
+</code></pre>
+<h2 id="asserting-on-scopes">Asserting on scopes</h2>
+<p>State passed to <code>BeginScope</code> is captured in the <code>Scopes</code> property:</p>
+<pre><code class="lang-csharp">using (logger.BeginScope(new { CorrelationId = &quot;abc-123&quot; }))
+{
+    logger.LogInformation(&quot;processing&quot;);
+}
+
+Assert.Single(logger.Scopes);
+</code></pre>
+<h2 id="next-steps">Next steps</h2>
+<ul>
+<li><a href="../api/Wolfgang.Extensions.Logging.InMemoryLogger.html">API Reference</a></li>
+<li><a href="https://github.com/Chris-Wolfgang/In-memory-Logger">GitHub repository</a></li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Chris-Wolfgang/In-memory-Logger/blob/v0.1.1/docfx_project/docs/getting-started.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Made with DocFX <script>(function(){var r='/';if(window.location.hostname.endsWith('.github.io')){var s=window.location.pathname.split('/').filter(Boolean);if(s.length)r='/'+s[0]+'/';}var t=document.createElement('script');t.src=r+'public/version-picker.js';t.async=true;document.head.appendChild(t);})();</script>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
