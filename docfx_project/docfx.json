@@ -36,8 +36,8 @@
     ],
     "output": "_site",
     "template": [
-      "modern",
-      "default"
+      "default",
+      "modern"
     ],
     "globalMetadata": {
       "_appName": "Wolfgang.Extensions.Logging.InMemoryLogger",
