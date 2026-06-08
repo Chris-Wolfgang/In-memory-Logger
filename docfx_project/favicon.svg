@@ -5,11 +5,11 @@
       font-weight: 700;
       font-size: 30px;
       fill: #7c23bb;
-      filter: drop-shadow(0 0 1.5px rgba(0, 0, 0, 0.55));
+      filter: drop-shadow(0 0 0.6px rgba(0, 0, 0, 0.6));
     }
     @media (prefers-color-scheme: dark) {
       .w {
-        filter: drop-shadow(0 0 2.5px rgba(255, 255, 255, 0.95));
+        filter: drop-shadow(0 0 0.8px rgba(255, 255, 255, 0.7));
       }
     }
   </style>
