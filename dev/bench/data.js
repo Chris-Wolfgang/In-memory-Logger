@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1780933399785,
+  "lastUpdate": 1781814001319,
   "repoUrl": "https://github.com/Chris-Wolfgang/In-memory-Logger",
   "entries": {
     "BenchmarkDotNet": [
@@ -46,6 +46,54 @@ window.BENCHMARK_DATA = {
             "value": 7.196489120523135,
             "unit": "ns",
             "range": "± 0.0052951859891312986"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "49699333+dependabot[bot]@users.noreply.github.com",
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]"
+          },
+          "committer": {
+            "email": "210299580+Chris-Wolfgang@users.noreply.github.com",
+            "name": "Chris Wolfgang",
+            "username": "Chris-Wolfgang"
+          },
+          "distinct": true,
+          "id": "9b05722970bbf71a3a5f2ad0d5765afb47765cbe",
+          "message": "Bump the dotnet-dependencies group with 4 updates\n\nBumps Meziantou.Analyzer from 3.0.101 to 3.0.104\nBumps Microsoft.Extensions.DependencyInjection from 10.0.8 to 10.0.9\nBumps Microsoft.Extensions.Logging from 10.0.8 to 10.0.9\nBumps Microsoft.Extensions.Logging.Abstractions from 10.0.8 to 10.0.9\n\n---\nupdated-dependencies:\n- dependency-name: Meziantou.Analyzer\n  dependency-version: 3.0.104\n  dependency-type: direct:production\n  update-type: version-update:semver-patch\n  dependency-group: dotnet-dependencies\n- dependency-name: Microsoft.Extensions.DependencyInjection\n  dependency-version: 10.0.9\n  dependency-type: direct:production\n  update-type: version-update:semver-patch\n  dependency-group: dotnet-dependencies\n- dependency-name: Microsoft.Extensions.Logging\n  dependency-version: 10.0.9\n  dependency-type: direct:production\n  update-type: version-update:semver-patch\n  dependency-group: dotnet-dependencies\n- dependency-name: Microsoft.Extensions.Logging.Abstractions\n  dependency-version: 10.0.9\n  dependency-type: direct:production\n  update-type: version-update:semver-patch\n  dependency-group: dotnet-dependencies\n...\n\nSigned-off-by: dependabot[bot] <support@github.com>",
+          "timestamp": "2026-06-18T16:17:15-04:00",
+          "tree_id": "380b1d6809107605f36557afeb645d5a19035586",
+          "url": "https://github.com/Chris-Wolfgang/In-memory-Logger/commit/9b05722970bbf71a3a5f2ad0d5765afb47765cbe"
+        },
+        "date": 1781814000056,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogInformation",
+            "value": 198.78063686688742,
+            "unit": "ns",
+            "range": "± 67.82384643593944"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogBelowMinimum",
+            "value": 0.00012584403157234192,
+            "unit": "ns",
+            "range": "± 0.00020359778948166187"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.BeginScopeRoundtrip",
+            "value": 54.27594084541003,
+            "unit": "ns",
+            "range": "± 0.2728857410616078"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogEntriesIndexer",
+            "value": 7.16002660493056,
+            "unit": "ns",
+            "range": "± 0.006332970832200923"
           }
         ]
       }
