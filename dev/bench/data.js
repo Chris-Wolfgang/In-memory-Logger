@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1781814001319,
+  "lastUpdate": 1781814168930,
   "repoUrl": "https://github.com/Chris-Wolfgang/In-memory-Logger",
   "entries": {
     "BenchmarkDotNet": [
@@ -94,6 +94,54 @@ window.BENCHMARK_DATA = {
             "value": 7.16002660493056,
             "unit": "ns",
             "range": "± 0.006332970832200923"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "49699333+dependabot[bot]@users.noreply.github.com",
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]"
+          },
+          "committer": {
+            "email": "210299580+Chris-Wolfgang@users.noreply.github.com",
+            "name": "Chris Wolfgang",
+            "username": "Chris-Wolfgang"
+          },
+          "distinct": true,
+          "id": "914fb80783e11e095df0451043c121af6cbdb8d7",
+          "message": "Bump Meziantou.Analyzer and 2 others\n\nBumps Meziantou.Analyzer from 3.0.101 to 3.0.104\nBumps Microsoft.Extensions.DependencyInjection from 10.0.8 to 10.0.9\nBumps Microsoft.Extensions.Logging from 10.0.8 to 10.0.9\n\n---\nupdated-dependencies:\n- dependency-name: Meziantou.Analyzer\n  dependency-version: 3.0.104\n  dependency-type: direct:production\n  update-type: version-update:semver-patch\n  dependency-group: dotnet-dependencies\n- dependency-name: Microsoft.Extensions.DependencyInjection\n  dependency-version: 10.0.9\n  dependency-type: direct:production\n  update-type: version-update:semver-patch\n  dependency-group: dotnet-dependencies\n- dependency-name: Microsoft.Extensions.DependencyInjection\n  dependency-version: 10.0.9\n  dependency-type: direct:production\n  update-type: version-update:semver-patch\n  dependency-group: dotnet-dependencies\n- dependency-name: Microsoft.Extensions.DependencyInjection\n  dependency-version: 10.0.9\n  dependency-type: direct:production\n  update-type: version-update:semver-patch\n  dependency-group: dotnet-dependencies\n- dependency-name: Microsoft.Extensions.Logging\n  dependency-version: 10.0.9\n  dependency-type: direct:production\n  update-type: version-update:semver-patch\n  dependency-group: dotnet-dependencies\n...\n\nSigned-off-by: dependabot[bot] <support@github.com>",
+          "timestamp": "2026-06-18T16:17:58-04:00",
+          "tree_id": "6cbcdbc230db7b6c7d7f9315f13f7c7a70f456fd",
+          "url": "https://github.com/Chris-Wolfgang/In-memory-Logger/commit/914fb80783e11e095df0451043c121af6cbdb8d7"
+        },
+        "date": 1781814167601,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogInformation",
+            "value": 207.12099838256836,
+            "unit": "ns",
+            "range": "± 65.74816565131876"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogBelowMinimum",
+            "value": 0.0007466400663057963,
+            "unit": "ns",
+            "range": "± 0.0012932185298082347"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.BeginScopeRoundtrip",
+            "value": 60.48571294546127,
+            "unit": "ns",
+            "range": "± 0.14506896314849943"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogEntriesIndexer",
+            "value": 8.162947431206703,
+            "unit": "ns",
+            "range": "± 0.02518004481164418"
           }
         ]
       }
