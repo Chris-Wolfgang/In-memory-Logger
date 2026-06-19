@@ -5,7 +5,7 @@
       "src": [
         {
           "files": [
-			"src/**/*.csproj"
+            "src/**/*.csproj"
           ],
           "src": "../"
         }
@@ -16,9 +16,9 @@
   "build": {
     "content": [
       {
-		"files": [
-			"**/*.{md,yml}"
-		],
+        "files": [
+          "**/*.{md,yml}"
+        ],
         "exclude": [
           "_site/**"
         ]
@@ -29,6 +29,8 @@
         "files": [
           "logo.svg",
           "favicon.svg",
+          "apple-touch-icon.png",
+          "favicon.ico",
           "images/**",
           "public/**",
           "versions.json"
