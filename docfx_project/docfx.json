@@ -28,6 +28,8 @@
       {
         "files": [
           "logo.svg",
+          "favicon.ico",
+          "apple-touch-icon.png",
           "favicon.svg",
           "apple-touch-icon.png",
           "favicon.ico",
