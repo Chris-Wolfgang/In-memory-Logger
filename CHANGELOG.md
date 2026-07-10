@@ -19,6 +19,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [0.1.3] - 2026-07-06
+
+### Changed
+
+- Dependabot bump: dotnet-dependencies group (4 packages).
+
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
 ## [0.1.2] - 2026-06-06
 
 ### Fixed
@@ -41,3 +59,7 @@ Note: v0.1.1 was tagged and a GitHub Release was published, but the
 `publish-nuget` job never ran because of the workflow bug fixed in
 0.1.2. No `0.1.1` package exists on NuGet.org — install `0.1.2` or
 later.
+
+[Unreleased]: https://github.com/Chris-Wolfgang/In-memory-Logger/compare/v0.1.3...HEAD
+[0.1.3]: https://github.com/Chris-Wolfgang/In-memory-Logger/compare/v0.1.2...v0.1.3
+[0.1.2]: https://github.com/Chris-Wolfgang/In-memory-Logger/releases/tag/v0.1.2
