@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<coverage version="1.0" date="2026-07-12_01-59-10" tag="">
+  <assembly name="Wolfgang.Extensions.Logging.InMemoryLogger">
+    <class name="Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger" coveredlines="68" coverablelines="68" totallines="254" coveredbranches="16" totalbranches="18" coveredcodeelements="14" fullcoveredcodeelements="14" totalcodeelements="14" />
+    <class name="Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLogger`1" coveredlines="20" coverablelines="20" totallines="93" coveredbranches="1" totalbranches="2" coveredcodeelements="8" fullcoveredcodeelements="8" totalcodeelements="8" />
+    <class name="Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerBuilderExtensions" coveredlines="6" coverablelines="6" totallines="49" coveredbranches="4" totalbranches="4" coveredcodeelements="1" fullcoveredcodeelements="1" totalcodeelements="1" />
+    <class name="Wolfgang.Extensions.Logging.InMemoryLogger.InMemoryLoggerProvider" coveredlines="16" coverablelines="17" totallines="99" coveredbranches="1" totalbranches="2" coveredcodeelements="5" fullcoveredcodeelements="4" totalcodeelements="5" />
+  </assembly>
+</coverage>
