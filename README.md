@@ -76,17 +76,13 @@ var logger = new InMemoryLogger("MyCategory", LogLevel.Warning, capacity: 32);
 
 ---
 
-## 🎯 Target Frameworks
+## 🎯 Supported Frameworks
 
-| TFM | Status |
-|---|---|
-| `net462` | ✅ |
-| `netstandard2.0` | ✅ |
-| `netstandard2.1` | ✅ |
-| `net8.0` | ✅ |
-| `net10.0` | ✅ |
+This library targets:
 
----
+- **.NET Framework:** 4.6.2
+
+See the [NuGet package page](https://www.nuget.org/packages/Wolfgang.Extensions.Logging.InMemoryLogger/) for the authoritative per-TFM compatibility matrix.
 
 ## 🔍 Code Quality & Static Analysis
 
