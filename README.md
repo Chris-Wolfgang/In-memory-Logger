@@ -5,7 +5,7 @@ An implementation of `ILogger` and `ILogger<T>` from `Microsoft.Extensions.Loggi
 [![NuGet](https://img.shields.io/nuget/v/Wolfgang.Extensions.Logging.InMemoryLogger.svg?logo=nuget&label=NuGet)](https://www.nuget.org/packages/Wolfgang.Extensions.Logging.InMemoryLogger)
 [![NuGet downloads](https://img.shields.io/nuget/dt/Wolfgang.Extensions.Logging.InMemoryLogger.svg?logo=nuget&label=downloads)](https://www.nuget.org/packages/Wolfgang.Extensions.Logging.InMemoryLogger)
 [![PR build](https://img.shields.io/github/actions/workflow/status/Chris-Wolfgang/In-memory-Logger/pr.yaml?event=pull_request_target&label=PR%20build&logo=github)](https://github.com/Chris-Wolfgang/In-memory-Logger/actions/workflows/pr.yaml)
-[![Release](https://img.shields.io/github/actions/workflow/status/Chris-Wolfgang/In-memory-Logger/release.yaml?label=release&logo=github)](https://github.com/Chris-Wolfgang/In-memory-Logger/actions/workflows/release.yaml)
+[![Release](https://img.shields.io/github/actions/workflow/status/Chris-Wolfgang/In-memory-Logger/release.yaml?event=release&label=release&logo=github)](https://github.com/Chris-Wolfgang/In-memory-Logger/actions/workflows/release.yaml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![.NET](https://img.shields.io/badge/.NET-Multi--Targeted-purple.svg)](https://dotnet.microsoft.com/)
 [![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?logo=github)](https://github.com/Chris-Wolfgang/In-memory-Logger)
