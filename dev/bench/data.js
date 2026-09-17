@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1789611485642,
+  "lastUpdate": 1789612259176,
   "repoUrl": "https://github.com/Chris-Wolfgang/In-memory-Logger",
   "entries": {
     "BenchmarkDotNet": [
@@ -430,6 +430,54 @@ window.BENCHMARK_DATA = {
             "value": 7.231451327602069,
             "unit": "ns",
             "range": "± 0.0031297835444259138"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "210299580+Chris-Wolfgang@users.noreply.github.com",
+            "name": "Chris Wolfgang",
+            "username": "Chris-Wolfgang"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "604efd25b47f748d62d458bc7bce7150713c93e6",
+          "message": "ci: pin every workflow action to a commit SHA with an exact # vX.Y.Z comment (#204)\n\nRan repo-template's scripts/pin-actions.ps1 -PinTags: tag references become\nSHA pins and major-only comments (# v7) become the exact tag on the pinned\ncommit (# v7.0.1), so zizmor's ref-version-mismatch stops firing when the\nmajor tag moves on. Only the ref/comment text changed. Dependabot keeps the\nprecision it finds, so this stays converted.\n\n3 already exact, 39 line(s) rewritten, 39 tag reference(s), 0 pinned SHA(s) with no tag\n\nRefs Chris-Wolfgang/repo-template#447\n\nCo-authored-by: Chris Wolfgang <cwolfgan@ptd.net>\nCo-authored-by: Claude Opus 5 <noreply@anthropic.com>",
+          "timestamp": "2026-09-16T22:28:07-04:00",
+          "tree_id": "1018be6faf3b282c91d4d8c3bc35b37b47b4d03f",
+          "url": "https://github.com/Chris-Wolfgang/In-memory-Logger/commit/604efd25b47f748d62d458bc7bce7150713c93e6"
+        },
+        "date": 1789612256457,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogInformation",
+            "value": 196.73522996902466,
+            "unit": "ns",
+            "range": "± 64.19752842535559"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogBelowMinimum",
+            "value": 0.00020156241953372955,
+            "unit": "ns",
+            "range": "± 0.00034911635152893314"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.BeginScopeRoundtrip",
+            "value": 52.87987186511358,
+            "unit": "ns",
+            "range": "± 0.3896867199992643"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogEntriesIndexer",
+            "value": 7.147660911083221,
+            "unit": "ns",
+            "range": "± 0.002734661147115328"
           }
         ]
       }
