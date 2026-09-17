@@ -1,0 +1,15 @@
+{
+  "template": "Chris-Wolfgang/repo-template",
+  "commit": "a7bed5df70323fefbf791a093b7644086431b781",
+  "updated": "2026-09-17",
+  "placeholders": {
+    "GITHUB_OWNER": "Chris-Wolfgang",
+    "REPO_NAME": "In-memory-Logger",
+    "GITHUB_REPO_URL": "https://github.com/Chris-Wolfgang/In-memory-Logger",
+    "DOCS_URL": "https://chris-wolfgang.github.io/In-memory-Logger/",
+    "PROJECT_NAME": "Wolfgang.Extensions.Logging.InMemoryLogger",
+    "PACKAGE_NAME": "Wolfgang.Extensions.Logging.InMemoryLogger",
+    "LICENSE_TYPE": "MIT"
+  },
+  "note": "Written by scripts/setup.ps1 and scripts/upgrade.ps1; the template commit this repository last took template-managed files from, and the placeholder values setup used."
+}
