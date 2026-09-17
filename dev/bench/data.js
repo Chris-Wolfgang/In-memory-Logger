@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1786656699087,
+  "lastUpdate": 1789611485642,
   "repoUrl": "https://github.com/Chris-Wolfgang/In-memory-Logger",
   "entries": {
     "BenchmarkDotNet": [
@@ -382,6 +382,54 @@ window.BENCHMARK_DATA = {
             "value": 7.7162953068812685,
             "unit": "ns",
             "range": "± 0.08607153944414038"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "49699333+dependabot[bot]@users.noreply.github.com",
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "648432691df1eca84ed43a8d8de29c317f4bfecd",
+          "message": "Bump Meziantou.Analyzer and 4 others (#206)\n\nBumps Meziantou.Analyzer from 3.0.200 to 3.0.259\nBumps Microsoft.Extensions.DependencyInjection from 10.0.11 to 10.0.12\nBumps Microsoft.Extensions.Logging from 10.0.11 to 10.0.12\nBumps Microsoft.SourceLink.GitHub from 10.0.400 to 10.0.401\nBumps SonarAnalyzer.CSharp from 10.33.0.1635 to 10.34.0.3385\n\n---\nupdated-dependencies:\n- dependency-name: Meziantou.Analyzer\n  dependency-version: 3.0.259\n  dependency-type: direct:production\n  update-type: version-update:semver-patch\n  dependency-group: dotnet-dependencies\n- dependency-name: Microsoft.Extensions.DependencyInjection\n  dependency-version: 10.0.12\n  dependency-type: direct:production\n  update-type: version-update:semver-patch\n  dependency-group: dotnet-dependencies\n- dependency-name: Microsoft.Extensions.DependencyInjection\n  dependency-version: 10.0.12\n  dependency-type: direct:production\n  update-type: version-update:semver-patch\n  dependency-group: dotnet-dependencies\n- dependency-name: Microsoft.Extensions.DependencyInjection\n  dependency-version: 10.0.12\n  dependency-type: direct:production\n  update-type: version-update:semver-patch\n  dependency-group: dotnet-dependencies\n- dependency-name: Microsoft.Extensions.Logging\n  dependency-version: 10.0.12\n  dependency-type: direct:production\n  update-type: version-update:semver-patch\n  dependency-group: dotnet-dependencies\n- dependency-name: Microsoft.SourceLink.GitHub\n  dependency-version: 10.0.401\n  dependency-type: direct:production\n  update-type: version-update:semver-patch\n  dependency-group: dotnet-dependencies\n- dependency-name: SonarAnalyzer.CSharp\n  dependency-version: 10.34.0.3385\n  dependency-type: direct:production\n  update-type: version-update:semver-minor\n  dependency-group: dotnet-dependencies\n...\n\nSigned-off-by: dependabot[bot] <support@github.com>\nCo-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>",
+          "timestamp": "2026-09-16T22:15:14-04:00",
+          "tree_id": "5d25a04527177c7a4d05675b18b612f1ebb6ed43",
+          "url": "https://github.com/Chris-Wolfgang/In-memory-Logger/commit/648432691df1eca84ed43a8d8de29c317f4bfecd"
+        },
+        "date": 1789611483290,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogInformation",
+            "value": 197.78307755788168,
+            "unit": "ns",
+            "range": "± 65.4309724280654"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogBelowMinimum",
+            "value": 0.0001507041354974111,
+            "unit": "ns",
+            "range": "± 0.00026102721959226033"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.BeginScopeRoundtrip",
+            "value": 57.20723388592402,
+            "unit": "ns",
+            "range": "± 0.14578382118057656"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogEntriesIndexer",
+            "value": 7.231451327602069,
+            "unit": "ns",
+            "range": "± 0.0031297835444259138"
           }
         ]
       }
