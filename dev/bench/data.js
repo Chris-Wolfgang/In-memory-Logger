@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1789612259176,
+  "lastUpdate": 1790019608143,
   "repoUrl": "https://github.com/Chris-Wolfgang/In-memory-Logger",
   "entries": {
     "BenchmarkDotNet": [
@@ -478,6 +478,54 @@ window.BENCHMARK_DATA = {
             "value": 7.147660911083221,
             "unit": "ns",
             "range": "± 0.002734661147115328"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "210299580+Chris-Wolfgang@users.noreply.github.com",
+            "name": "Chris Wolfgang",
+            "username": "Chris-Wolfgang"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0d5b4b4e8bd3174cce9a5c956d896a11b2c7b9a3",
+          "message": "build(publicapi): record 2 shipped member(s) the analyzer never saw (#228)\n\nrepo-template#611 raises RS0016 (public symbol not declared in the PublicAPI\nfiles) from the blanket 'suggestion' to warning, which is an error in Release.\nUntil now only RS0017 fired, so the files could lose entries but never notice\nan addition. This records every member RS0016 reports today so the enforcing\n.editorconfig can land green on top.\n\nCo-authored-by: Claude Opus 5 <noreply@anthropic.com>",
+          "timestamp": "2026-09-21T15:36:32-04:00",
+          "tree_id": "11477edefa6ff69c71654c5656ded2966641762f",
+          "url": "https://github.com/Chris-Wolfgang/In-memory-Logger/commit/0d5b4b4e8bd3174cce9a5c956d896a11b2c7b9a3"
+        },
+        "date": 1790019606279,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogInformation",
+            "value": 212.5442754427592,
+            "unit": "ns",
+            "range": "± 105.10724869920647"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogBelowMinimum",
+            "value": 0.00023685147364934286,
+            "unit": "ns",
+            "range": "± 0.0004102387862082229"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.BeginScopeRoundtrip",
+            "value": 57.96632872025172,
+            "unit": "ns",
+            "range": "± 0.1610523181643525"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogEntriesIndexer",
+            "value": 14.701087127129236,
+            "unit": "ns",
+            "range": "± 0.04996457207460781"
           }
         ]
       }
