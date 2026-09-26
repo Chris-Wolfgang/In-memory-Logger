@@ -1,7 +1,4 @@
-using System;
 using System.Collections.Concurrent;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
 namespace Wolfgang.Extensions.Logging.InMemoryLogger.Tests.Integration;
@@ -132,13 +129,14 @@ public class ConcurrentProducersTests
             capacity: 10_000
         );
 
-        using var cts = new System.Threading.CancellationTokenSource();
+        using var cts = new CancellationTokenSource();
+        var token = cts.Token;
         var producer = Task.Run(() =>
         {
             var i = 0;
-            while (!cts.IsCancellationRequested)
+            while (!token.IsCancellationRequested)
             {
-                sut.Log(LogLevel.Information, new EventId(0), i++, null, (s, _) => s.ToString()!);
+                sut.Log(LogLevel.Information, new EventId(0), i++, null, (s, _) => s.ToString());
             }
         });
 
