@@ -16,7 +16,7 @@ public class InMemoryLogger : ILogger
 {
 	private readonly List<LogEntry<object>> _logEntries;
 #if NET9_0_OR_GREATER
-	private readonly System.Threading.Lock _lock = new();
+	private readonly Lock _lock = new();
 #else
 	private readonly object _lock = new object();
 #endif
@@ -86,7 +86,7 @@ public class InMemoryLogger : ILogger
 			eventId,
 			state!,
 			exception,
-			(o, ex) => formatter((TState)o!, ex)
+			(o, ex) => formatter((TState)o, ex)
 		);
 
 		lock (_lock)
