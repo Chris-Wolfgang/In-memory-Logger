@@ -1,4 +1,7 @@
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Xunit;
 
 namespace Wolfgang.Extensions.Logging.InMemoryLogger.Tests.Integration;
 
