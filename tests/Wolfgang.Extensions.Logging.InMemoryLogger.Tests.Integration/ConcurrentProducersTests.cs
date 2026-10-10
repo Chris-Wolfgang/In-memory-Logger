@@ -17,6 +17,11 @@ namespace Wolfgang.Extensions.Logging.InMemoryLogger.Tests.Integration;
 /// </summary>
 public class ConcurrentProducersTests
 {
+    // Shared by the producer tests that log a plain string state.
+    private static string Identity(string state, Exception? _) => state;
+
+
+
     [Fact]
     public async Task Log_when_called_concurrently_from_multiple_tasks_captures_every_entry()
     {
@@ -44,7 +49,7 @@ public class ConcurrentProducersTests
                         new EventId(producerId, "concurrent"),
                         $"p{producerId}:{i}",
                         exception: null,
-                        formatter: static (s, _) => s
+                        formatter: Identity
                     );
                 }
             }))
@@ -90,7 +95,7 @@ public class ConcurrentProducersTests
                         new EventId(producerId, "p"),
                         $"p{producerId}:{i}",
                         exception: null,
-                        formatter: static (s, _) => s
+                        formatter: Identity
                     );
                 }
             }))
