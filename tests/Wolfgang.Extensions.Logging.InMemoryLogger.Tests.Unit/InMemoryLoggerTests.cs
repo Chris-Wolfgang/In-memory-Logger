@@ -79,7 +79,7 @@ public class InMemoryLoggerTests
             new EventId(1, "TestEvent"),
             "Test message",
             exception: null,
-            (state, _) => state
+            TestFormatters.Identity
         );
 
         Assert.Single(sut.LogEntries);
