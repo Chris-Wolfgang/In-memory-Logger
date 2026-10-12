@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1791831133581,
+  "lastUpdate": 1791834909490,
   "repoUrl": "https://github.com/Chris-Wolfgang/In-memory-Logger",
   "entries": {
     "BenchmarkDotNet": [
@@ -622,6 +622,54 @@ window.BENCHMARK_DATA = {
             "value": 17.162005970875423,
             "unit": "ns",
             "range": "± 0.008115302231394042"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "210299580+Chris-Wolfgang@users.noreply.github.com",
+            "name": "Chris Wolfgang",
+            "username": "Chris-Wolfgang"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a596d434724db189baa9211b7c2e1a421b2a055a",
+          "message": "refactor: clear InspectCode findings in library source (#282)\n\n- InMemoryLogger.cs: drop the redundant `System.Threading.` qualifier on\n  the NET9+ `Lock` field (`using System.Threading;` is already present).\n- InMemoryLogger.cs: drop the redundant `!` on the formatter-lambda\n  argument; LogEntry<object>'s formatter parameter is non-nullable object.\n- InMemoryLoggerBuilderExtensions.cs: remove the unused\n  `using Microsoft.Extensions.DependencyInjection;` (ServiceCollection is\n  only named inside an XML-doc <code> sample, which is not resolved).\n\nFixes code-scanning alerts #28, #30, #37, #48.\n\nCo-authored-by: Claude Opus 5.5 <noreply@anthropic.com>",
+          "timestamp": "2026-10-12T15:50:52-04:00",
+          "tree_id": "469b336858c1059bef692f5945862f81119bb1c2",
+          "url": "https://github.com/Chris-Wolfgang/In-memory-Logger/commit/a596d434724db189baa9211b7c2e1a421b2a055a"
+        },
+        "date": 1791834907129,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogInformation",
+            "value": 258.8400438626607,
+            "unit": "ns",
+            "range": "± 119.03495332798056"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogBelowMinimum",
+            "value": 0.021658590684334438,
+            "unit": "ns",
+            "range": "± 0.01339416812535486"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.BeginScopeRoundtrip",
+            "value": 61.61509398619334,
+            "unit": "ns",
+            "range": "± 0.16029711909725589"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogEntriesIndexer",
+            "value": 16.389825244744618,
+            "unit": "ns",
+            "range": "± 0.25594457998374626"
           }
         ]
       }
