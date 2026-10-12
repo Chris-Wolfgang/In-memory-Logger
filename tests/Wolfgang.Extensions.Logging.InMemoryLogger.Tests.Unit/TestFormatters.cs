@@ -1,3 +1,5 @@
+using System;
+
 namespace Wolfgang.Extensions.Logging.InMemoryLogger.Tests.Unit;
 
 /// <summary>

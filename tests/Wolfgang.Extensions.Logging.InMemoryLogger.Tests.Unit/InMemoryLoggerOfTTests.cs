@@ -1,4 +1,6 @@
+using System;
 using Microsoft.Extensions.Logging;
+using Xunit;
 
 namespace Wolfgang.Extensions.Logging.InMemoryLogger.Tests.Unit;
 
