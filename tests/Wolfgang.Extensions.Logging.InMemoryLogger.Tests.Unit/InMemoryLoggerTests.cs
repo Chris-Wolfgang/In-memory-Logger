@@ -1,4 +1,6 @@
+using System;
 using Microsoft.Extensions.Logging;
+using Xunit;
 
 namespace Wolfgang.Extensions.Logging.InMemoryLogger.Tests.Unit;
 
@@ -79,7 +81,7 @@ public class InMemoryLoggerTests
             new EventId(1, "TestEvent"),
             "Test message",
             exception: null,
-            (state, _) => state
+            TestFormatters.Identity
         );
 
         Assert.Single(sut.LogEntries);

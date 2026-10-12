@@ -1,4 +1,6 @@
+using System;
 using Microsoft.Extensions.Logging;
+using Xunit;
 
 namespace Wolfgang.Extensions.Logging.InMemoryLogger.Tests.Unit;
 
@@ -32,7 +34,7 @@ public class InMemoryLoggerOfTTests
             new EventId(1, "TestEvent"),
             "Test message",
             exception: null,
-            (state, _) => state
+            TestFormatters.Identity
         );
 
         Assert.Single(sut.LogEntries);
@@ -42,7 +44,7 @@ public class InMemoryLoggerOfTTests
         Assert.Equal("TestEvent", logEntry.EventId.Name);
 
         // Produce the formatted message the same way the logger would
-        var formatted = logEntry.Formatter.Invoke(logEntry.State!, logEntry.Exception);
+        var formatted = logEntry.Formatter.Invoke(logEntry.State, logEntry.Exception);
         Assert.Equal("Test message", formatted);
 
         Assert.Null(logEntry.Exception);
@@ -101,7 +103,7 @@ public class InMemoryLoggerOfTTests
     [Fact]
     public void IsEnabled_when_logLevel_is_None_returns_false()
     {
-        var sut = new InMemoryLogger<InMemoryLoggerOfTTests>(LogLevel.Trace);
+        var sut = new InMemoryLogger<InMemoryLoggerOfTTests>();
 
         Assert.False(sut.IsEnabled(LogLevel.None));
     }
