@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1791678817485,
+  "lastUpdate": 1791831133581,
   "repoUrl": "https://github.com/Chris-Wolfgang/In-memory-Logger",
   "entries": {
     "BenchmarkDotNet": [
@@ -574,6 +574,54 @@ window.BENCHMARK_DATA = {
             "value": 17.175694783528645,
             "unit": "ns",
             "range": "± 0.0020547563874452465"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "210299580+Chris-Wolfgang@users.noreply.github.com",
+            "name": "Chris Wolfgang",
+            "username": "Chris-Wolfgang"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "bfe2df31d6a213518c3be1cfa3e600f6d1a5272f",
+          "message": "chore(benchmarks): remove unused using directive (#280)\n\n`using System;` in InMemoryLoggerBenchmarks.cs is unused; the project\ntargets net10.0 only with ImplicitUsings disabled, so this is not a\nmulti-TFM artifact.\n\nFixes code-scanning alert #32 (RedundantUsingDirective).\n\nCo-authored-by: Claude Opus 5.5 <noreply@anthropic.com>",
+          "timestamp": "2026-10-12T14:48:58-04:00",
+          "tree_id": "256199bfcba5407afee7fbffe383bc3541edaf04",
+          "url": "https://github.com/Chris-Wolfgang/In-memory-Logger/commit/bfe2df31d6a213518c3be1cfa3e600f6d1a5272f"
+        },
+        "date": 1791831131084,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogInformation",
+            "value": 232.83424496650696,
+            "unit": "ns",
+            "range": "± 106.60688883493854"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogBelowMinimum",
+            "value": 0.00009761999050776164,
+            "unit": "ns",
+            "range": "± 0.00016908278339383467"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.BeginScopeRoundtrip",
+            "value": 61.032963951428734,
+            "unit": "ns",
+            "range": "± 0.4720295988461637"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogEntriesIndexer",
+            "value": 17.162005970875423,
+            "unit": "ns",
+            "range": "± 0.008115302231394042"
           }
         ]
       }
