@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1791834909490,
+  "lastUpdate": 1791836123981,
   "repoUrl": "https://github.com/Chris-Wolfgang/In-memory-Logger",
   "entries": {
     "BenchmarkDotNet": [
@@ -670,6 +670,54 @@ window.BENCHMARK_DATA = {
             "value": 16.389825244744618,
             "unit": "ns",
             "range": "± 0.25594457998374626"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "210299580+Chris-Wolfgang@users.noreply.github.com",
+            "name": "Chris Wolfgang",
+            "username": "Chris-Wolfgang"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6f5dd8316a6b64efcfd0f549fda4fb289981221d",
+          "message": "build(publicapi): record nullability annotations in PublicAPI.Shipped.txt (#283)\n\nThe file declares #nullable enable but 12 entries lacked their `!`\nannotations, so PublicApiAnalyzers reported RS0036 on every TFM\n(net462, netstandard2.0, netstandard2.1, net8.0, net10.0). Entries now\nmatch the annotated signatures the analyzer reports.\n\nFixes code-scanning alerts #10-#21 (RS0036).\n\nCo-authored-by: Claude Opus 5.5 <noreply@anthropic.com>",
+          "timestamp": "2026-10-12T16:12:31-04:00",
+          "tree_id": "764706846aecff0afb1a21766fa694ee2afce6ee",
+          "url": "https://github.com/Chris-Wolfgang/In-memory-Logger/commit/6f5dd8316a6b64efcfd0f549fda4fb289981221d"
+        },
+        "date": 1791836122862,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogInformation",
+            "value": 197.22412474950156,
+            "unit": "ns",
+            "range": "± 64.9387695408566"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogBelowMinimum",
+            "value": 0.0014088228344917297,
+            "unit": "ns",
+            "range": "± 0.0024401527282028753"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.BeginScopeRoundtrip",
+            "value": 56.223945677280426,
+            "unit": "ns",
+            "range": "± 0.7340551893760517"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogEntriesIndexer",
+            "value": 7.132529869675636,
+            "unit": "ns",
+            "range": "± 0.003684538146871204"
           }
         ]
       }
