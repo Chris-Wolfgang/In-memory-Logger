@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1791836123981,
+  "lastUpdate": 1791837850846,
   "repoUrl": "https://github.com/Chris-Wolfgang/In-memory-Logger",
   "entries": {
     "BenchmarkDotNet": [
@@ -718,6 +718,54 @@ window.BENCHMARK_DATA = {
             "value": 7.132529869675636,
             "unit": "ns",
             "range": "± 0.003684538146871204"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "210299580+Chris-Wolfgang@users.noreply.github.com",
+            "name": "Chris Wolfgang",
+            "username": "Chris-Wolfgang"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "71246753c1ece95235d619dfdf81d094b772950d",
+          "message": "chore: explicit usings on every TFM (no implicit/global usings in multi-TFM projects) (#285)\n\n* chore: explicit usings on every TFM (no implicit/global usings in multi-TFM projects)\n\nTurn off ImplicitUsings in the multi-target library and test projects,\ndrop the global <Using Include=\"Xunit\" />, and add the using directives\neach test file needs. With implicit usings on, InspectCode (one modern\nTFM slice) flags usings that net462/netstandard2.x need as redundant.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\n\n* chore: explicit usings in the test files main added after this branch\n\nConcurrentProducersTests.cs and TestFormatters.cs landed on main relying on\nimplicit usings, which this PR turns off. Adds the using System; they need.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\n\n---------\n\nCo-authored-by: Claude Opus 5.5 <noreply@anthropic.com>",
+          "timestamp": "2026-10-12T16:41:24-04:00",
+          "tree_id": "582dc1e7d398d04b182424de130def0d4870a21f",
+          "url": "https://github.com/Chris-Wolfgang/In-memory-Logger/commit/71246753c1ece95235d619dfdf81d094b772950d"
+        },
+        "date": 1791837848737,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogInformation",
+            "value": 205.23521645863852,
+            "unit": "ns",
+            "range": "± 64.69669955354081"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogBelowMinimum",
+            "value": 0,
+            "unit": "ns",
+            "range": "± 0"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.BeginScopeRoundtrip",
+            "value": 57.38345515727997,
+            "unit": "ns",
+            "range": "± 0.10483865365479125"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogEntriesIndexer",
+            "value": 8.619762316346169,
+            "unit": "ns",
+            "range": "± 0.01409282811239649"
           }
         ]
       }
