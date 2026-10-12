@@ -1,5 +1,3 @@
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
 namespace Wolfgang.Extensions.Logging.InMemoryLogger.Tests.Integration;
@@ -15,7 +13,7 @@ public class AsyncScopeTests
     [Fact]
     public async Task BeginScope_when_used_across_await_keeps_the_scope_visible()
     {
-        var sut = new InMemoryLogger("async.scope.basic", LogLevel.Trace);
+        var sut = new InMemoryLogger("async.scope.basic");
 
         using (sut.BeginScope("outer-scope"))
         {
@@ -35,7 +33,7 @@ public class AsyncScopeTests
     [Fact]
     public async Task BeginScope_when_used_across_concurrent_awaits_keeps_each_branch_isolated()
     {
-        var sut = new InMemoryLogger("async.scope.isolated", LogLevel.Trace);
+        var sut = new InMemoryLogger("async.scope.isolated");
 
         // Two parallel async branches each open their own scope. They must
         // not see each other's scope state.
@@ -71,7 +69,7 @@ public class AsyncScopeTests
     [Fact]
     public async Task BeginScope_when_nested_visible_in_inner_scope_only_outer_after_inner_disposes()
     {
-        var sut = new InMemoryLogger("async.scope.nested", LogLevel.Trace);
+        var sut = new InMemoryLogger("async.scope.nested");
 
         using (sut.BeginScope("outer"))
         {
@@ -97,7 +95,7 @@ public class AsyncScopeTests
     [Fact]
     public async Task Log_when_called_inside_a_scope_after_await_records_the_entry()
     {
-        var sut = new InMemoryLogger("async.scope.logged", LogLevel.Trace);
+        var sut = new InMemoryLogger("async.scope.logged");
 
         using (sut.BeginScope("op-42"))
         {
