@@ -139,6 +139,10 @@ pwsh ./scripts/build-pr.ps1
 
 
 
+## 🔐 Verify the Build
+
+To check a published package against its source, see [Verifying the Build](docs/REPRODUCIBLE-BUILD.md) and the release provenance steps in [SECURITY.md](SECURITY.md#verifying-a-release).
+
 ## 🤝 Contributing
 
 Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for:
