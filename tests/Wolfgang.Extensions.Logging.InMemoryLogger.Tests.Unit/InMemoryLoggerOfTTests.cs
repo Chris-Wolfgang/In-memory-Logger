@@ -92,7 +92,7 @@ public class InMemoryLoggerOfTTests
     [Fact]
     public void Log_when_MinimumLogLevel_is_Trace_adds_entry()
     {
-        var sut = new InMemoryLogger<InMemoryLoggerOfTTests>(LogLevel.Trace);
+        var sut = new InMemoryLogger<InMemoryLoggerOfTTests>();
 
         sut.LogTrace("Test message");
 
