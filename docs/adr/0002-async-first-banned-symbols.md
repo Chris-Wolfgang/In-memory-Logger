@@ -5,6 +5,9 @@
 
 ## Context
 
+The file's header says it enforces an async-first policy; the reasons below are the usual ones for
+that policy, not a record of a specific incident in this repository.
+
 The library is used from async test and application code. Blocking calls such as `Task.Wait`,
 `Task<T>.Result` and `GetAwaiter().GetResult()` can deadlock under a synchronisation context and
 hide thread-pool starvation. Other APIs (`BinaryFormatter`, `WebClient`, `DateTime.Now`, synchronous
@@ -14,11 +17,11 @@ file I/O) have safer or async replacements.
 
 `BannedSymbols.txt` at the repository root lists those APIs, each with the preferred alternative as
 its message. `Directory.Build.props` includes it as an `AdditionalFiles` item so the
-BannedApiAnalyzers report any use as a build diagnostic, and warnings are treated as errors.
+BannedApiAnalyzers report any use as a build diagnostic; in Release builds warnings are treated as errors.
 
 ## Consequences
 
-- A banned call fails the build with a message naming the replacement.
+- A banned call fails the Release build with a message naming the replacement.
 - Code that legitimately needs a banned API (for example a test that must block) needs a narrow,
   commented exclusion rather than removing the entry.
 - The list must be maintained by hand as new blocking APIs are identified.
