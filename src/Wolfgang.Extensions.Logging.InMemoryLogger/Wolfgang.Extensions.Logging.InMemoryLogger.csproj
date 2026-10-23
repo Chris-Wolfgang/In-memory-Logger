@@ -20,6 +20,14 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<SignAssembly>False</SignAssembly>
+
+		<!-- PackageValidation: pack fails if the package introduces a binary-breaking change
+		     against the last published version (ApiCompat per target framework). Intentional
+		     breaks are waived in CompatibilitySuppressions.xml with the specific rule ID and
+		     target. Keep the baseline at the last published version and bump it in the release
+		     PR that ships the next one. -->
+		<EnablePackageValidation>true</EnablePackageValidation>
+		<PackageValidationBaselineVersion>0.1.3</PackageValidationBaselineVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
