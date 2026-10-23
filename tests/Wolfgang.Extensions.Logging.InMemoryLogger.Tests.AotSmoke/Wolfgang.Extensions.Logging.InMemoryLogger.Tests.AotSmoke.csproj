@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+
+    <!-- The point of this project: prove the library survives Native AOT + trimming end to end.
+         If an AOT-hostile pattern (reflection on names the trimmer cannot see, dynamic generic
+         instantiation, runtime code generation) gets in, `dotnet publish` here fails with an
+         IL2xxx/IL3xxx warning (an error under warnings-as-errors) or the published binary
+         faults when it runs (#122). -->
+    <PublishAot>true</PublishAot>
+    <PublishTrimmed>true</PublishTrimmed>
+    <StripSymbols>true</StripSymbols>
+    <InvariantGlobalization>true</InvariantGlobalization>
+
+    <!-- Not packed and not a test project: publish, then execute. pr.yaml and
+         scripts/build-pr.ps1 skip it in their test step (no IsTestProject / Test SDK). -->
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Wolfgang.Extensions.Logging.InMemoryLogger\Wolfgang.Extensions.Logging.InMemoryLogger.csproj" />
+  </ItemGroup>
+
+</Project>
