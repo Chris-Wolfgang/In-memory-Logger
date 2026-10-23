@@ -1,0 +1,61 @@
+name: AOT smoke
+
+# Trim / Native AOT compatibility verification (#122).
+#
+# Publishes tests/Wolfgang.Extensions.Logging.InMemoryLogger.Tests.AotSmoke, a console-app
+# consumer with <PublishAot>true</PublishAot> and <PublishTrimmed>true</PublishTrimmed> that
+# references the src library and calls every public member through the Microsoft.Extensions.Logging
+# APIs a real consumer uses, then runs the native binary. An AOT-hostile pattern (dynamic generic
+# instantiation, reflection on names the trimmer cannot see, runtime code generation) fails the
+# publish (IL2xxx / IL3xxx warnings are errors) or the run.
+#
+# Linux only: Native AOT needs a platform linker, which ubuntu-latest has and a Windows box
+# without the C++ workload does not.
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'tests/Wolfgang.Extensions.Logging.InMemoryLogger.Tests.AotSmoke/**'
+      - 'Directory.Build.props'
+      - '.github/workflows/aot-smoke.yaml'
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: aot-smoke-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  aot-smoke:
+    name: PublishAot + run
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68  # v6.0.0
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Publish AOT smoke consumer
+        run: |
+          dotnet publish tests/Wolfgang.Extensions.Logging.InMemoryLogger.Tests.AotSmoke/Wolfgang.Extensions.Logging.InMemoryLogger.Tests.AotSmoke.csproj \
+            -c Release \
+            -r linux-x64 \
+            --self-contained \
+            -o "$RUNNER_TEMP/aot-out"
+
+      - name: Run AOT-published binary
+        run: |
+          set -e
+          "$RUNNER_TEMP/aot-out/Wolfgang.Extensions.Logging.InMemoryLogger.Tests.AotSmoke"
+          echo "AOT smoke exited cleanly - the library survives Native AOT + trimming."
