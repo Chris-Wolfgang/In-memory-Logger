@@ -23,6 +23,7 @@ public class InMemoryLoggerBuilderExtensionsTests
     }
 
 
+
     [Fact]
     public void AddInMemoryLogger_when_builder_is_null_throws_ArgumentNullException()
     {
@@ -34,6 +35,7 @@ public class InMemoryLoggerBuilderExtensionsTests
         );
         Assert.Equal("builder", ex.ParamName);
     }
+
 
 
     [Fact]
