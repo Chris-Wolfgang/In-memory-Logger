@@ -30,6 +30,16 @@
 		<PackageValidationBaselineVersion>0.1.3</PackageValidationBaselineVersion>
 	</PropertyGroup>
 
+	<!-- Trimming and Native AOT: the library uses no reflection, dynamic code or runtime code
+	     generation, so it is annotated as safe for both. IsAotCompatible turns on the trim,
+	     single-file and AOT analyzers, so a change that is not trim/AOT-safe fails the Release
+	     build (warnings are errors). Only net8.0+ supports these properties; on net462 and
+	     netstandard2.x they would only raise NETSDK1210. -->
+	<PropertyGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
+		<IsAotCompatible>true</IsAotCompatible>
+		<IsTrimmable>true</IsTrimmable>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<None Include="..\..\README.md" Pack="true" PackagePath="\" />
 	</ItemGroup>
