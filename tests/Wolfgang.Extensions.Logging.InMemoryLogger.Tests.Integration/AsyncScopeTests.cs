@@ -33,6 +33,7 @@ public class AsyncScopeTests
     }
 
 
+
     [Fact]
     public async Task BeginScope_when_used_across_concurrent_awaits_keeps_each_branch_isolated()
     {
@@ -69,6 +70,7 @@ public class AsyncScopeTests
     }
 
 
+
     [Fact]
     public async Task BeginScope_when_nested_visible_in_inner_scope_only_outer_after_inner_disposes()
     {
@@ -93,6 +95,7 @@ public class AsyncScopeTests
 
         Assert.Empty(sut.Scopes);
     }
+
 
 
     [Fact]
