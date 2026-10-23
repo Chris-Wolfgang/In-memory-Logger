@@ -87,7 +87,7 @@ public class InMemoryLoggerTests
             new EventId(1, "TestEvent"),
             "Test message",
             exception: null,
-            TestFormatters.Identity
+            static (s, _) => s
         );
 
         Assert.Single(sut.LogEntries);
@@ -95,6 +95,7 @@ public class InMemoryLoggerTests
         Assert.Equal(LogLevel.Information, logEntry.LogLevel);
         Assert.Equal("TestCategory", logEntry.Category);
         Assert.Equal(1, logEntry.EventId.Id);
+        Assert.Equal("Test message", logEntry.Formatter(logEntry.State, logEntry.Exception));
     }
 
 
@@ -174,5 +175,36 @@ public class InMemoryLoggerTests
         }
 
         Assert.Empty(sut.Scopes);
+    }
+
+
+
+    [Fact]
+    public void Log_when_the_same_formatter_is_reused_stores_the_same_adapter()
+    {
+        var sut = new InMemoryLogger("TestCategory");
+        Func<string, Exception?, string> formatter = static (s, _) => s;
+
+        sut.Log(LogLevel.Information, new EventId(1), "first", exception: null, formatter);
+        sut.Log(LogLevel.Information, new EventId(2), "second", exception: null, formatter);
+
+        var entries = sut.LogEntries;
+        Assert.Same(entries[0].Formatter, entries[1].Formatter);
+    }
+
+
+
+    [Fact]
+    public void Log_when_a_different_formatter_is_passed_each_entry_formats_with_its_own_formatter()
+    {
+        var sut = new InMemoryLogger("TestCategory");
+
+        sut.Log(LogLevel.Information, new EventId(1), "state", exception: null, static (s, _) => "upper:" + s.ToUpperInvariant());
+        sut.Log(LogLevel.Information, new EventId(2), "state", exception: null, static (s, _) => "lower:" + s);
+
+        var entries = sut.LogEntries;
+        Assert.NotSame(entries[0].Formatter, entries[1].Formatter);
+        Assert.Equal("upper:STATE", entries[0].Formatter(entries[0].State, entries[0].Exception));
+        Assert.Equal("lower:state", entries[1].Formatter(entries[1].State, entries[1].Exception));
     }
 }

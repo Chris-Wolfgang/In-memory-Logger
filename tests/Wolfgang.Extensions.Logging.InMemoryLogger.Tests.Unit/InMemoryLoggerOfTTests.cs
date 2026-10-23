@@ -36,7 +36,7 @@ public class InMemoryLoggerOfTTests
             new EventId(1, "TestEvent"),
             "Test message",
             exception: null,
-            TestFormatters.Identity
+            static (s, _) => s
         );
 
         Assert.Single(sut.LogEntries);
