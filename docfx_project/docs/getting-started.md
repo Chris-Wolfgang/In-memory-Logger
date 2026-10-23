@@ -52,29 +52,34 @@ var logger = new InMemoryLogger(
     capacity: 32);
 ```
 
-To register with the standard `ILoggerFactory`:
+To register with the standard `ILoggerFactory`, create an `InMemoryLoggerProvider` and pass it to `AddInMemoryLogger`; the provider then holds the entries of every logger the factory creates:
 
 ```csharp
-using var loggerFactory = LoggerFactory.Create(b => b.AddInMemoryLogger());
+var provider = new InMemoryLoggerProvider();
+using var loggerFactory = LoggerFactory.Create(b => b.AddInMemoryLogger(provider));
+
 var logger = loggerFactory.CreateLogger<MyService>();
+logger.LogInformation("processing");
+
+Assert.Single(provider.LogEntries);
 ```
 
-State passed to `BeginScope` is captured in the `Scopes` property:
+`Scopes` is the live scope stack of the logger, outermost first. Assert on it while the scope is open; once the `using` block disposes the scope it is removed again:
 
 ```csharp
 using (logger.BeginScope(new { CorrelationId = "abc-123" }))
 {
-    logger.LogInformation("processing");
+    Assert.Single(logger.Scopes);
 }
 
-Assert.Single(logger.Scopes);
+Assert.Empty(logger.Scopes);
 ```
 
 ## Next Steps
 
 - Explore the [API Reference](https://chris-wolfgang.github.io/In-memory-Logger/versions/latest/api/Wolfgang.Extensions.Logging.InMemoryLogger.html) for detailed documentation
 - Read the [Introduction](introduction.md) to learn more about Wolfgang.Extensions.Logging.InMemoryLogger
-- Check out example projects in the [GitHub repository](https://github.com/Chris-Wolfgang/In-memory-Logger)
+- Browse the unit and integration tests in the [GitHub repository](https://github.com/Chris-Wolfgang/In-memory-Logger/tree/main/tests) for more usage examples
 
 ## Common Issues
 
@@ -84,7 +89,7 @@ The `InMemoryLogger` constructor takes a `minLogLevel` (defaults to `LogLevel.Tr
 
 ### `Scopes` is empty after `BeginScope`
 
-The scope must be active *while* the log call runs — the `using` block has to wrap the `Log*` call, not just the `BeginScope` invocation. The library captures scope state when an entry is appended, not when the scope opens.
+`Scopes` reflects the scopes that are open *right now* on the current async flow; it is not recorded into the log entries. Read it inside the `using` block. After the scope is disposed (or from a different async flow, which has its own scope stack) it no longer appears.
 
 ### Enumerating `LogEntries` from another thread
 
