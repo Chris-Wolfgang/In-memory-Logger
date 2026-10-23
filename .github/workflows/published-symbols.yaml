@@ -1,0 +1,160 @@
+name: Published Symbols
+
+# Verifies the symbols of what is actually PUBLISHED, not what CI just built (#123).
+#
+# sourcelink.yaml checks the PDBs of a fresh build. A release can still go wrong after that:
+# the .snupkg may not reach the NuGet symbol server, may be missing a target framework, or may
+# hold a PDB that does not belong to the published DLL. In each case a consumer who steps into
+# the library in a debugger silently gets decompiled code. This workflow downloads the latest
+# stable version the way a debugger would (the .nupkg from the NuGet feed, the .snupkg from the
+# NuGet symbol endpoint) and checks, for every target framework:
+#
+#   1. the .snupkg contains a PDB for it,
+#   2. the DLL's CodeView GUID equals the PDB's id (this is how a debugger pairs them), and
+#   3. `dotnet sourcelink test` succeeds: every source document in the PDB resolves to the file on
+#      GitHub at the embedded commit, with a matching checksum.
+#
+# It does not drive a debugger, and it does not exercise an embedded-PDB fallback (the package
+# ships portable PDBs in the .snupkg, not embedded ones).
+#
+# Runs weekly and on demand. It is deliberately not triggered by a release: the NuGet symbol
+# server can lag the feed by several minutes, and a check that races it would report a false
+# failure. Not a required check.
+
+on:
+  schedule:
+    - cron: '47 7 * * 1'   # Mondays at 07:47 UTC
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Package version to check (default: the latest stable version on nuget.org)'
+        type: string
+        required: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: published-symbols-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  published-symbols:
+    name: Verify symbols of the published package
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      PACKAGE_ID: Wolfgang.Extensions.Logging.InMemoryLogger
+      INPUT_VERSION: ${{ inputs.version }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore CI tools (sourcelink)
+        # Pinned in .config/dotnet-tools.json; never installed unversioned.
+        run: dotnet tool restore
+
+      - name: Download the published package and its symbols
+        id: download
+        run: |
+          set -euo pipefail
+          id_lower="${PACKAGE_ID,,}"
+          version="${INPUT_VERSION:-}"
+          if [ -z "$version" ]; then
+            version=$(curl -fsS "https://api.nuget.org/v3-flatcontainer/${id_lower}/index.json" \
+              | python3 -c "import sys,json;v=[x for x in json.load(sys.stdin)['versions'] if '-' not in x];print(v[-1])")
+          fi
+          echo "Checking ${PACKAGE_ID} ${version}"
+          mkdir -p published/dll published/snupkg
+          curl -fsSL -o published/pkg.nupkg  "https://api.nuget.org/v3-flatcontainer/${id_lower}/${version}/${id_lower}.${version}.nupkg"
+          curl -fsSL -o published/pkg.snupkg "https://www.nuget.org/api/v2/symbolpackage/${PACKAGE_ID}/${version}"
+          python3 -m zipfile -e published/pkg.nupkg  published/dll
+          python3 -m zipfile -e published/pkg.snupkg published/snupkg
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+
+      - name: Every target framework has a PDB whose id matches its DLL
+        run: |
+          set -euo pipefail
+          # A single-file .NET 10 program (no project file): reads each lib/<tfm> DLL's CodeView GUID
+          # and the id of the PDB with the same name from the symbol package, and fails on any mismatch
+          # or missing PDB.
+          cat > check-symbols.cs <<'CS'
+          using System;
+          using System.IO;
+          using System.Linq;
+          using System.Reflection.Metadata;
+          using System.Reflection.PortableExecutable;
+
+          var root = args[0];
+          var failures = 0;
+          var libs = Directory.GetDirectories(Path.Combine(root, "dll", "lib"));
+          if (libs.Length == 0)
+          {
+              Console.WriteLine("::error::The published package has no lib/<tfm> folders.");
+              return 1;
+          }
+
+          foreach (var lib in libs.OrderBy(x => x))
+          {
+              var tfm = Path.GetFileName(lib);
+              foreach (var dllPath in Directory.GetFiles(lib, "*.dll"))
+              {
+                  var name = Path.GetFileNameWithoutExtension(dllPath);
+                  var pdbPath = Path.Combine(root, "snupkg", "lib", tfm, name + ".pdb");
+                  if (!File.Exists(pdbPath))
+                  {
+                      Console.WriteLine($"::error::{tfm}/{name}: the symbol package has no PDB for this DLL.");
+                      failures++;
+                      continue;
+                  }
+
+                  using var dll = new PEReader(File.OpenRead(dllPath));
+                  var codeView = dll.ReadDebugDirectory().FirstOrDefault(e => e.Type == DebugDirectoryEntryType.CodeView);
+                  if (codeView.Type != DebugDirectoryEntryType.CodeView)
+                  {
+                      Console.WriteLine($"::error::{tfm}/{name}: the DLL has no CodeView debug entry, so no debugger can find its symbols.");
+                      failures++;
+                      continue;
+                  }
+
+                  var dllGuid = dll.ReadCodeViewDebugDirectoryData(codeView).Guid;
+                  using var pdb = MetadataReaderProvider.FromPortablePdbStream(File.OpenRead(pdbPath));
+                  var pdbGuid = new Guid(pdb.GetMetadataReader().DebugMetadataHeader!.Id.Take(16).ToArray());
+                  var match = dllGuid == pdbGuid;
+                  Console.WriteLine($"{tfm,-16} {name}: DLL {dllGuid}  PDB {pdbGuid}  {(match ? "match" : "MISMATCH")}");
+                  if (!match)
+                  {
+                      Console.WriteLine($"::error::{tfm}/{name}: the PDB in the symbol package does not belong to the published DLL.");
+                      failures++;
+                  }
+              }
+          }
+
+          return failures == 0 ? 0 : 1;
+          CS
+          dotnet run check-symbols.cs -- "$PWD/published"
+
+      - name: SourceLink resolves for every published PDB
+        run: |
+          set -euo pipefail
+          count=0
+          while IFS= read -r pdb; do
+            echo "== sourcelink test ${pdb#published/snupkg/} =="
+            if ! dotnet sourcelink test "$pdb"; then
+              echo "::error::SourceLink does not resolve for the published PDB ${pdb#published/snupkg/}: stepping into the library would show decompiled code."
+              exit 1
+            fi
+            count=$((count + 1))
+          done < <(find published/snupkg -name '*.pdb' | sort)
+          if [ "$count" -eq 0 ]; then
+            echo "::error::The symbol package contains no PDB files."
+            exit 1
+          fi
+          echo "SourceLink resolved for ${count} published PDB(s)."
