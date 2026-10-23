@@ -32,6 +32,19 @@ public class InMemoryLogger : ILogger
     /// <param name="capacity">The initial capacity of the log entries collection.</param>
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="category"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException">Thrown when capacity is less than 1.</exception>
+    /// <example>
+    /// <code>
+    /// using Microsoft.Extensions.Logging;
+    /// using Wolfgang.Extensions.Logging.InMemoryLogger;
+    ///
+    /// var logger = new InMemoryLogger("MyApp.Orders", LogLevel.Information, capacity: 32);
+    /// logger.LogInformation("Order {Id} placed", 42);
+    /// logger.LogDebug("below the minimum level, not captured");
+    ///
+    /// var captured = logger.LogEntries.Count; // 1
+    /// var level = logger.LogEntries[0].LogLevel; // LogLevel.Information
+    /// </code>
+    /// </example>
     public InMemoryLogger
     (
         string category,
@@ -181,6 +194,27 @@ public class InMemoryLogger : ILogger
     /// <summary>
     /// Gets the currently active scopes as an array, from outermost to innermost.
     /// </summary>
+    /// <remarks>
+    /// This is the live scope stack of the current async flow: a scope appears while its
+    /// <see cref="BeginScope{TState}(TState)"/> handle is undisposed and disappears when it is
+    /// disposed. It is not recorded into <see cref="LogEntries"/>.
+    /// </remarks>
+    /// <example>
+    /// <code>
+    /// using Microsoft.Extensions.Logging;
+    /// using Wolfgang.Extensions.Logging.InMemoryLogger;
+    ///
+    /// var logger = new InMemoryLogger("MyApp");
+    /// using (logger.BeginScope("request-17"))
+    /// using (logger.BeginScope(new { UserId = 5 }))
+    /// {
+    ///     var depth = logger.Scopes.Length; // 2
+    ///     var outermost = logger.Scopes[0]; // "request-17"
+    /// }
+    ///
+    /// var afterwards = logger.Scopes.Length; // 0
+    /// </code>
+    /// </example>
     public object[] Scopes
     {
         get
