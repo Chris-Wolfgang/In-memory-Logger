@@ -55,8 +55,10 @@ public sealed class InMemoryLoggerProvider : ILoggerProvider
     /// Entries are grouped by logger category; ordering across categories is not guaranteed.
     /// </summary>
     /// <remarks>
-    /// Each access materializes a snapshot of the entries across all loggers; the cost is
-    /// O(n) in the total entry count. Test code typically reads this once per assertion.
+    /// Each access materializes a snapshot of the entries across all loggers: every logger's own
+    /// <see cref="InMemoryLogger.LogEntries"/> snapshot is copied once more into the combined array,
+    /// so the cost is two copies of the n entries (2n) plus one array per logger. Test code
+    /// typically reads this once per assertion.
     /// </remarks>
     [SuppressMessage("Major Code Smell", "S2365:Properties should not make collection or array copies",
         Justification = "This is a test-helper property whose entire purpose is to return a snapshot view; the copy semantics are intentional and idiomatic for assertion code.")]

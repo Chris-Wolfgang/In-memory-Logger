@@ -82,7 +82,7 @@ public class InMemoryLogger : ILogger
             eventId,
             state!,
             exception,
-            (o, ex) => formatter((TState)o, ex)
+            FormatterAdapter<TState>.For(formatter)
         );
 
         lock (_lock)
@@ -160,6 +160,11 @@ public class InMemoryLogger : ILogger
     /// <summary>
     /// The capacity of the internal log entries collection.
     /// </summary>
+    /// <remarks>
+    /// This is the <em>current</em> capacity of the internal list, not the constructor argument
+    /// echoed back: it starts at the <c>capacity</c> passed to the constructor and grows as
+    /// entries are added beyond it.
+    /// </remarks>
     public int Capacity
     {
         get
@@ -186,15 +191,75 @@ public class InMemoryLogger : ILogger
                 return Array.Empty<object>();
             }
 
-            var scopes = new List<object>();
-            while (current != null)
+            // Two walks of the parent chain: count, then fill from the innermost end, so the
+            // result is built in a single array without an intermediate list or a reverse.
+            var depth = 0;
+            for (var scope = current; scope != null; scope = scope.Parent)
             {
-                scopes.Add(current.State);
-                current = current.Parent;
+                depth++;
             }
 
-            scopes.Reverse();
-            return scopes.ToArray();
+            var scopes = new object[depth];
+            for (var scope = current; scope != null; scope = scope.Parent)
+            {
+                scopes[--depth] = scope.State;
+            }
+
+            return scopes;
+        }
+    }
+
+
+
+    /// <summary>
+    /// Caches the adapter from the caller's <c>Func&lt;TState, Exception?, string&gt;</c> to the
+    /// <c>Func&lt;object, Exception?, string&gt;</c> a <see cref="LogEntry{TState}"/> of
+    /// <see cref="object"/> stores. Microsoft.Extensions.Logging passes the same cached formatter
+    /// instance on every <c>LogInformation(...)</c>-style call, so remembering the last formatter
+    /// seen per <typeparamref name="TState"/> makes the common path allocation-free instead of
+    /// allocating a closure per call.
+    /// </summary>
+    /// <typeparam name="TState">The state type of the log call.</typeparam>
+    [SuppressMessage("Minor Code Smell", "S2743:Static fields should not be used in generic types",
+        Justification = "One cache slot per TState is the point: the adapter's type depends on TState.")]
+    private static class FormatterAdapter<TState>
+    {
+        private static Entry? _last;
+
+
+
+        public static Func<object, Exception?, string> For(Func<TState, Exception?, string> formatter)
+        {
+            // A single reference read and write: racing callers can only replace the slot with an
+            // equally valid entry, never observe a torn one.
+            var last = Volatile.Read(ref _last);
+            if (last != null && ReferenceEquals(last.Formatter, formatter))
+            {
+                return last.Adapter;
+            }
+
+            var created = new Entry(formatter);
+            Volatile.Write(ref _last, created);
+            return created.Adapter;
+        }
+
+
+
+        private sealed class Entry
+        {
+            public Entry(Func<TState, Exception?, string> formatter)
+            {
+                Formatter = formatter;
+                Adapter = (state, exception) => formatter((TState)state, exception);
+            }
+
+
+
+            public Func<TState, Exception?, string> Formatter { get; }
+
+
+
+            public Func<object, Exception?, string> Adapter { get; }
         }
     }
 
