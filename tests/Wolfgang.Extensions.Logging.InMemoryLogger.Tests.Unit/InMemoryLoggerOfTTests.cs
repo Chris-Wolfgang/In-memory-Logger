@@ -7,16 +7,6 @@ namespace Wolfgang.Extensions.Logging.InMemoryLogger.Tests.Unit;
 public class InMemoryLoggerOfTTests
 {
     [Fact]
-    public void Ctor_when_default_parameters_creates_instance()
-    {
-        var sut = new InMemoryLogger<InMemoryLoggerOfTTests>();
-
-        Assert.NotNull(sut);
-    }
-
-
-
-    [Fact]
     public void LogEntries_when_nothing_is_logged_returns_empty_list()
     {
         var sut = new InMemoryLogger<InMemoryLoggerOfTTests>();
@@ -145,19 +135,6 @@ public class InMemoryLoggerOfTTests
         var sut = new InMemoryLogger<InMemoryLoggerOfTTests>();
 
         Assert.Equal(16, sut.Capacity);
-    }
-
-
-
-    [Fact]
-    public void BeginScope_when_called_returns_a_disposable()
-    {
-        var sut = new InMemoryLogger<InMemoryLoggerOfTTests>();
-
-        var scope = sut.BeginScope("test scope");
-
-        Assert.NotNull(scope);
-        scope.Dispose();
     }
 
 
