@@ -1,5 +1,5 @@
 # Sequential PR validation workflow with coverage gating
-# Stage 1: Linux tests with 95% coverage requirement
+# Stage 1: Linux tests with two coverage gates (src 95%, test assemblies 100%)
 # Stage 2: Windows .NET (5.0-10.0) and .NET Framework (4.6.2-4.8.1) tests (only if Linux passes)
 # Stage 3: macOS tests (only if Stage 2 passes)
 #
@@ -779,7 +779,7 @@ jobs:
             -targetdir:"CoverageReport" \
             -reporttypes:"Html;TextSummary;MarkdownSummaryGithub;CsvSummary"
 
-      - name: Enforce 95% coverage threshold
+      - name: Enforce coverage thresholds (src 95%, test assemblies 100%)
         if: steps.check-coverage.outputs.has-coverage == 'true'
         run: |
           if [ ! -f CoverageReport/Summary.txt ]; then
@@ -1256,7 +1256,7 @@ jobs:
           }
           Write-Host "Every test assembly that collected coverage is present in the report."
 
-      - name: Enforce 95% coverage threshold
+      - name: Enforce coverage thresholds (src 95%, test assemblies 100%)
         if: steps.check-coverage.outputs.has-coverage == 'true'
         shell: pwsh
         run: |
@@ -1668,7 +1668,7 @@ jobs:
             echo "ℹ️  No coverage files found - skipping report generation"
           fi
 
-      - name: Enforce 95% coverage threshold
+      - name: Enforce coverage thresholds (src 95%, test assemblies 100%)
         run: |
           # If no cobertura files were produced (no tests, all test projects
           # skipped, etc.), the preceding step explicitly skipped report
@@ -1798,7 +1798,7 @@ jobs:
           echo "=========================================="
           echo "✅ ALL STAGES PASSED"
           echo "=========================================="
-          echo "Stage 1: Linux tests + 95% coverage ✅"
+          echo "Stage 1: Linux tests + coverage gates (src 95%, test assemblies 100%) ✅"
           echo "Stage 2: Windows .NET Core & .NET Framework tests ✅"
           echo "Stage 3: macOS tests ✅"
           echo ""
