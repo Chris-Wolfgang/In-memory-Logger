@@ -73,6 +73,10 @@ the limits are; it does not promise a bit-identical `.nupkg`.
    diff built.sha256 expected.sha256 && echo "assemblies match the release manifest"
    ```
 
+   On Windows (Git Bash), `jq` writes CRLF line endings and `sha256sum` marks binary files with
+   `*`; normalise both before the `diff` with `tr -d '\r'` on the `jq` output and
+   `sed 's/ [*]/  /' built.sha256`.
+
 6. Independently of the rebuild, confirm provenance with the attestation described in
    [SECURITY.md](../SECURITY.md#verifying-a-release).
 
