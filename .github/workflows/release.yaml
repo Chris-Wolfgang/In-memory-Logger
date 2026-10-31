@@ -594,6 +594,51 @@ jobs:
           }
 
 
+      # Expected hashes for third-party rebuilds (docs/REPRODUCIBLE-BUILD.md, #134).
+      # A .nupkg never hashes the same twice (zip entry timestamps), so the manifest
+      # lists the SHA-256 of every non-empty lib/ entry inside each package, plus the
+      # commit, runner OS and SDK a rebuild must match. It travels in the
+      # nuget-packages artifact, is covered by the provenance attestation in
+      # publish-nuget, and is attached to the GitHub Release.
+      - name: Generate reproducible-build manifest
+        if: steps.check-packages.outputs.has-packages == 'true'
+        shell: pwsh
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          Add-Type -AssemblyName System.IO.Compression.FileSystem
+          $dir = Join-Path $PWD 'nuget-packages'
+          $packages = foreach ($pkg in Get-ChildItem -Path $dir -Filter '*.nupkg' | Sort-Object Name) {
+            $zip = [System.IO.Compression.ZipFile]::OpenRead($pkg.FullName)
+            try {
+              $entries = foreach ($e in $zip.Entries | Where-Object { $_.FullName -like 'lib/*' -and $_.Length -gt 0 } | Sort-Object FullName) {
+                $stream = $e.Open()
+                try {
+                  $hash = [System.Convert]::ToHexString([System.Security.Cryptography.SHA256]::HashData($stream)).ToLowerInvariant()
+                } finally {
+                  $stream.Dispose()
+                }
+                [ordered]@{ path = $e.FullName; sha256 = $hash }
+              }
+            } finally {
+              $zip.Dispose()
+            }
+            [ordered]@{ package = $pkg.Name; entries = @($entries) }
+          }
+          if (@($packages).Count -eq 0) { Write-Error "No .nupkg found in $dir"; exit 1 }
+          $manifest = [ordered]@{
+            schemaVersion = 1
+            repository    = $env:GITHUB_REPOSITORY
+            tag           = $env:RELEASE_TAG
+            commit        = $env:GITHUB_SHA
+            runnerOs      = $env:RUNNER_OS
+            sdk           = (dotnet --version)
+            packages      = @($packages)
+          }
+          $path = Join-Path $dir 'reproducible-build-manifest.json'
+          $manifest | ConvertTo-Json -Depth 6 | Set-Content -Path $path -Encoding utf8NoBOM
+          Write-Host "Wrote $path"
+
       - name: Upload NuGet packages
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9  # v7.0.2
         with:
@@ -743,7 +788,9 @@ jobs:
       - name: Attest build provenance for packages
         uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8  # v4.2.2
         with:
-          subject-path: './packages/*.nupkg'
+          subject-path: |
+            ./packages/*.nupkg
+            ./packages/reproducible-build-manifest.json
 
       - name: NuGet login (OIDC trusted publishing)
         id: nuget-login
@@ -832,7 +879,7 @@ jobs:
           TAG_NAME: ${{ github.event.release.tag_name }}
         run: |
           shopt -s nullglob
-          files=(./nuget-packages/*.nupkg ./nuget-packages/*.snupkg ./nuget-packages/*.bom.json)
+          files=(./nuget-packages/*.nupkg ./nuget-packages/*.snupkg ./nuget-packages/*.bom.json ./nuget-packages/reproducible-build-manifest.json)
           # nullglob only drops unmatched *patterns*; a literal name stays and would make
           # `gh release upload` fail, so add the coverage zip only when it exists.
           if [ -f release-coverage.zip ]; then files+=(release-coverage.zip); fi
