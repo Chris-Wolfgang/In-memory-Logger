@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792087243130,
+  "lastUpdate": 1793645912341,
   "repoUrl": "https://github.com/Chris-Wolfgang/In-memory-Logger",
   "entries": {
     "BenchmarkDotNet": [
@@ -814,6 +814,54 @@ window.BENCHMARK_DATA = {
             "value": 6.386812585095565,
             "unit": "ns",
             "range": "± 0.003050838613821687"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "210299580+Chris-Wolfgang@users.noreply.github.com",
+            "name": "Chris Wolfgang",
+            "username": "Chris-Wolfgang"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ffa03e5050184dc0c7523fa786a25f754e6497d0",
+          "message": "Bump certifi 2026.7.22 -> 2026.10.18 in semgrep requirements (supersedes #369) (#371)\n\nApplies only the certifi pin and hashes from #369. Dependabot regenerated\nsemgrep.txt without --override semgrep-overrides.txt, which would drop the\nmcp and OpenTelemetry overrides kept by the PRs below; this commit keeps them.\n\nCo-authored-by: Claude Opus 5.5 <noreply@anthropic.com>",
+          "timestamp": "2026-11-02T13:39:12-05:00",
+          "tree_id": "ccfd676ea1a7191d6c5be1b31c038a3cbea7b169",
+          "url": "https://github.com/Chris-Wolfgang/In-memory-Logger/commit/ffa03e5050184dc0c7523fa786a25f754e6497d0"
+        },
+        "date": 1793645910942,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogInformation",
+            "value": 196.9021271864573,
+            "unit": "ns",
+            "range": "± 104.99002146881074"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogBelowMinimum",
+            "value": 0.021343888714909554,
+            "unit": "ns",
+            "range": "± 0.008098182944555212"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.BeginScopeRoundtrip",
+            "value": 33.30970120429993,
+            "unit": "ns",
+            "range": "± 0.43511539764831914"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogEntriesIndexer",
+            "value": 12.050238336126009,
+            "unit": "ns",
+            "range": "± 0.02468956587762992"
           }
         ]
       }
