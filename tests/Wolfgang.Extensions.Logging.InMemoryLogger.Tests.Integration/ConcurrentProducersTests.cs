@@ -73,6 +73,7 @@ public class ConcurrentProducersTests
     }
 
 
+
     [Fact]
     public async Task Log_when_called_concurrently_each_producer_emits_all_of_its_own_entries()
     {
@@ -123,6 +124,7 @@ public class ConcurrentProducersTests
             Assert.Equal(entriesPerProducer, kvp.Value);
         }
     }
+
 
 
     [Fact]
