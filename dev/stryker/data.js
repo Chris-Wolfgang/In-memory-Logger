@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792303624423,
+  "lastUpdate": 1794140552410,
   "repoUrl": "https://github.com/Chris-Wolfgang/In-memory-Logger",
   "entries": {
     "Mutation score": [
@@ -102,6 +102,33 @@ window.BENCHMARK_DATA = {
           "url": "https://github.com/Chris-Wolfgang/In-memory-Logger/commit/998877c83592c4bf66cdd9f5a74e8a48582a8b6f"
         },
         "date": 1792303621110,
+        "tool": "customBiggerIsBetter",
+        "benches": [
+          {
+            "name": "Mutation score",
+            "value": 85.71,
+            "unit": "%"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]",
+            "email": "49699333+dependabot[bot]@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "01dc671376829126ce5b930708dffc06feb5aaa1",
+          "message": "build(deps): bump the pip-tooling group (#390)\n\nBumps the pip-tooling group in /.github/requirements with 9 updates:\n\n| Package | From | To |\n| --- | --- | --- |\n| [opentelemetry-api](https://github.com/open-telemetry/opentelemetry-python) | `1.45.1` | `1.45.2` |\n| [opentelemetry-exporter-otlp-proto-common](https://github.com/open-telemetry/opentelemetry-python) | `1.45.1` | `1.45.2` |\n| [opentelemetry-exporter-otlp-proto-http](https://github.com/open-telemetry/opentelemetry-python) | `1.45.1` | `1.45.2` |\n| [opentelemetry-instrumentation](https://github.com/open-telemetry/opentelemetry-python-contrib) | `0.66b1` | `0.66b2` |\n| [opentelemetry-instrumentation-requests](https://github.com/open-telemetry/opentelemetry-python-contrib) | `0.66b1` | `0.66b2` |\n| [opentelemetry-instrumentation-threading](https://github.com/open-telemetry/opentelemetry-python-contrib) | `0.66b1` | `0.66b2` |\n| [opentelemetry-proto](https://github.com/open-telemetry/opentelemetry-python) | `1.45.1` | `1.45.2` |\n| [opentelemetry-sdk](https://github.com/open-telemetry/opentelemetry-python) | `1.45.1` | `1.45.2` |\n| [opentelemetry-util-http](https://github.com/open-telemetry/opentelemetry-python-contrib) | `0.66b1` | `0.66b2` |\n\n\nUpdates `opentelemetry-api` from 1.45.1 to 1.45.2\n- [Release notes](https://github.com/open-telemetry/opentelemetry-python/releases)\n- [Changelog](https://github.com/open-telemetry/opentelemetry-python/blob/main/CHANGELOG.md)\n- [Commits](https://github.com/open-telemetry/opentelemetry-python/compare/v1.45.1...v1.45.2)\n\nUpdates `opentelemetry-exporter-otlp-proto-common` from 1.45.1 to 1.45.2\n- [Release notes](https://github.com/open-telemetry/opentelemetry-python/releases)\n- [Changelog](https://github.com/open-telemetry/opentelemetry-python/blob/main/CHANGELOG.md)\n- [Commits](https://github.com/open-telemetry/opentelemetry-python/compare/v1.45.1...v1.45.2)\n\nUpdates `opentelemetry-exporter-otlp-proto-http` from 1.45.1 to 1.45.2\n- [Release notes](https://github.com/open-telemetry/opentelemetry-python/releases)\n- [Changelog](https://github.com/open-telemetry/opentelemetry-python/blob/main/CHANGELOG.md)\n- [Commits](https://github.com/open-telemetry/opentelemetry-python/compare/v1.45.1...v1.45.2)\n\nUpdates `opentelemetry-instrumentation` from 0.66b1 to 0.66b2\n- [Release notes](https://github.com/open-telemetry/opentelemetry-python-contrib/releases)\n- [Changelog](https://github.com/open-telemetry/opentelemetry-python-contrib/blob/main/CHANGELOG.md)\n- [Commits](https://github.com/open-telemetry/opentelemetry-python-contrib/commits)\n\nUpdates `opentelemetry-instrumentation-requests` from 0.66b1 to 0.66b2\n- [Release notes](https://github.com/open-telemetry/opentelemetry-python-contrib/releases)\n- [Changelog](https://github.com/open-telemetry/opentelemetry-python-contrib/blob/main/CHANGELOG.md)\n- [Commits](https://github.com/open-telemetry/opentelemetry-python-contrib/commits)\n\nUpdates `opentelemetry-instrumentation-threading` from 0.66b1 to 0.66b2\n- [Release notes](https://github.com/open-telemetry/opentelemetry-python-contrib/releases)\n- [Changelog](https://github.com/open-telemetry/opentelemetry-python-contrib/blob/main/CHANGELOG.md)\n- [Commits](https://github.com/open-telemetry/opentelemetry-python-contrib/commits)\n\nUpdates `opentelemetry-proto` from 1.45.1 to 1.45.2\n- [Release notes](https://github.com/open-telemetry/opentelemetry-python/releases)\n- [Changelog](https://github.com/open-telemetry/opentelemetry-python/blob/main/CHANGELOG.md)\n- [Commits](https://github.com/open-telemetry/opentelemetry-python/compare/v1.45.1...v1.45.2)\n\nUpdates `opentelemetry-sdk` from 1.45.1 to 1.45.2\n- [Release notes](https://github.com/open-telemetry/opentelemetry-python/releases)\n- [Changelog](https://github.com/open-telemetry/opentelemetry-python/blob/main/CHANGELOG.md)\n- [Commits](https://github.com/open-telemetry/opentelemetry-python/compare/v1.45.1...v1.45.2)\n\nUpdates `opentelemetry-util-http` from 0.66b1 to 0.66b2\n- [Release notes](https://github.com/open-telemetry/opentelemetry-python-contrib/releases)\n- [Changelog](https://github.com/open-telemetry/opentelemetry-python-contrib/blob/main/CHANGELOG.md)\n- [Commits](https://github.com/open-telemetry/opentelemetry-python-contrib/commits)\n\n---\nupdated-dependencies:\n- dependency-name: opentelemetry-api\n  dependency-version: 1.45.2\n  dependency-type: direct:production\n  update-type: version-update:semver-patch\n  dependency-group: pip-tooling\n- dependency-name: opentelemetry-exporter-otlp-proto-common\n  dependency-version: 1.45.2\n  dependency-type: direct:production\n  update-type: version-update:semver-patch\n  dependency-group: pip-tooling\n- dependency-name: opentelemetry-exporter-otlp-proto-http\n  dependency-version: 1.45.2\n  dependency-type: direct:production\n  update-type: version-update:semver-patch\n  dependency-group: pip-tooling\n- dependency-name: opentelemetry-instrumentation\n  dependency-version: 0.66b2\n  dependency-type: direct:production\n  dependency-group: pip-tooling\n- dependency-name: opentelemetry-instrumentation-requests\n  dependency-version: 0.66b2\n  dependency-type: direct:production\n  dependency-group: pip-tooling\n- dependency-name: opentelemetry-instrumentation-threading\n  dependency-version: 0.66b2\n  dependency-type: direct:production\n  dependency-group: pip-tooling\n- dependency-name: opentelemetry-proto\n  dependency-version: 1.45.2\n  dependency-type: direct:production\n  update-type: version-update:semver-patch\n  dependency-group: pip-tooling\n- dependency-name: opentelemetry-sdk\n  dependency-version: 1.45.2\n  dependency-type: direct:production\n  update-type: version-update:semver-patch\n  dependency-group: pip-tooling\n- dependency-name: opentelemetry-util-http\n  dependency-version: 0.66b2\n  dependency-type: direct:production\n  dependency-group: pip-tooling\n...\n\nSigned-off-by: dependabot[bot] <support@github.com>\nCo-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>\nCo-authored-by: Chris Wolfgang <210299580+Chris-Wolfgang@users.noreply.github.com>",
+          "timestamp": "2026-11-05T02:13:25Z",
+          "url": "https://github.com/Chris-Wolfgang/In-memory-Logger/commit/01dc671376829126ce5b930708dffc06feb5aaa1"
+        },
+        "date": 1794140548637,
         "tool": "customBiggerIsBetter",
         "benches": [
           {
