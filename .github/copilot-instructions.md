@@ -16,11 +16,13 @@
 - Constructor: `InMemoryLogger<T>(LogLevel minLogLevel = Trace, int capacity = 16)`
 - Properties: `Category`, `MinimumLogLevel`, `Capacity`, `LogEntries`, `Scopes`
 - Methods: `Log<TState>(...)`, `IsEnabled(LogLevel)`, `BeginScope<TState>(TState)`
+- `InMemoryLoggerProvider(LogLevel minLogLevel = Trace)`: `CreateLogger(string)`, `LogEntries` (all loggers), `Loggers` (by category), `Dispose()`
+- `InMemoryLoggerBuilderExtensions.AddInMemoryLogger(this ILoggingBuilder, InMemoryLoggerProvider)`
 
 ## Important Notes
 - Thread-safe append into the internal log-entry buffer.
 - `LogEntries` returns `IReadOnlyList<LogEntry<object>>` from `Microsoft.Extensions.Logging.Abstractions` — usable directly with LINQ + xUnit asserts.
-- `Scopes` captures objects passed to `BeginScope` for scope-aware assertions.
+- `Scopes` is the live stack of the scopes open on the current async flow (outermost first); a disposed scope is removed, so assert inside the `using` block.
 - Public API is tracked by `PublicAPI.Shipped.txt` / `PublicAPI.Unshipped.txt` — additions surface as RS0016 at compile time.
 
 ## Code Style
@@ -37,7 +39,7 @@
 - `dotnet restore`
 - `dotnet build -c Release`
 - `dotnet test -c Release --no-build`
-- CI gates: 90% line coverage threshold, DevSkim security scan, gitleaks secrets scan, CodeQL security-extended.
+- CI gates: line coverage of 90% for `src/` and 98% for test assemblies (`CODECOV_MINIMUM` / `CODECOV_TEST_MINIMUM` in `pr.yaml`), DevSkim security scan, gitleaks secrets scan, CodeQL security-extended.
 
 ## Release
 - Bump `<Version>` in `src/Wolfgang.Extensions.Logging.InMemoryLogger/Wolfgang.Extensions.Logging.InMemoryLogger.csproj`.
