@@ -1,0 +1,11 @@
+# Paths Semgrep should not scan. Each entry carries its own justification;
+# do NOT add blanket directories (tests/, scripts/) here.
+#
+#   - scripts/normalize-trx.py  — CI-only helper for the cross-platform
+#     differential. It parses the .trx file the same job's own `dotnet test`
+#     run just wrote, never untrusted input, so use-defused-xml (XXE / entity
+#     expansion via stdlib xml) has no attacker-controlled document to act on.
+#     Python's expat also stops resolving external entities by default (3.7.1+)
+#     and caps entity expansion (expat 2.4.1+). defusedxml would add a pip
+#     dependency to every leg of that matrix for no change in exposure.
+scripts/normalize-trx.py
