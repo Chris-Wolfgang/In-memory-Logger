@@ -7,21 +7,13 @@ namespace Wolfgang.Extensions.Logging.InMemoryLogger.Tests.Unit;
 public class InMemoryLoggerOfTTests
 {
     [Fact]
-    public void Ctor_when_default_parameters_creates_instance()
-    {
-        var sut = new InMemoryLogger<InMemoryLoggerOfTTests>();
-
-        Assert.NotNull(sut);
-    }
-
-
-    [Fact]
     public void LogEntries_when_nothing_is_logged_returns_empty_list()
     {
         var sut = new InMemoryLogger<InMemoryLoggerOfTTests>();
 
         Assert.Empty(sut.LogEntries);
     }
+
 
 
     [Fact]
@@ -34,7 +26,7 @@ public class InMemoryLoggerOfTTests
             new EventId(1, "TestEvent"),
             "Test message",
             exception: null,
-            TestFormatters.Identity
+            static (s, _) => s
         );
 
         Assert.Single(sut.LogEntries);
@@ -49,6 +41,7 @@ public class InMemoryLoggerOfTTests
 
         Assert.Null(logEntry.Exception);
     }
+
 
 
     [Theory]
@@ -89,15 +82,17 @@ public class InMemoryLoggerOfTTests
     }
 
 
+
     [Fact]
     public void Log_when_MinimumLogLevel_is_Trace_adds_entry()
     {
-        var sut = new InMemoryLogger<InMemoryLoggerOfTTests>(LogLevel.Trace);
+        var sut = new InMemoryLogger<InMemoryLoggerOfTTests>();
 
         sut.LogTrace("Test message");
 
         Assert.NotEmpty(sut.LogEntries);
     }
+
 
 
     [Fact]
@@ -121,6 +116,7 @@ public class InMemoryLoggerOfTTests
     }
 
 
+
     [Theory]
     [InlineData(10)]
     [InlineData(100)]
@@ -132,6 +128,7 @@ public class InMemoryLoggerOfTTests
     }
 
 
+
     [Fact]
     public void Ctor_when_capacity_not_specified_initializes_to_16()
     {
@@ -140,17 +137,6 @@ public class InMemoryLoggerOfTTests
         Assert.Equal(16, sut.Capacity);
     }
 
-
-    [Fact]
-    public void BeginScope_returns_non_null_disposable()
-    {
-        var sut = new InMemoryLogger<InMemoryLoggerOfTTests>();
-
-        var scope = sut.BeginScope("test scope");
-
-        Assert.NotNull(scope);
-        scope.Dispose();
-    }
 
 
     [Fact]
@@ -164,6 +150,7 @@ public class InMemoryLoggerOfTTests
             Assert.Equal("outer", sut.Scopes[0]);
         }
     }
+
 
 
     [Fact]
@@ -181,6 +168,7 @@ public class InMemoryLoggerOfTTests
     }
 
 
+
     [Fact]
     public void BeginScope_when_disposed_Scopes_is_empty()
     {
@@ -192,5 +180,18 @@ public class InMemoryLoggerOfTTests
         }
 
         Assert.Empty(sut.Scopes);
+    }
+
+
+
+    [Fact]
+    public void Log_when_called_uses_the_full_type_name_as_the_category()
+    {
+        var sut = new InMemoryLogger<InMemoryLoggerOfTTests>();
+
+        sut.LogInformation("message");
+
+        var entry = Assert.Single(sut.LogEntries);
+        Assert.Equal(typeof(InMemoryLoggerOfTTests).FullName, entry.Category);
     }
 }

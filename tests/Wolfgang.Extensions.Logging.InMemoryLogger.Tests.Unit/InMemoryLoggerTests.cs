@@ -15,6 +15,7 @@ public class InMemoryLoggerTests
     }
 
 
+
     [Fact]
     public void Ctor_when_category_is_null_throws_ArgumentNullException()
     {
@@ -24,6 +25,7 @@ public class InMemoryLoggerTests
         );
         Assert.Equal("category", ex.ParamName);
     }
+
 
 
     [Fact]
@@ -37,6 +39,7 @@ public class InMemoryLoggerTests
     }
 
 
+
     [Fact]
     public void Ctor_when_default_parameters_MinimumLogLevel_is_Trace()
     {
@@ -44,6 +47,7 @@ public class InMemoryLoggerTests
 
         Assert.Equal(LogLevel.Trace, sut.MinimumLogLevel);
     }
+
 
 
     [Theory]
@@ -62,6 +66,7 @@ public class InMemoryLoggerTests
     }
 
 
+
     [Fact]
     public void LogEntries_when_nothing_is_logged_returns_empty_list()
     {
@@ -69,6 +74,7 @@ public class InMemoryLoggerTests
 
         Assert.Empty(sut.LogEntries);
     }
+
 
 
     [Fact]
@@ -81,15 +87,16 @@ public class InMemoryLoggerTests
             new EventId(1, "TestEvent"),
             "Test message",
             exception: null,
-            TestFormatters.Identity
+            static (s, _) => s
         );
 
-        Assert.Single(sut.LogEntries);
-        var logEntry = sut.LogEntries[0];
+        var logEntry = Assert.Single(sut.LogEntries);
         Assert.Equal(LogLevel.Information, logEntry.LogLevel);
         Assert.Equal("TestCategory", logEntry.Category);
         Assert.Equal(1, logEntry.EventId.Id);
+        Assert.Equal("Test message", logEntry.Formatter(logEntry.State, logEntry.Exception));
     }
+
 
 
     [Fact]
@@ -103,6 +110,7 @@ public class InMemoryLoggerTests
     }
 
 
+
     [Fact]
     public void IsEnabled_when_logLevel_is_None_returns_false()
     {
@@ -110,6 +118,7 @@ public class InMemoryLoggerTests
 
         Assert.False(sut.IsEnabled(LogLevel.None));
     }
+
 
 
     [Theory]
@@ -123,6 +132,7 @@ public class InMemoryLoggerTests
     }
 
 
+
     [Fact]
     public void BeginScope_when_active_Scopes_contains_scope_state()
     {
@@ -134,6 +144,7 @@ public class InMemoryLoggerTests
             Assert.Equal("outer", sut.Scopes[0]);
         }
     }
+
 
 
     [Fact]
@@ -151,6 +162,7 @@ public class InMemoryLoggerTests
     }
 
 
+
     [Fact]
     public void BeginScope_when_disposed_Scopes_is_empty()
     {
@@ -162,5 +174,158 @@ public class InMemoryLoggerTests
         }
 
         Assert.Empty(sut.Scopes);
+    }
+
+
+
+    [Fact]
+    public void Log_when_the_same_formatter_is_reused_stores_the_same_adapter()
+    {
+        // The adapter cache is one static slot per state type, shared by every test that runs in
+        // parallel. A state type only this test uses keeps another test's formatter out of the slot.
+        var sut = new InMemoryLogger("TestCategory");
+        Func<CacheProbeState, Exception?, string> formatter = static (s, _) => s.Value;
+
+        sut.Log(LogLevel.Information, new EventId(1), new CacheProbeState("first"), exception: null, formatter);
+        sut.Log(LogLevel.Information, new EventId(2), new CacheProbeState("second"), exception: null, formatter);
+
+        var entries = sut.LogEntries;
+        Assert.Same(entries[0].Formatter, entries[1].Formatter);
+        Assert.Equal("second", entries[1].Formatter(entries[1].State, entries[1].Exception));
+    }
+
+
+
+
+
+
+    [Fact]
+    public void Log_when_a_different_formatter_is_passed_each_entry_formats_with_its_own_formatter()
+    {
+        var sut = new InMemoryLogger("TestCategory");
+
+        sut.Log(LogLevel.Information, new EventId(1), "state", exception: null, static (s, _) => "upper:" + s.ToUpperInvariant());
+        sut.Log(LogLevel.Information, new EventId(2), "state", exception: null, static (s, _) => "lower:" + s);
+
+        var entries = sut.LogEntries;
+        Assert.NotSame(entries[0].Formatter, entries[1].Formatter);
+        Assert.Equal("upper:STATE", entries[0].Formatter(entries[0].State, entries[0].Exception));
+        Assert.Equal("lower:state", entries[1].Formatter(entries[1].State, entries[1].Exception));
+    }
+
+
+
+    [Fact]
+    public void Log_when_exception_supplied_captures_the_exception()
+    {
+        var sut = new InMemoryLogger("TestCategory");
+        var exception = new InvalidOperationException("boom");
+
+        sut.Log(LogLevel.Error, new EventId(3), "failed", exception, static (s, _) => s);
+
+        var entry = Assert.Single(sut.LogEntries);
+        Assert.Same(exception, entry.Exception);
+    }
+
+
+
+    [Theory]
+    [InlineData(LogLevel.Trace, LogLevel.Trace, true)]
+    [InlineData(LogLevel.Information, LogLevel.Debug, false)]
+    [InlineData(LogLevel.Information, LogLevel.Information, true)]
+    [InlineData(LogLevel.Information, LogLevel.Warning, true)]
+    [InlineData(LogLevel.Error, LogLevel.Warning, false)]
+    [InlineData(LogLevel.Error, LogLevel.Critical, true)]
+    [InlineData(LogLevel.Critical, LogLevel.Error, false)]
+    [InlineData(LogLevel.Critical, LogLevel.Critical, true)]
+    [InlineData(LogLevel.None, LogLevel.Critical, false)]
+    [InlineData(LogLevel.Trace, LogLevel.None, false)]
+    public void IsEnabled_when_level_is_compared_with_MinimumLogLevel_returns_expected
+    (
+        LogLevel minLogLevel,
+        LogLevel logLevel,
+        bool expected
+    )
+    {
+        var sut = new InMemoryLogger("TestCategory", minLogLevel);
+
+        Assert.Equal(expected, sut.IsEnabled(logLevel));
+    }
+
+
+
+    [Fact]
+    public void BeginScope_when_disposed_out_of_order_ignores_the_dispose()
+    {
+        var sut = new InMemoryLogger("TestCategory");
+        var outer = sut.BeginScope("outer");
+        var inner = sut.BeginScope("inner");
+
+        outer.Dispose();
+
+        Assert.Equal(new object[] { "outer", "inner" }, sut.Scopes);
+
+        inner.Dispose();
+
+        Assert.Equal(new object[] { "outer" }, sut.Scopes);
+    }
+
+
+
+    [Fact]
+    public void BeginScope_when_disposed_twice_pops_only_once()
+    {
+        var sut = new InMemoryLogger("TestCategory");
+        using var outer = sut.BeginScope("outer");
+        var inner = sut.BeginScope("inner");
+
+        inner.Dispose();
+        inner.Dispose();
+
+        Assert.Equal(new object[] { "outer" }, sut.Scopes);
+    }
+
+
+
+    [Fact]
+    public void Ctor_when_capacity_is_1_accepts_it()
+    {
+        var sut = new InMemoryLogger("TestCategory", capacity: 1);
+
+        Assert.Equal(1, sut.Capacity);
+    }
+
+
+
+    [Fact]
+    public void Ctor_when_capacity_is_less_than_1_says_so_in_the_message()
+    {
+        var ex = Assert.Throws<ArgumentOutOfRangeException>
+        (
+            () => new InMemoryLogger("TestCategory", capacity: -1)
+        );
+
+        Assert.StartsWith("Value cannot be less than 1", ex.Message, StringComparison.Ordinal);
+    }
+
+
+
+    [Fact]
+    public void Scopes_when_no_scope_is_open_returns_the_shared_empty_array()
+    {
+        var sut = new InMemoryLogger("TestCategory");
+
+        Assert.Same(Array.Empty<object>(), sut.Scopes);
+    }
+
+
+
+    private sealed class CacheProbeState
+    {
+        public CacheProbeState(string value) => Value = value;
+
+
+
+        public string Value { get; }
     }
 }
