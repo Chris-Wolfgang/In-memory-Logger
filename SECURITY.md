@@ -55,6 +55,39 @@ the deadline passes, not after.
 
 Please keep the details private until the advisory is published.
 
+## Verifying a Release
+
+Each release publishes two supply-chain artifacts besides the package itself, so you can check that
+what you downloaded was built from this repository.
+
+### Build provenance (SLSA attestation)
+
+`release.yaml` attests every `.nupkg` with `actions/attest-build-provenance` before publishing it to
+NuGet.org. The attestation is signed with the workflow's OIDC identity; there is no signing key to
+manage. To verify a package you downloaded (for example with `dotnet nuget download` or from the
+GitHub Release):
+
+```bash
+gh attestation verify Wolfgang.Extensions.Logging.InMemoryLogger.<version>.nupkg   --repo Chris-Wolfgang/In-memory-Logger   --signer-workflow Chris-Wolfgang/In-memory-Logger/.github/workflows/release.yaml
+```
+
+A successful run confirms the package bytes match what the release workflow built from this
+repository. A failure means the file was altered or did not come from that workflow; do not use it
+and report it as described above.
+
+### Software Bill of Materials (SBOM)
+
+`release.yaml` generates a CycloneDX SBOM for each shipped project and attaches it to the GitHub
+Release as `<project>.bom.json`. Download it from the release page and feed it to any CycloneDX
+consumer (for example `dotnet CycloneDX` or Dependency-Track) to inventory the package's
+dependencies.
+
+### Package signing
+
+The `.nupkg` does not yet carry a NuGet author signature, so `nuget verify -Signatures` does not
+apply. This is tracked in [#186](https://github.com/Chris-Wolfgang/In-memory-Logger/issues/186)
+and will be documented here once it ships.
+
 ## Credit
 
 Reporters are credited in the published advisory and in the release notes, unless you ask not to be.
@@ -64,3 +97,13 @@ Tell us in the report how you would like to be named.
 
 Your help is greatly appreciated!
 Responsible disclosure of security vulnerabilities helps protect our entire community.
+
+## Release path & compromise scope
+
+Facts a maintainer would need at 2am if the release identity is compromised. Generic incident-response steps (rotating credentials, revoking OAuth apps, publishing advisories, unlisting NuGet packages) are not duplicated here; GitHub's and NuGet's own docs update faster than a checked-in runbook.
+
+- **Release path**: OIDC / NuGet Trusted Publishing via `NuGet/login` in `.github/workflows/release.yaml`. The workflow mints an ephemeral push token per run via OIDC; `release.yaml` references no repository secret, so the release path does not depend on a long-lived API key stored in GitHub secrets. During an incident, check the NuGet account for any long-lived API keys anyway (they can be created outside of CI) and delete anything you don't recognize.
+- **Fallback**: none. If Trusted Publishing is compromised, the incident is at the GitHub-account level (the OIDC identity is `Chris-Wolfgang/In-memory-Logger`).
+- **Owner**: @Chris-Wolfgang.
+- **Downstream consumers**: no dependents are tracked in this repository; unknown external consumers may exist on nuget.org.
+- **Package coordinates for unlisting**: `Wolfgang.Extensions.Logging.InMemoryLogger` on nuget.org: https://www.nuget.org/packages/Wolfgang.Extensions.Logging.InMemoryLogger/
