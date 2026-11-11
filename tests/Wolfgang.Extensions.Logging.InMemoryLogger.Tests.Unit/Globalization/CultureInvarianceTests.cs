@@ -38,7 +38,7 @@ public class CultureInvarianceTests
             new EventId(1),
             "İıIi 1234.5",
             null,
-            TestFormatters.Identity
+            static (s, _) => s
         );
 
         var entry = Assert.Single(sut.LogEntries);
@@ -108,7 +108,7 @@ public class CultureInvarianceTests
             new EventId(1),
             "message",
             null,
-            TestFormatters.Identity
+            static (s, _) => s
         );
 
         Assert.Equal
