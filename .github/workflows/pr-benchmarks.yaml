@@ -1,0 +1,206 @@
+name: PR Benchmarks
+
+# Per-PR perf-regression detection (#133). Forward-looking companion to benchmarks.yaml (which charts the trend after a merge): runs the
+# BenchmarkDotNet suite on the PR's head and on its base commit, on the same runner in the same job,
+# and reports the per-benchmark delta before merge.
+#
+# Gating, and why it is asymmetric: allocated bytes per operation are deterministic, so growth beyond
+# ALLOC_THRESHOLD_PCT fails the job. Mean time on a shared runner is noisy even with both sides measured
+# back to back, so it is reported and only fails beyond TIME_THRESHOLD_PCT (a deliberately coarse
+# default). Add the label `perf-impact-acknowledged` to accept a regression; the job then reports it
+# and passes. The comment/summary is replaced on every push, never appended.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'benchmarks/**'
+      - '.github/workflows/pr-benchmarks.yaml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-benchmarks-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  compare:
+    name: Compare benchmarks with the base branch
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    permissions:
+      contents: read
+    env:
+      ALLOC_THRESHOLD_PCT: '50'
+      TIME_THRESHOLD_PCT: '100'
+      BENCH_DIR: benchmarks/Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks
+      ACKNOWLEDGED: ${{ contains(github.event.pull_request.labels.*.name, 'perf-impact-acknowledged') }}
+    steps:
+      - name: Checkout PR head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          path: head
+          persist-credentials: false
+
+      - name: Checkout base commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: base
+          persist-credentials: false
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Run benchmarks on the base commit
+        run: |
+          set -euo pipefail
+          if [ ! -d "base/$BENCH_DIR" ]; then
+            echo "The base commit has no benchmarks project; nothing to compare with."
+            exit 0
+          fi
+          cd "base/$BENCH_DIR"
+          dotnet run -c Release -- --filter "*" --job short --memory --exporters json
+          mkdir -p "$GITHUB_WORKSPACE/results/base"
+          cp BenchmarkDotNet.Artifacts/results/*-report-full-compressed.json "$GITHUB_WORKSPACE/results/base/"
+
+      - name: Run benchmarks on the PR head
+        run: |
+          set -euo pipefail
+          cd "head/$BENCH_DIR"
+          dotnet run -c Release -- --filter "*" --job short --memory --exporters json
+          mkdir -p "$GITHUB_WORKSPACE/results/head"
+          cp BenchmarkDotNet.Artifacts/results/*-report-full-compressed.json "$GITHUB_WORKSPACE/results/head/"
+
+      - name: Compute the delta table
+        id: delta
+        run: |
+          set -euo pipefail
+          cat > compare.py <<'PY'
+          import glob, json, os, sys
+
+          alloc_limit = float(os.environ["ALLOC_THRESHOLD_PCT"])
+          time_limit = float(os.environ["TIME_THRESHOLD_PCT"])
+
+
+          def load(folder):
+              rows = {}
+              for path in sorted(glob.glob(os.path.join(folder, "*.json"))):
+                  with open(path, encoding="utf-8") as f:
+                      for b in json.load(f)["Benchmarks"]:
+                          key = b["FullName"].replace("Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.", "")
+                          if b.get("Parameters"):
+                              key += " [" + b["Parameters"] + "]"
+                          rows[key] = (b["Statistics"]["Mean"], b["Memory"]["BytesAllocatedPerOperation"])
+              return rows
+
+
+          def pct(new, old):
+              if old == 0:
+                  return 0.0 if new == 0 else float("inf")
+              return (new - old) / old * 100.0
+
+
+          base, head = load("results/base"), load("results/head")
+          if not head:
+              print("::error::The PR head produced no benchmark results.")
+              sys.exit(2)
+
+          lines = ["<!-- pr-benchmarks -->", "### Benchmark delta against the base branch", ""]
+          regress = []
+          if not base:
+              lines.append("The base commit has no benchmark results, so there is nothing to compare with.")
+          else:
+              lines += [
+                  "| Benchmark | Time (base) | Time (PR) | Time delta | Alloc B/op (base) | Alloc B/op (PR) | Alloc delta |",
+                  "|---|---:|---:|---:|---:|---:|---:|",
+              ]
+              for name in sorted(head):
+                  new_t, new_a = head[name]
+                  if name not in base:
+                      lines.append(f"| {name} | new | {new_t:,.1f} ns | | new | {new_a} | |")
+                      continue
+                  old_t, old_a = base[name]
+                  dt, da = pct(new_t, old_t), pct(new_a, old_a)
+                  flag = ""
+                  if da > alloc_limit:
+                      regress.append(f"{name}: allocations {old_a} -> {new_a} B/op ({da:+.0f}%)")
+                      flag = " :x:"
+                  if dt > time_limit:
+                      regress.append(f"{name}: time {old_t:,.1f} -> {new_t:,.1f} ns ({dt:+.0f}%)")
+                      flag = " :x:"
+                  lines.append(f"| {name}{flag} | {old_t:,.1f} ns | {new_t:,.1f} ns | {dt:+.1f}% | {old_a} | {new_a} | {da:+.1f}% |")
+              for name in sorted(set(base) - set(head)):
+                  lines.append(f"| {name} | present | removed | | | | |")
+          lines += [
+              "",
+              f"Gate: allocations may grow by at most {alloc_limit:.0f}% (deterministic); time by at most {time_limit:.0f}% "
+              "(noisy on shared runners, so deliberately coarse). Label `perf-impact-acknowledged` accepts a regression.",
+          ]
+          if regress:
+              lines += ["", "**Beyond threshold:**"] + [f"- {r}" for r in regress]
+          with open("delta.md", "w", encoding="utf-8") as out:
+              out.write("\n".join(lines) + "\n")
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as out:
+              out.write(f"regressions={len(regress)}\n")
+          PY
+          python3 compare.py
+          cat delta.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload the delta table
+        if: always() && steps.delta.outcome == 'success'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9  # v7.0.2
+        with:
+          name: pr-benchmarks-delta
+          path: delta.md
+          retention-days: 5
+
+      - name: Fail on an unacknowledged regression
+        env:
+          REGRESSIONS: ${{ steps.delta.outputs.regressions }}
+        run: |
+          set -euo pipefail
+          if [ "$REGRESSIONS" != "0" ] && [ "$ACKNOWLEDGED" != "true" ]; then
+            echo "::error::$REGRESSIONS benchmark(s) regressed beyond the threshold. Fix them, or add the label perf-impact-acknowledged to accept the cost."
+            exit 1
+          fi
+
+  # The only job with a write scope. It never checks out or runs PR code: it downloads the
+  # delta table the read-only compare job produced and posts it, so a PR's benchmark code
+  # cannot reach a token that can write to the repository's pull requests.
+  comment:
+    name: Post the delta table
+    needs: compare
+    # Fork PRs get a read-only token that cannot comment; the compare job's summary still has the table.
+    if: always() && needs.compare.result != 'cancelled' && needs.compare.result != 'skipped' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Download the delta table
+        id: download
+        continue-on-error: true
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333  # v8.0.2
+        with:
+          name: pr-benchmarks-delta
+
+      - name: Create or replace the PR comment
+        if: steps.download.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+          id=$(gh api "repos/$REPO/issues/$PR_NUMBER/comments" --paginate --jq '[.[] | select(.body | startswith("<!-- pr-benchmarks -->"))] | first | .id // empty')
+          if [ -n "$id" ]; then
+            gh api --method PATCH "repos/$REPO/issues/comments/$id" -F body=@delta.md > /dev/null
+          else
+            gh api --method POST "repos/$REPO/issues/$PR_NUMBER/comments" -F body=@delta.md > /dev/null
+          fi
