@@ -1,0 +1,85 @@
+name: Reproducible Build
+
+# Verifies the build is reproducible, not just configured to be (#125).
+#
+# The SDK's default Deterministic=true and Directory.Build.props' ContinuousIntegrationBuild
+# (set when CI=true) are the INPUTS to a reproducible build. This workflow checks the OUTPUT: on each
+# runner OS it builds the same commit twice from two different directories, hashes every
+# DLL and PDB each src project produces, and fails when the two sets differ.
+#
+# It does NOT compare Linux against Windows. The SDK writes obj/*.AssemblyInfo.cs and
+# obj/*.AssemblyAttributes.cs with the OS newline (CRLF vs LF), and the PDB records those
+# files' checksums, so PDBs (and the DLL debug-directory bytes derived from them) differ
+# across operating systems even though the compiled IL and metadata are identical. Same-OS
+# reproducibility is what a third party can repeat; see docs/REPRODUCIBLE-BUILD.md (#305).
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: reproducible-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  reproducible:
+    name: Build twice on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          dotnet-version: '10.0.x'
+
+      # The second build runs from a worktree of the same commit at a different path, so a path
+      # that leaks into the output shows up as a hash difference.
+      - name: Build twice from different directories
+        shell: bash
+        env:
+          CI: 'true'
+        run: |
+          set -euo pipefail
+          build_and_hash() {
+            local root="$1" out="$2"
+            : > "$out"
+            while IFS= read -r proj; do
+              local name
+              name="$(basename "$(dirname "$proj")")"
+              dotnet build "$root/$proj" -c Release --nologo -v:q -p:ContinuousIntegrationBuild=true
+              (cd "$root/$(dirname "$proj")/bin/Release" && find . -type f \( -name '*.dll' -o -name '*.pdb' \) -exec sha256sum {} +) \
+                | sed -E "s#^([0-9a-f]+) [ *]\./#\1  ${name}/#" >> "$out"
+            done < <(git ls-files 'src/**/*.csproj' 'src/*.csproj')
+            LC_ALL=C sort -k2 -o "$out" "$out"
+            test -s "$out"
+          }
+
+          # A worktree (not a plain copy) so the second build still sees the same commit and
+          # remote, which the PDB's SourceLink map and the informational version embed.
+          second="$RUNNER_TEMP/second-build/checkout-copy"
+          git worktree add --detach "$second" HEAD
+
+          build_and_hash "$PWD" "$RUNNER_TEMP/first.txt"
+          build_and_hash "$second" "$RUNNER_TEMP/second.txt"
+
+          cat "$RUNNER_TEMP/first.txt"
+          if diff -u "$RUNNER_TEMP/first.txt" "$RUNNER_TEMP/second.txt"; then
+            echo "Two builds from different directories are byte-identical ($(wc -l < "$RUNNER_TEMP/first.txt") files)."
+          else
+            echo "::error::Build output is not reproducible on ${{ matrix.os }} (diff above)."
+            exit 1
+          fi
