@@ -11,6 +11,7 @@ namespace Wolfgang.Extensions.Logging.InMemoryLogger.Tests.Fuzz;
 /// 100,000 (#105). A failing property prints a <c>Replay</c> seed; pass it as
 /// <c>[FuzzProperty(Replay = "...")]</c> to re-run the shrunk case deterministically.
 /// </summary>
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property, AllowMultiple = false)]
 public sealed class FuzzPropertyAttribute : PropertyAttribute
 {
     /// <summary>The case count used when <c>FSCHECK_MAX_TESTS</c> is unset or invalid.</summary>
