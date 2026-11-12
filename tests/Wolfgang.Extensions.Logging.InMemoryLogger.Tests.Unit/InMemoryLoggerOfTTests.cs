@@ -181,4 +181,17 @@ public class InMemoryLoggerOfTTests
 
         Assert.Empty(sut.Scopes);
     }
+
+
+
+    [Fact]
+    public void Log_when_called_uses_the_full_type_name_as_the_category()
+    {
+        var sut = new InMemoryLogger<InMemoryLoggerOfTTests>();
+
+        sut.LogInformation("message");
+
+        var entry = Assert.Single(sut.LogEntries);
+        Assert.Equal(typeof(InMemoryLoggerOfTTests).FullName, entry.Category);
+    }
 }

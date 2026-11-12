@@ -196,14 +196,6 @@ public class InMemoryLoggerTests
 
 
 
-    private sealed class CacheProbeState
-    {
-        public CacheProbeState(string value) => Value = value;
-
-
-
-        public string Value { get; }
-    }
 
 
 
@@ -291,5 +283,49 @@ public class InMemoryLoggerTests
         inner.Dispose();
 
         Assert.Equal(new object[] { "outer" }, sut.Scopes);
+    }
+
+
+
+    [Fact]
+    public void Ctor_when_capacity_is_1_accepts_it()
+    {
+        var sut = new InMemoryLogger("TestCategory", capacity: 1);
+
+        Assert.Equal(1, sut.Capacity);
+    }
+
+
+
+    [Fact]
+    public void Ctor_when_capacity_is_less_than_1_says_so_in_the_message()
+    {
+        var ex = Assert.Throws<ArgumentOutOfRangeException>
+        (
+            () => new InMemoryLogger("TestCategory", capacity: -1)
+        );
+
+        Assert.StartsWith("Value cannot be less than 1", ex.Message, StringComparison.Ordinal);
+    }
+
+
+
+    [Fact]
+    public void Scopes_when_no_scope_is_open_returns_the_shared_empty_array()
+    {
+        var sut = new InMemoryLogger("TestCategory");
+
+        Assert.Same(Array.Empty<object>(), sut.Scopes);
+    }
+
+
+
+    private sealed class CacheProbeState
+    {
+        public CacheProbeState(string value) => Value = value;
+
+
+
+        public string Value { get; }
     }
 }
