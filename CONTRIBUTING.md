@@ -58,7 +58,7 @@ You can contribute in several ways:
 
 This project maintains **extremely high code quality standards** through multiple layers of static analysis and automated enforcement.
 
-### The 7 Analyzers
+### The 8 Analyzers
 
 All code is analyzed by these tools during build:
 
@@ -95,6 +95,10 @@ All code is analyzed by these tools during build:
    - Industry-standard code analysis
    - Security vulnerability detection
    - Code smell identification
+
+8. **Microsoft.CodeAnalysis.PublicApiAnalyzers**
+   - Tracks the public API surface in `PublicAPI.Shipped.txt` / `PublicAPI.Unshipped.txt`
+   - An unrecorded public member (RS0016) or a removed one (RS0017) fails the Release build
 
 ### Async-First Enforcement
 
@@ -213,7 +217,6 @@ Key style rules enforced:
 - **Naming:** PascalCase for public members, camelCase for parameters/locals
 - **File-scoped namespaces:** Required in C# 10+
 - **`var` preferences:** Use for built-in types and when type is obvious
-- **Null checks:** Prefer pattern matching (`is null`, `is not null`)
 
 View the complete configuration in [.editorconfig](.editorconfig).
 
