@@ -33,6 +33,7 @@ public class AsyncScopeTests
     }
 
 
+
     [Fact]
     public async Task BeginScope_when_used_across_concurrent_awaits_keeps_each_branch_isolated()
     {
@@ -69,6 +70,7 @@ public class AsyncScopeTests
     }
 
 
+
     [Fact]
     public async Task BeginScope_when_nested_visible_in_inner_scope_only_outer_after_inner_disposes()
     {
@@ -95,6 +97,7 @@ public class AsyncScopeTests
     }
 
 
+
     [Fact]
     public async Task Log_when_called_inside_a_scope_after_await_records_the_entry()
     {
@@ -113,7 +116,7 @@ public class AsyncScopeTests
             );
         }
 
-        Assert.Single(sut.LogEntries);
-        Assert.Equal("after-await", sut.LogEntries[0].Formatter(sut.LogEntries[0].State, sut.LogEntries[0].Exception));
+        var entry = Assert.Single(sut.LogEntries);
+        Assert.Equal("after-await", entry.Formatter(entry.State, entry.Exception));
     }
 }

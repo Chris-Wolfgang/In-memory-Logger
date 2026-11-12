@@ -4,7 +4,7 @@ An implementation of `ILogger` and `ILogger<T>` from `Microsoft.Extensions.Loggi
 
 [![NuGet](https://img.shields.io/nuget/v/Wolfgang.Extensions.Logging.InMemoryLogger.svg?logo=nuget&label=NuGet)](https://www.nuget.org/packages/Wolfgang.Extensions.Logging.InMemoryLogger)
 [![NuGet downloads](https://img.shields.io/nuget/dt/Wolfgang.Extensions.Logging.InMemoryLogger.svg?logo=nuget&label=downloads)](https://www.nuget.org/packages/Wolfgang.Extensions.Logging.InMemoryLogger)
-[![PR build](https://img.shields.io/github/actions/workflow/status/Chris-Wolfgang/In-memory-Logger/pr.yaml?event=pull_request_target&label=PR%20build&logo=github)](https://github.com/Chris-Wolfgang/In-memory-Logger/actions/workflows/pr.yaml)
+[![PR build](https://img.shields.io/github/actions/workflow/status/Chris-Wolfgang/In-memory-Logger/pr.yaml?event=pull_request&label=PR%20build&logo=github)](https://github.com/Chris-Wolfgang/In-memory-Logger/actions/workflows/pr.yaml)
 [![Release](https://img.shields.io/github/actions/workflow/status/Chris-Wolfgang/In-memory-Logger/release.yaml?event=release&label=release&logo=github)](https://github.com/Chris-Wolfgang/In-memory-Logger/actions/workflows/release.yaml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![.NET](https://img.shields.io/badge/.NET-Multi--Targeted-purple.svg)](https://dotnet.microsoft.com/)
@@ -48,6 +48,7 @@ This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) f
 - Captures scope state via `BeginScope` for assertion in tests.
 - Returns log entries as `IReadOnlyList<LogEntry<object>>` for easy LINQ + assertion patterns.
 - Ships both a non-generic `InMemoryLogger` (constructed with a category string) and a generic `InMemoryLogger<T>` (category derived from `typeof(T)`), matching the standard `ILogger` / `ILogger<T>` shape.
+- `InMemoryLoggerProvider` plus the `AddInMemoryLogger` extension plug the logger into `ILoggerFactory` / dependency injection; the provider exposes every logger it created (`Loggers`) and all of their entries (`LogEntries`).
 
 ---
 
@@ -73,6 +74,25 @@ The non-generic form takes a category string directly:
 
 ```csharp
 var logger = new InMemoryLogger("MyCategory", LogLevel.Warning, capacity: 32);
+```
+
+### Register with `ILoggerFactory` / dependency injection
+
+```csharp
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Wolfgang.Extensions.Logging.InMemoryLogger;
+
+var provider = new InMemoryLoggerProvider(LogLevel.Information);
+
+using var services = new ServiceCollection()
+    .AddLogging(builder => builder.AddInMemoryLogger(provider))
+    .BuildServiceProvider();
+
+services.GetRequiredService<ILogger<MyService>>().LogInformation("hello");
+
+// Entries from every category the factory created
+Assert.Single(provider.LogEntries);
 ```
 
 ---
