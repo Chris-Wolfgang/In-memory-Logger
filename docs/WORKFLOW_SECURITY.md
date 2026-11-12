@@ -150,6 +150,23 @@ When reviewing changes to the workflow security model:
 2. Update the list in this document. It is the only copy: [CONTRIBUTING.md](../CONTRIBUTING.md)
    characterises the categories and links here rather than repeating the names.
 
+## Accepted analyzer suppressions
+
+`actionlint` and `zizmor` run on every pull request (`.github/workflows/actions-audit.yaml`); `actionlint` findings and
+high-severity `zizmor` findings fail the check. A deliberate pattern is accepted with a comment next to the flagged
+line instead of a central file, so each entry below has its reason in place. These are all of them as of this
+writing (`grep -rn "zizmor: *ignore\[\|shellcheck disable" .github/workflows` finds them again, along with some explanatory comments in `actions-audit.yaml` that describe the syntax):
+
+| Where | Tool and rule | Why it is accepted |
+|---|---|---|
+| `protected-files.yaml`, `pull_request_target:` trigger | zizmor `dangerous-triggers` | The job never checks out or executes pull request content; it only lists the files a PR changes through the API and reports on them. |
+| `release.yaml`, `trigger-docs` job `uses: ./.github/workflows/docfx.yaml` | zizmor `self-repository` | GitHub's `$/` self-repository syntax is preferred, but `actionlint` (which fails the audit job) rejects it until rhysd/actionlint#732 ships. Switch to `$/.github/workflows/docfx.yaml` and drop the ignore then. |
+| `pr.yaml`, the Stage 1 coverage-gate loop | shellcheck `SC2094` | False positive: the loop's redirect and the inner `awk` both only read `Summary.txt`. |
+| `scorecard.yaml`, building `rules_json` | shellcheck `SC2086` | Intentional word-splitting: one rule per line for the `jq -R`/`-s` pipeline. |
+
+Adding a suppression is a change to a protected workflow file, so it needs a maintainer's review; put the reason
+in the comment, and add a row here.
+
 ## References
 
 - [GitHub Actions Security Hardening](https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions)
