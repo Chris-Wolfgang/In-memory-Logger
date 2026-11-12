@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 using Xunit;
@@ -12,6 +11,12 @@ namespace Wolfgang.Extensions.Logging.InMemoryLogger.Tests.Unit.Globalization;
 /// </summary>
 public class CultureInvarianceTests
 {
+    // One shared identity formatter: a lambda inlined at each call site leaves the copy in a test
+    // that never invokes the stored formatter uncovered, which the 100% test-assembly gate rejects.
+    private static readonly System.Func<string, System.Exception?, string> Identity = static (s, _) => s;
+
+
+
     public static IEnumerable<object[]> Cultures() =>
         new[]
         {
@@ -38,7 +43,7 @@ public class CultureInvarianceTests
             new EventId(1),
             "İıIi 1234.5",
             null,
-            TestFormatters.Identity
+            Identity
         );
 
         var entry = Assert.Single(sut.LogEntries);
@@ -108,7 +113,7 @@ public class CultureInvarianceTests
             new EventId(1),
             "message",
             null,
-            TestFormatters.Identity
+            Identity
         );
 
         Assert.Equal
