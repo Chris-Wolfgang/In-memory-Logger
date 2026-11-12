@@ -35,7 +35,7 @@ using (logger.BeginScope(new Payload(1)))
 Check("Scopes empty after dispose", logger.Scopes.Length == 0);
 
 // InMemoryLogger<T>
-var typed = new InMemoryLogger<Payload>(LogLevel.Trace, capacity: 2);
+var typed = new InMemoryLogger<Payload>(capacity: 2);
 typed.LogTrace("typed");
 Check("InMemoryLogger<T>.LogEntries", typed.LogEntries.Count == 1 && typed.IsEnabled(LogLevel.Trace));
 Check("InMemoryLogger<T> category", string.Equals(typed.LogEntries[0].Category, typeof(Payload).FullName, StringComparison.Ordinal));
@@ -48,6 +48,9 @@ Check("InMemoryLogger<T> properties", typed.MinimumLogLevel == LogLevel.Trace &&
 
 // InMemoryLoggerProvider + AddInMemoryLogger through LoggerFactory.
 var provider = new InMemoryLoggerProvider(LogLevel.Warning);
+// LoggerFactory.Create runs the configure delegate before it returns, so the closure never sees
+// provider after the Dispose below.
+// ReSharper disable once AccessToDisposedClosure
 using (var factory = LoggerFactory.Create(builder => builder.AddInMemoryLogger(provider)))
 {
     factory.CreateLogger<Payload>().LogWarning("from the factory");
