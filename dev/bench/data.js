@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1794496951894,
+  "lastUpdate": 1794512518004,
   "repoUrl": "https://github.com/Chris-Wolfgang/In-memory-Logger",
   "entries": {
     "BenchmarkDotNet": [
@@ -910,6 +910,54 @@ window.BENCHMARK_DATA = {
             "value": 7.12703017393748,
             "unit": "ns",
             "range": "± 0.0017515779239661235"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "210299580+Chris-Wolfgang@users.noreply.github.com",
+            "name": "Chris Wolfgang",
+            "username": "Chris-Wolfgang"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e685690eb7eeb4e8592b871358b83c3205f717c1",
+          "message": "docs+test: compiled <example> blocks (DocExamples project) and examples for the public API (#351)\n\n* docs+test: compiled <example> blocks (DocExamples project) and examples for the public API\n\nRefs #120\n\nCo-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>\n\n* build: align Microsoft.Extensions.DependencyInjection with the library's 10.0.14\n\nThe library now brings Microsoft.Extensions.Logging 10.0.14, so a direct 10.0.13\nreference fails restore with NU1605 (package downgrade) under warnings-as-errors.\n\nCo-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>\n\n* build: bump Microsoft.Extensions.DependencyInjection to 11.0.0 in Tests.DocExamples\n\nmain's #403 moved the library to Microsoft.Extensions.Logging 11.0.0, which\nneeds DependencyInjection >= 11.0.0; the 10.0.14 pin is now a NU1605 downgrade.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\n\n---------\n\nCo-authored-by: Claude Fable 5.1 <noreply@anthropic.com>",
+          "timestamp": "2026-11-12T14:14:22-05:00",
+          "tree_id": "c5c4f0078dc726b8b55903dc04d688d0f68eedd0",
+          "url": "https://github.com/Chris-Wolfgang/In-memory-Logger/commit/e685690eb7eeb4e8592b871358b83c3205f717c1"
+        },
+        "date": 1794512516560,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogInformation",
+            "value": 96.83952422936757,
+            "unit": "ns",
+            "range": "± 75.75177010357274"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogBelowMinimum",
+            "value": 0.003081072742740313,
+            "unit": "ns",
+            "range": "± 0.005336574532241815"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.BeginScopeRoundtrip",
+            "value": 31.07769646247228,
+            "unit": "ns",
+            "range": "± 0.7700343472484646"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogEntriesIndexer",
+            "value": 11.911596139272055,
+            "unit": "ns",
+            "range": "± 0.015500261012851131"
           }
         ]
       }
