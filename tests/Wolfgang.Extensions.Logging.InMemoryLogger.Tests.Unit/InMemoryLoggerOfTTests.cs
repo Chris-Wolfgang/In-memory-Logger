@@ -15,6 +15,7 @@ public class InMemoryLoggerOfTTests
     }
 
 
+
     [Fact]
     public void LogEntries_when_nothing_is_logged_returns_empty_list()
     {
@@ -22,6 +23,7 @@ public class InMemoryLoggerOfTTests
 
         Assert.Empty(sut.LogEntries);
     }
+
 
 
     [Fact]
@@ -49,6 +51,7 @@ public class InMemoryLoggerOfTTests
 
         Assert.Null(logEntry.Exception);
     }
+
 
 
     [Theory]
@@ -89,6 +92,7 @@ public class InMemoryLoggerOfTTests
     }
 
 
+
     [Fact]
     public void Log_when_MinimumLogLevel_is_Trace_adds_entry()
     {
@@ -98,6 +102,7 @@ public class InMemoryLoggerOfTTests
 
         Assert.NotEmpty(sut.LogEntries);
     }
+
 
 
     [Fact]
@@ -121,6 +126,7 @@ public class InMemoryLoggerOfTTests
     }
 
 
+
     [Theory]
     [InlineData(10)]
     [InlineData(100)]
@@ -132,6 +138,7 @@ public class InMemoryLoggerOfTTests
     }
 
 
+
     [Fact]
     public void Ctor_when_capacity_not_specified_initializes_to_16()
     {
@@ -141,8 +148,9 @@ public class InMemoryLoggerOfTTests
     }
 
 
+
     [Fact]
-    public void BeginScope_returns_non_null_disposable()
+    public void BeginScope_when_called_returns_a_disposable()
     {
         var sut = new InMemoryLogger<InMemoryLoggerOfTTests>();
 
@@ -151,6 +159,7 @@ public class InMemoryLoggerOfTTests
         Assert.NotNull(scope);
         scope.Dispose();
     }
+
 
 
     [Fact]
@@ -166,6 +175,7 @@ public class InMemoryLoggerOfTTests
     }
 
 
+
     [Fact]
     public void BeginScope_when_nested_Scopes_contains_outermost_to_innermost()
     {
@@ -179,6 +189,7 @@ public class InMemoryLoggerOfTTests
             Assert.Equal("inner", sut.Scopes[1]);
         }
     }
+
 
 
     [Fact]

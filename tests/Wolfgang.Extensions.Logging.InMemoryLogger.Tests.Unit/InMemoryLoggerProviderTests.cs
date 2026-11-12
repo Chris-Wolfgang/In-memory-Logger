@@ -17,6 +17,7 @@ public class InMemoryLoggerProviderTests
     }
 
 
+
     [Fact]
     public void CreateLogger_when_called_twice_with_same_category_returns_same_instance()
     {
@@ -29,6 +30,7 @@ public class InMemoryLoggerProviderTests
     }
 
 
+
     [Fact]
     public void CreateLogger_when_called_with_different_categories_returns_different_instances()
     {
@@ -39,6 +41,7 @@ public class InMemoryLoggerProviderTests
 
         Assert.NotSame(logger1, logger2);
     }
+
 
 
     [Fact]
@@ -55,8 +58,9 @@ public class InMemoryLoggerProviderTests
     }
 
 
+
     [Fact]
-    public void Loggers_returns_all_created_loggers()
+    public void Loggers_when_loggers_were_created_returns_each_of_them()
     {
         using var sut = new InMemoryLoggerProvider();
 
@@ -67,6 +71,7 @@ public class InMemoryLoggerProviderTests
         Assert.True(sut.Loggers.ContainsKey("Category1"));
         Assert.True(sut.Loggers.ContainsKey("Category2"));
     }
+
 
 
     [Fact]
@@ -82,8 +87,9 @@ public class InMemoryLoggerProviderTests
     }
 
 
+
     [Fact]
-    public void Dispose_does_not_throw()
+    public void Dispose_when_called_does_not_throw()
     {
         var sut = new InMemoryLoggerProvider();
 

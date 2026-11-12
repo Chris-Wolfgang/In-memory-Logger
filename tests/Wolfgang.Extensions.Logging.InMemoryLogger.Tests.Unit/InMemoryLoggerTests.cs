@@ -15,6 +15,7 @@ public class InMemoryLoggerTests
     }
 
 
+
     [Fact]
     public void Ctor_when_category_is_null_throws_ArgumentNullException()
     {
@@ -24,6 +25,7 @@ public class InMemoryLoggerTests
         );
         Assert.Equal("category", ex.ParamName);
     }
+
 
 
     [Fact]
@@ -37,6 +39,7 @@ public class InMemoryLoggerTests
     }
 
 
+
     [Fact]
     public void Ctor_when_default_parameters_MinimumLogLevel_is_Trace()
     {
@@ -44,6 +47,7 @@ public class InMemoryLoggerTests
 
         Assert.Equal(LogLevel.Trace, sut.MinimumLogLevel);
     }
+
 
 
     [Theory]
@@ -62,6 +66,7 @@ public class InMemoryLoggerTests
     }
 
 
+
     [Fact]
     public void LogEntries_when_nothing_is_logged_returns_empty_list()
     {
@@ -69,6 +74,7 @@ public class InMemoryLoggerTests
 
         Assert.Empty(sut.LogEntries);
     }
+
 
 
     [Fact]
@@ -92,6 +98,7 @@ public class InMemoryLoggerTests
     }
 
 
+
     [Fact]
     public void Log_when_MinimumLogLevel_is_None_does_not_add_entry()
     {
@@ -103,6 +110,7 @@ public class InMemoryLoggerTests
     }
 
 
+
     [Fact]
     public void IsEnabled_when_logLevel_is_None_returns_false()
     {
@@ -110,6 +118,7 @@ public class InMemoryLoggerTests
 
         Assert.False(sut.IsEnabled(LogLevel.None));
     }
+
 
 
     [Theory]
@@ -121,6 +130,7 @@ public class InMemoryLoggerTests
 
         Assert.Equal(capacity, sut.Capacity);
     }
+
 
 
     [Fact]
@@ -136,6 +146,7 @@ public class InMemoryLoggerTests
     }
 
 
+
     [Fact]
     public void BeginScope_when_nested_Scopes_contains_outermost_to_innermost()
     {
@@ -149,6 +160,7 @@ public class InMemoryLoggerTests
             Assert.Equal("inner", sut.Scopes[1]);
         }
     }
+
 
 
     [Fact]
