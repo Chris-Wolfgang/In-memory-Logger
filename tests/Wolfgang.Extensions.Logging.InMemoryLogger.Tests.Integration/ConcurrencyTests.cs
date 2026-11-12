@@ -32,7 +32,7 @@ public class ConcurrencyTests
     [Fact]
     public async Task Log_when_called_from_dedicated_threads_at_once_keeps_every_entry_once_and_in_per_thread_order()
     {
-        var sut = new InMemoryLogger("stress.log", LogLevel.Trace, capacity: 1);
+        var sut = new InMemoryLogger("stress.log", capacity: 1);
 
         await RunOnDedicatedThreadsAsync
         (
@@ -129,6 +129,8 @@ public class ConcurrencyTests
             (
                 () =>
                 {
+                    // barrier is disposed only after Task.WhenAll below has observed every task.
+                    // ReSharper disable once AccessToDisposedClosure
                     barrier.SignalAndWait();
                     body(thread);
                 },
