@@ -35,7 +35,7 @@
          `xunit.v3` package is reflection-based and cannot run under Native AOT. Requires net9.0+ and C#. -->
     <PackageReference Include="xunit.v3.aot" Version="4.0.2" />
     <!-- Same reference as Tests.Unit: InMemoryLoggerBuilderExtensionsTests builds a ServiceCollection. -->
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.14" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="11.0.0" />
   </ItemGroup>
 
   <ItemGroup>
