@@ -12,6 +12,21 @@ namespace Wolfgang.Extensions.Logging.InMemoryLogger;
 /// An <see cref="ILoggerProvider"/> that creates <see cref="InMemoryLogger"/> instances
 /// and provides access to all log entries across all loggers.
 /// </summary>
+/// <example>
+/// <code>
+/// using Microsoft.Extensions.Logging;
+/// using Wolfgang.Extensions.Logging.InMemoryLogger;
+///
+/// var provider = new InMemoryLoggerProvider(LogLevel.Information);
+/// using var factory = LoggerFactory.Create(builder => builder.AddInMemoryLogger(provider));
+///
+/// factory.CreateLogger("Orders").LogInformation("placed");
+/// factory.CreateLogger("Billing").LogInformation("charged");
+///
+/// var all = provider.LogEntries.Count; // 2
+/// var orders = provider.Loggers["Orders"].LogEntries.Count; // 1
+/// </code>
+/// </example>
 public sealed class InMemoryLoggerProvider : ILoggerProvider
 {
     private readonly ConcurrentDictionary<string, InMemoryLogger> _loggers = new(StringComparer.Ordinal);

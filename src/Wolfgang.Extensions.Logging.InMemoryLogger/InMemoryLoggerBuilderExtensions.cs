@@ -19,6 +19,10 @@ public static class InMemoryLoggerBuilderExtensions
     /// </exception>
     /// <example>
     /// <code>
+    /// using Microsoft.Extensions.DependencyInjection;
+    /// using Microsoft.Extensions.Logging;
+    /// using Wolfgang.Extensions.Logging.InMemoryLogger;
+    ///
     /// var provider = new InMemoryLoggerProvider();
     /// var serviceProvider = new ServiceCollection()
     ///     .AddLogging(builder => builder.AddInMemoryLogger(provider))

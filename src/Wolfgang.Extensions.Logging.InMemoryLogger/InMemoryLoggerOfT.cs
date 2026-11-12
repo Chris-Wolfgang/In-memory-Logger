@@ -24,6 +24,20 @@ public class InMemoryLogger<T> : ILogger<T>
     /// <param name="minLogLevel">The minimum log level to log.</param>
     /// <param name="capacity">The initial capacity of the log entries collection.</param>
     /// <exception cref="ArgumentOutOfRangeException">Thrown when capacity is less than 1.</exception>
+    /// <example>
+    /// <code>
+    /// using System.Text;
+    /// using Microsoft.Extensions.Logging;
+    /// using Wolfgang.Extensions.Logging.InMemoryLogger;
+    ///
+    /// // Inject wherever an ILogger&lt;StringBuilder&gt; is expected.
+    /// ILogger&lt;StringBuilder&gt; logger = new InMemoryLogger&lt;StringBuilder&gt;(LogLevel.Warning);
+    /// logger.LogWarning("Low disk space");
+    ///
+    /// var captured = (InMemoryLogger&lt;StringBuilder&gt;)logger;
+    /// var category = captured.LogEntries[0].Category; // "System.Text.StringBuilder"
+    /// </code>
+    /// </example>
     public InMemoryLogger
     (
         LogLevel minLogLevel = LogLevel.Trace,
