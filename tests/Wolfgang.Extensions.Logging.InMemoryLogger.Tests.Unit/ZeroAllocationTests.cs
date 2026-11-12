@@ -1,5 +1,6 @@
 #if NET5_0_OR_GREATER
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Logging;
 using Xunit;
 
@@ -82,7 +83,7 @@ public class ZeroAllocationTests
     public void Log_when_enabled_with_a_reused_formatter_and_room_in_the_buffer_allocates_nothing()
     {
         // Room for the warm-up call plus both runs of the loop, so the buffer never grows.
-        var sut = new InMemoryLogger("alloc", LogLevel.Trace, capacity: (2 * Calls) + 1);
+        var sut = new InMemoryLogger("alloc", capacity: (2 * Calls) + 1);
         sut.Log(LogLevel.Information, default, ProbeState, null, ProbeFormatter);
 
         var allocated = Measure(() =>
@@ -146,6 +147,9 @@ public class ZeroAllocationTests
 
 
 
+    // Empty by design: a reference-type state of its own type, so the measured Log<TState> path
+    // is this TState alone and the state carries no fields that could allocate.
+    [SuppressMessage("Minor Code Smell", "S2094:Classes should not be empty", Justification = "Marker state type; see the comment above.")]
     private sealed class AllocationProbe
     {
     }
