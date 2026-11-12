@@ -9,6 +9,8 @@ name: PR Benchmarks
 # back to back, so it is reported and only fails beyond TIME_THRESHOLD_PCT (a deliberately coarse
 # default). Add the label `perf-impact-acknowledged` to accept a regression; the job then reports it
 # and passes. The comment/summary is replaced on every push, never appended.
+# A time delta is not gated when both means are below TIME_FLOOR_NS: BenchmarkDotNet cannot resolve
+# sub-nanosecond means (it reports them as zero measurements), so their percentage change is noise.
 
 on:
   pull_request:
@@ -36,6 +38,7 @@ jobs:
     env:
       ALLOC_THRESHOLD_PCT: '50'
       TIME_THRESHOLD_PCT: '100'
+      TIME_FLOOR_NS: '1'
       BENCH_DIR: benchmarks/Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks
       ACKNOWLEDGED: ${{ contains(github.event.pull_request.labels.*.name, 'perf-impact-acknowledged') }}
     steps:
@@ -86,6 +89,7 @@ jobs:
 
           alloc_limit = float(os.environ["ALLOC_THRESHOLD_PCT"])
           time_limit = float(os.environ["TIME_THRESHOLD_PCT"])
+          time_floor = float(os.environ["TIME_FLOOR_NS"])
 
 
           def load(folder):
@@ -131,7 +135,7 @@ jobs:
                   if da > alloc_limit:
                       regress.append(f"{name}: allocations {old_a} -> {new_a} B/op ({da:+.0f}%)")
                       flag = " :x:"
-                  if dt > time_limit:
+                  if dt > time_limit and max(old_t, new_t) >= time_floor:
                       regress.append(f"{name}: time {old_t:,.1f} -> {new_t:,.1f} ns ({dt:+.0f}%)")
                       flag = " :x:"
                   lines.append(f"| {name}{flag} | {old_t:,.1f} ns | {new_t:,.1f} ns | {dt:+.1f}% | {old_a} | {new_a} | {da:+.1f}% |")
@@ -140,7 +144,8 @@ jobs:
           lines += [
               "",
               f"Gate: allocations may grow by at most {alloc_limit:.0f}% (deterministic); time by at most {time_limit:.0f}% "
-              "(noisy on shared runners, so deliberately coarse). Label `perf-impact-acknowledged` accepts a regression.",
+              f"(noisy on shared runners, so deliberately coarse; not gated when both means are under {time_floor:g} ns). "
+              "Label `perf-impact-acknowledged` accepts a regression.",
           ]
           if regress:
               lines += ["", "**Beyond threshold:**"] + [f"- {r}" for r in regress]
