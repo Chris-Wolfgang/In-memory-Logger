@@ -68,8 +68,8 @@ public class InMemoryLoggerProviderTests
         sut.CreateLogger("Category2");
 
         Assert.Equal(2, sut.Loggers.Count);
-        Assert.True(sut.Loggers.ContainsKey("Category1"));
-        Assert.True(sut.Loggers.ContainsKey("Category2"));
+        Assert.Contains("Category1", sut.Loggers.Keys);
+        Assert.Contains("Category2", sut.Loggers.Keys);
     }
 
 

@@ -1,7 +1,7 @@
 using System;
-using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Xunit;
@@ -128,50 +128,56 @@ public class ConcurrentProducersTests
 
 
     [Fact]
-    public async Task LogEntries_when_read_during_active_writes_does_not_throw()
+    public async Task LogEntries_when_read_during_active_writes_returns_growing_prefixes_of_the_log()
     {
-        // The contract: LogEntries is safe to enumerate while another thread
-        // is still appending. We don't pin a specific snapshot count — that
-        // depends on scheduling — but the snapshot must not throw and must
-        // be a valid prefix of the eventual log.
+        // The contract: LogEntries is safe to read while another thread is
+        // still appending, and each snapshot is a prefix of the eventual log.
+        // We don't pin a specific snapshot count — that depends on scheduling —
+        // but successive snapshots can never shrink, each one's entries are the
+        // first N entries in order, and the final log holds at least as many.
+        const int total = 20_000;
         var sut = new InMemoryLogger
         (
             category: "concurrent.snapshot",
             minLogLevel: LogLevel.Trace,
-            capacity: 10_000
+            capacity: 16
         );
 
-        using var cts = new CancellationTokenSource();
-        var token = cts.Token;
+        // A bounded producer: the reader below races it, but the test's cost does not
+        // depend on how fast the machine is.
         var producer = Task.Run(() =>
         {
-            var i = 0;
-            while (!token.IsCancellationRequested)
+            for (var i = 0; i < total; i++)
             {
-                sut.Log(LogLevel.Information, new EventId(0), i++, null, (s, _) => s.ToString());
+                sut.Log(LogLevel.Information, new EventId(i), i, null, static (s, _) => s.ToString(CultureInfo.InvariantCulture));
             }
         });
 
-        // Take several snapshots while the producer is going.
-        var snapshots = new ConcurrentBag<int>();
+        // Take snapshots while the producer is going. Each one is read through .Count and
+        // the indexer, the routes that would race if the underlying collection were not
+        // copied under the lock, and sampled at up to 17 positions: entry n of every
+        // snapshot must be the n-th value the producer logged.
+        var counts = new List<int>();
+        var outOfOrder = 0;
         for (var i = 0; i < 50; i++)
         {
-            // Enumerate via .Count and .ElementAt — both routes the analyzer
-            // tools warn would race if the underlying collection were not
-            // thread-safe.
             var snapshot = sut.LogEntries;
-            snapshots.Add(snapshot.Count);
-            if (snapshot.Count > 0)
+            counts.Add(snapshot.Count);
+            for (var n = 0; n < snapshot.Count; n += Math.Max(1, snapshot.Count / 16))
             {
-                _ = snapshot[snapshot.Count - 1];
+                outOfOrder += snapshot[n].EventId.Id == n ? 0 : 1;
             }
+
             await Task.Delay(1);
         }
 
-        cts.Cancel();
         await producer;
 
-        // No exception is the assertion. (xunit would surface the throw.)
-        Assert.NotEmpty(snapshots);
+        var final = sut.LogEntries;
+
+        Assert.Equal(0, outOfOrder);
+        Assert.Equal(counts.OrderBy(c => c), counts);
+        Assert.Equal(total, final.Count);
+        Assert.Equal(Enumerable.Range(0, total), final.Select(e => e.EventId.Id));
     }
 }

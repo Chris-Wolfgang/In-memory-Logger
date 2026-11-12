@@ -116,7 +116,7 @@ public class AsyncScopeTests
             );
         }
 
-        Assert.Single(sut.LogEntries);
-        Assert.Equal("after-await", sut.LogEntries[0].Formatter(sut.LogEntries[0].State, sut.LogEntries[0].Exception));
+        var entry = Assert.Single(sut.LogEntries);
+        Assert.Equal("after-await", entry.Formatter(entry.State, entry.Exception));
     }
 }

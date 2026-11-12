@@ -90,8 +90,7 @@ public class InMemoryLoggerTests
             static (s, _) => s
         );
 
-        Assert.Single(sut.LogEntries);
-        var logEntry = sut.LogEntries[0];
+        var logEntry = Assert.Single(sut.LogEntries);
         Assert.Equal(LogLevel.Information, logEntry.LogLevel);
         Assert.Equal("TestCategory", logEntry.Category);
         Assert.Equal(1, logEntry.EventId.Id);
@@ -220,5 +219,77 @@ public class InMemoryLoggerTests
         Assert.NotSame(entries[0].Formatter, entries[1].Formatter);
         Assert.Equal("upper:STATE", entries[0].Formatter(entries[0].State, entries[0].Exception));
         Assert.Equal("lower:state", entries[1].Formatter(entries[1].State, entries[1].Exception));
+    }
+
+
+
+    [Fact]
+    public void Log_when_exception_supplied_captures_the_exception()
+    {
+        var sut = new InMemoryLogger("TestCategory");
+        var exception = new InvalidOperationException("boom");
+
+        sut.Log(LogLevel.Error, new EventId(3), "failed", exception, static (s, _) => s);
+
+        var entry = Assert.Single(sut.LogEntries);
+        Assert.Same(exception, entry.Exception);
+    }
+
+
+
+    [Theory]
+    [InlineData(LogLevel.Trace, LogLevel.Trace, true)]
+    [InlineData(LogLevel.Information, LogLevel.Debug, false)]
+    [InlineData(LogLevel.Information, LogLevel.Information, true)]
+    [InlineData(LogLevel.Information, LogLevel.Warning, true)]
+    [InlineData(LogLevel.Error, LogLevel.Warning, false)]
+    [InlineData(LogLevel.Error, LogLevel.Critical, true)]
+    [InlineData(LogLevel.Critical, LogLevel.Error, false)]
+    [InlineData(LogLevel.Critical, LogLevel.Critical, true)]
+    [InlineData(LogLevel.None, LogLevel.Critical, false)]
+    [InlineData(LogLevel.Trace, LogLevel.None, false)]
+    public void IsEnabled_when_level_is_compared_with_MinimumLogLevel_returns_expected
+    (
+        LogLevel minLogLevel,
+        LogLevel logLevel,
+        bool expected
+    )
+    {
+        var sut = new InMemoryLogger("TestCategory", minLogLevel);
+
+        Assert.Equal(expected, sut.IsEnabled(logLevel));
+    }
+
+
+
+    [Fact]
+    public void BeginScope_when_disposed_out_of_order_ignores_the_dispose()
+    {
+        var sut = new InMemoryLogger("TestCategory");
+        var outer = sut.BeginScope("outer");
+        var inner = sut.BeginScope("inner");
+
+        outer.Dispose();
+
+        Assert.Equal(new object[] { "outer", "inner" }, sut.Scopes);
+
+        inner.Dispose();
+
+        Assert.Equal(new object[] { "outer" }, sut.Scopes);
+    }
+
+
+
+    [Fact]
+    public void BeginScope_when_disposed_twice_pops_only_once()
+    {
+        var sut = new InMemoryLogger("TestCategory");
+        using var outer = sut.BeginScope("outer");
+        var inner = sut.BeginScope("inner");
+
+        inner.Dispose();
+        inner.Dispose();
+
+        Assert.Equal(new object[] { "outer" }, sut.Scopes);
     }
 }
