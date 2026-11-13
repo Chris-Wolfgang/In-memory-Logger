@@ -1,0 +1,17 @@
+{
+  "$schema": "https://raw.githubusercontent.com/stryker-mutator/stryker-net/master/src/Stryker.Core/Stryker.Core/schema/stryker-config.json",
+  "stryker-config": {
+    "project": "Wolfgang.Extensions.Logging.InMemoryLogger.csproj",
+    "target-framework": "net10.0",
+    "reporters": [
+      "html",
+      "json",
+      "progress"
+    ],
+    "thresholds": {
+      "high": 100,
+      "low": 99,
+      "break": 98
+    }
+  }
+}

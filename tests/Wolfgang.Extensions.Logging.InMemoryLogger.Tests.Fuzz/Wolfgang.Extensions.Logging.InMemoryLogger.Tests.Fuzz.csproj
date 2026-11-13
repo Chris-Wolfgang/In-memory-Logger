@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- FsCheck property-based fuzz tests (#105). PR CI runs each property at FsCheck's default
+       100 cases; the weekly fuzz.yaml run sets FSCHECK_MAX_TESTS=100000. Single TFM: the
+       properties exercise the library's behaviour, which is the same code on every target. -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="10.1.0" />
+    <PackageReference Include="FsCheck.Xunit" Version="3.6.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Wolfgang.Extensions.Logging.InMemoryLogger\Wolfgang.Extensions.Logging.InMemoryLogger.csproj" />
+  </ItemGroup>
+
+</Project>
