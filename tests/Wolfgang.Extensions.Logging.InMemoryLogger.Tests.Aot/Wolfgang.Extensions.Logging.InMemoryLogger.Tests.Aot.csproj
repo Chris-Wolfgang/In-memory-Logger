@@ -33,7 +33,7 @@
     <!-- The AOT (source-generated) edition of xUnit.net v3: test discovery, theory data and attribute
          configuration are resolved at build time, so no reflection is needed at run time. The plain
          `xunit.v3` package is reflection-based and cannot run under Native AOT. Requires net9.0+ and C#. -->
-    <PackageReference Include="xunit.v3.aot" Version="4.0.2" />
+    <PackageReference Include="xunit.v3.aot" Version="4.0.3" />
     <!-- Same reference as Tests.Unit: InMemoryLoggerBuilderExtensionsTests builds a ServiceCollection. -->
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="11.0.0" />
   </ItemGroup>
