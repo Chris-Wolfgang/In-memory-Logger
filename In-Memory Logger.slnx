@@ -53,6 +53,7 @@
     <Project Path="src/Wolfgang.Extensions.Logging.InMemoryLogger/Wolfgang.Extensions.Logging.InMemoryLogger.csproj" Id="44f43cd5-6d56-4f06-86ab-f0a0779e785c" />
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="tests/Wolfgang.Extensions.Logging.InMemoryLogger.Tests.Aot/Wolfgang.Extensions.Logging.InMemoryLogger.Tests.Aot.csproj" />
     <Project Path="tests/Wolfgang.Extensions.Logging.InMemoryLogger.Tests.AotSmoke/Wolfgang.Extensions.Logging.InMemoryLogger.Tests.AotSmoke.csproj" />
     <Project Path="tests/Wolfgang.Extensions.Logging.InMemoryLogger.Tests.DocExamples/Wolfgang.Extensions.Logging.InMemoryLogger.Tests.DocExamples.csproj" />
     <Project Path="tests/Wolfgang.Extensions.Logging.InMemoryLogger.Tests.Fuzz/Wolfgang.Extensions.Logging.InMemoryLogger.Tests.Fuzz.csproj" />
