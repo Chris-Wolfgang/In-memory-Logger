@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1794512518004,
+  "lastUpdate": 1794532427681,
   "repoUrl": "https://github.com/Chris-Wolfgang/In-memory-Logger",
   "entries": {
     "BenchmarkDotNet": [
@@ -958,6 +958,60 @@ window.BENCHMARK_DATA = {
             "value": 11.911596139272055,
             "unit": "ns",
             "range": "± 0.015500261012851131"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "210299580+Chris-Wolfgang@users.noreply.github.com",
+            "name": "Chris Wolfgang",
+            "username": "Chris-Wolfgang"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "311ad54dcddb9fca8936ad3515e1029518314587",
+          "message": "test: run the unit suite as a Native AOT executable (Tests.Aot, xunit.v3.aot) (#360)\n\n* test: run the unit suite as a Native AOT executable (Tests.Aot, xunit.v3.aot)\n\nAdds tests/Wolfgang.Extensions.Logging.InMemoryLogger.Tests.Aot: a net10.0 Exe that links\nthe Tests.Unit sources and builds them with xunit.v3.aot 4.0.2 (source-generated, no\nreflection), with PublishAot/PublishTrimmed/IsAotCompatible, so the same 52 tests run as a\nnative binary. The 2.x unit project is unchanged. Fleet AOT standard (2026-10-30).\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\n\n* docs: document .NET 10 as the lowest version supported for Native AOT\n\nCo-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>\n\n* build: align Microsoft.Extensions.DependencyInjection with the library's 10.0.14\n\nThe library now brings Microsoft.Extensions.Logging 10.0.14, so a direct 10.0.13\nreference fails restore with NU1605 (package downgrade) under warnings-as-errors.\n\nCo-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>\n\n* build: bump Microsoft.Extensions.DependencyInjection to 11.0.0 in Tests.Aot\n\nmain's #403 moved the library to Microsoft.Extensions.Logging 11.0.0, which\nneeds DependencyInjection >= 11.0.0; the 10.0.14 pin is now a NU1605 downgrade.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\n\n---------\n\nCo-authored-by: Claude Opus 5.5 <noreply@anthropic.com>",
+          "timestamp": "2026-11-12T20:11:57-05:00",
+          "tree_id": "6e91e7d23ac5c367f91a47a0b4261ef93318d57d",
+          "url": "https://github.com/Chris-Wolfgang/In-memory-Logger/commit/311ad54dcddb9fca8936ad3515e1029518314587"
+        },
+        "date": 1794532426522,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerAppendBenchmarks.LogInformation",
+            "value": 61.72987453333334,
+            "unit": "ns",
+            "range": "± 1.6534333470141134"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogBelowMinimum",
+            "value": 1.263437317063411,
+            "unit": "ns",
+            "range": "± 0.012626126973030664"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.IsEnabled",
+            "value": 0.3562018349766731,
+            "unit": "ns",
+            "range": "± 0.0077343581651015845"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.BeginScopeRoundtrip",
+            "value": 55.92696565389633,
+            "unit": "ns",
+            "range": "± 0.25267579211506414"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogEntriesSnapshot",
+            "value": 2811.0575688680015,
+            "unit": "ns",
+            "range": "± 16.811926868739175"
           }
         ]
       }
