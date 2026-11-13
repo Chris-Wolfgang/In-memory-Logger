@@ -68,8 +68,9 @@ jobs:
           id_lower="${PACKAGE_ID,,}"
           version="${INPUT_VERSION:-}"
           if [ -z "$version" ]; then
+            # jq, not a pipe into python3: Scorecard reads `curl | <interpreter>` as download-then-run.
             version=$(curl -fsS "https://api.nuget.org/v3-flatcontainer/${id_lower}/index.json" \
-              | python3 -c "import sys,json;v=[x for x in json.load(sys.stdin)['versions'] if '-' not in x];print(v[-1])")
+              | jq -r '[.versions[] | select(contains("-") | not)] | last')
           fi
           echo "Checking ${PACKAGE_ID} ${version}"
           mkdir -p published/dll published/snupkg
