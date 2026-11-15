@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1794543931500,
+  "lastUpdate": 1794748097926,
   "repoUrl": "https://github.com/Chris-Wolfgang/In-memory-Logger",
   "entries": {
     "Mutation score": [
@@ -156,6 +156,33 @@ window.BENCHMARK_DATA = {
           "url": "https://github.com/Chris-Wolfgang/In-memory-Logger/commit/80b51bd3b7a96c360a1975bc89c7025be0cb0381"
         },
         "date": 1794543926581,
+        "tool": "customBiggerIsBetter",
+        "benches": [
+          {
+            "name": "Mutation score (tests/Wolfgang.Extensions.Logging.InMemoryLogger.Tests.Unit)",
+            "value": 100,
+            "unit": "%"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "Chris Wolfgang",
+            "username": "Chris-Wolfgang",
+            "email": "210299580+Chris-Wolfgang@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "762d19633e9849acb756db26ce46686038023c8a",
+          "message": "build: literal copyright year and LF-normalized generated sources (#393) (#413)\n\nTwo reproducible-build inputs from the fleet standard:\n- Copyright is a literal year instead of the build clock, so a rebuild of a\n  tag after 1 January still matches the released binary.\n- Directory.Build.targets rewrites the SDK-generated AssemblyInfo /\n  AssemblyAttributes / GlobalUsings sources to LF before CoreCompile in\n  packable projects, so the PDB (and therefore the DLL MVID) no longer\n  differs per OS. Copied from IComparable-Extensions.\n\nRefs #393\n\nCo-authored-by: Claude Opus 5.5 <noreply@anthropic.com>",
+          "timestamp": "2026-11-14T14:08:51Z",
+          "url": "https://github.com/Chris-Wolfgang/In-memory-Logger/commit/762d19633e9849acb756db26ce46686038023c8a"
+        },
+        "date": 1794748093323,
         "tool": "customBiggerIsBetter",
         "benches": [
           {
