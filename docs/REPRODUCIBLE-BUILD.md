@@ -112,6 +112,30 @@ Only `lib/` entries are listed because the container and its metadata entries (`
 `.psmdcp`, `[Content_Types].xml`) carry timestamps and NuGet-version details that never reproduce;
 the assemblies and XML documentation files under `lib/` are what you run.
 
+## Expected hashes: `SHA256SUMS.txt`
+
+Releases made after `SHA256SUMS.txt` was added to `release.yaml` also carry a `SHA256SUMS.txt` asset, written
+by the same step from the same packages and covered by the same attestation. It is in `sha256sum -c`
+format (LF line endings) and lists:
+
+- `nupkg/<name>/lib/...`: every non-empty `lib/` entry of each `.nupkg` (the same hashes as the manifest),
+- `snupkg/<name>/lib/<tfm>/*.pdb`: the symbol files in each `.snupkg`,
+- `<name>.nupkg` and `<name>.snupkg`: the published package files themselves. These identify the exact
+  bytes released; a rebuild reproduces the entries, never the containers (zip timestamps).
+
+To check downloaded packages, or a rebuild, extract each package to the path the file names and run
+`sha256sum -c`:
+
+```bash
+gh attestation verify SHA256SUMS.txt --repo Chris-Wolfgang/In-memory-Logger \
+  --signer-workflow Chris-Wolfgang/In-memory-Logger/.github/workflows/release.yaml
+for p in *.nupkg *.snupkg; do mkdir -p "${p##*.}/${p%.*}" && unzip -q -o "$p" -d "${p##*.}/${p%.*}"; done
+sha256sum -c SHA256SUMS.txt    # every line OK for the downloaded release packages
+```
+
+For a rebuild, pack your own packages (same tag, SDK and OS as the manifest), extract them the same way
+and run the same command: every entry line should pass, and the two container lines fail, as expected.
+
 ## Publishing a verification attestation
 
 If your rebuild matches, you can publish that result so others can rely on it without rebuilding
