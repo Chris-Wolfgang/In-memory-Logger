@@ -114,6 +114,13 @@ AOT is supported**: on every pull request the unit suite is compiled and run as 
 (`tests/Wolfgang.Extensions.Logging.InMemoryLogger.Tests.Aot`). The .NET 8 build passes the trim/AOT analyzers but is not executed
 natively, so Native AOT on .NET 8 is not a supported scenario.
 
+## Test matrix
+
+Every pull request runs the tests on five legs: linux-x64 (`ubuntu-latest`), windows-x64, macos-arm64,
+linux-arm64 (`ubuntu-24.04-arm`) and windows-arm64 (`windows-11-arm`). Windows x64 runs every TFM (.NET
+Framework 4.6.2-4.8.1 and .NET 5.0 onward); linux-x64 runs .NET 5.0 onward; the three ARM64 legs run .NET 6.0
+onward. The Native AOT smoke test is published and run on linux-x64 and linux-arm64.
+
 ## 🔍 Code Quality & Static Analysis
 
 This project is held to the canonical analyzer set used across all `Chris-Wolfgang` .NET libraries. Analyzers run on every build and are treated as errors in `Release`.
