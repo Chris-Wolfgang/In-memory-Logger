@@ -602,6 +602,11 @@ jobs:
       # commit, runner OS and SDK a rebuild must match. It travels in the
       # nuget-packages artifact, is covered by the provenance attestation in
       # publish-nuget, and is attached to the GitHub Release.
+      # SHA256SUMS.txt (#393) carries the same hashes in `sha256sum -c` format, plus
+      # the .pdb entries of each .snupkg and the hash of each published .nupkg/.snupkg
+      # file itself (identifies the exact bytes released; a rebuild never matches
+      # those, only the entries). Entry paths are nupkg/<name>/lib/... and
+      # snupkg/<name>/lib/..., i.e. where `unzip <name>.nupkg -d nupkg/<name>` puts them.
       - name: Generate reproducible-build manifest
         if: steps.check-packages.outputs.has-packages == 'true'
         shell: pwsh
@@ -640,6 +645,29 @@ jobs:
           $path = Join-Path $dir 'reproducible-build-manifest.json'
           $manifest | ConvertTo-Json -Depth 6 | Set-Content -Path $path -Encoding utf8NoBOM
           Write-Host "Wrote $path"
+
+          function Get-Sha256Hex([System.IO.Stream] $s) {
+            [System.Convert]::ToHexString([System.Security.Cryptography.SHA256]::HashData($s)).ToLowerInvariant()
+          }
+          $lines = [System.Collections.Generic.List[string]]::new()
+          foreach ($pkg in Get-ChildItem -Path $dir -File | Where-Object { $_.Extension -in '.nupkg', '.snupkg' } | Sort-Object Name) {
+            $zip = [System.IO.Compression.ZipFile]::OpenRead($pkg.FullName)
+            try {
+              $wanted = if ($pkg.Extension -eq '.snupkg') { $zip.Entries | Where-Object { $_.FullName -like 'lib/*.pdb' -and $_.Length -gt 0 } } else { $zip.Entries | Where-Object { $_.FullName -like 'lib/*' -and $_.Length -gt 0 } }
+              foreach ($e in $wanted | Sort-Object FullName) {
+                $stream = $e.Open()
+                try { $lines.Add("$(Get-Sha256Hex $stream)  $($pkg.Extension.TrimStart('.'))/$($pkg.BaseName)/$($e.FullName)") } finally { $stream.Dispose() }
+              }
+            } finally {
+              $zip.Dispose()
+            }
+            $fs = [System.IO.File]::OpenRead($pkg.FullName)
+            try { $lines.Add("$(Get-Sha256Hex $fs)  $($pkg.Name)") } finally { $fs.Dispose() }
+          }
+          $sums = Join-Path $dir 'SHA256SUMS.txt'
+          # LF line endings and no BOM, so `sha256sum -c` reads it on any OS.
+          [System.IO.File]::WriteAllText($sums, (($lines -join "`n") + "`n"), [System.Text.UTF8Encoding]::new($false))
+          Write-Host "Wrote $sums ($($lines.Count) lines)"
 
       - name: Upload NuGet packages
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9  # v7.0.2
@@ -795,6 +823,7 @@ jobs:
           subject-path: |
             ./packages/*.nupkg
             ./packages/reproducible-build-manifest.json
+            ./packages/SHA256SUMS.txt
 
       - name: NuGet login (OIDC trusted publishing)
         id: nuget-login
@@ -883,7 +912,7 @@ jobs:
           TAG_NAME: ${{ github.event.release.tag_name }}
         run: |
           shopt -s nullglob
-          files=(./nuget-packages/*.nupkg ./nuget-packages/*.snupkg ./nuget-packages/*.bom.json ./nuget-packages/reproducible-build-manifest.json)
+          files=(./nuget-packages/*.nupkg ./nuget-packages/*.snupkg ./nuget-packages/*.bom.json ./nuget-packages/reproducible-build-manifest.json ./nuget-packages/SHA256SUMS.txt)
           # nullglob only drops unmatched *patterns*; a literal name stays and would make
           # `gh release upload` fail, so add the coverage zip only when it exists.
           if [ -f release-coverage.zip ]; then files+=(release-coverage.zip); fi
