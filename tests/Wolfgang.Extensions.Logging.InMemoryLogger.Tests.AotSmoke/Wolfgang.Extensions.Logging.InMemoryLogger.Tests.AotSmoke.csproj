@@ -15,9 +15,12 @@
     <StripSymbols>true</StripSymbols>
     <InvariantGlobalization>true</InvariantGlobalization>
 
-    <!-- Not packed and not a test project: publish, then execute. pr.yaml and
-         scripts/build-pr.ps1 skip it in their test step (no IsTestProject / Test SDK). -->
+    <!-- Not packed and not a test project: publish, then execute. The explicit opt-out is what
+         pr.yaml's test stages read: Stages 4 and 5 (from repo-template) fail on a project under
+         tests/ that has neither Microsoft.NET.Test.Sdk nor IsTestProject=false, and
+         scripts/build-pr.ps1 skips it in its test step. -->
     <IsPackable>false</IsPackable>
+    <IsTestProject>false</IsTestProject>
   </PropertyGroup>
 
   <ItemGroup>
