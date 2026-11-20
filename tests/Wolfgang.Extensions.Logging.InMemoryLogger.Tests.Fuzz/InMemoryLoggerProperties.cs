@@ -103,8 +103,9 @@ public class InMemoryLoggerProperties
     /// Opens and disposes scopes in a generated order. Each operation byte either opens a new
     /// scope (even values) or disposes one of the handles opened so far (odd values, chosen by
     /// the byte), so out-of-order and repeated disposals are generated as often as in-order
-    /// ones. The model is the documented contract: a dispose pops only when it is the first
-    /// dispose of the scope currently on top; anything else is ignored.
+    /// ones. The model is the documented contract: <see cref="InMemoryLogger.Scopes"/> lists, in
+    /// opening order, every scope whose handle has not been disposed, whatever order the
+    /// disposals came in; a repeated dispose changes nothing.
     /// </summary>
     [FuzzProperty]
     public bool Scopes_follow_the_stack_model_for_any_open_and_dispose_order(byte[] operations)
@@ -112,9 +113,8 @@ public class InMemoryLoggerProperties
         ArgumentNullException.ThrowIfNull(operations);
 
         // Each case runs in a copy of the current execution context, so the AsyncLocal scope stacks
-        // it leaves behind (a scope whose dispose was ignored because it came out of order stays
-        // open, as documented) are discarded when the case ends instead of piling up in this
-        // thread's context and slowing every later case down.
+        // it leaves behind (operations may end with scopes still open) are discarded when the case
+        // ends instead of piling up in this thread's context and slowing every later case down.
         var matches = false;
         ExecutionContext.Run
         (
@@ -132,8 +132,7 @@ public class InMemoryLoggerProperties
     {
         var sut = new InMemoryLogger("fuzz");
         var handles = new List<(IDisposable Handle, int State)>();
-        var disposed = new HashSet<int>();
-        var model = new Stack<int>();
+        var model = new List<int>();
         var next = 0;
         var matches = true;
 
@@ -143,20 +142,16 @@ public class InMemoryLoggerProperties
             {
                 var state = next++;
                 handles.Add((sut.BeginScope(state), state));
-                model.Push(state);
+                model.Add(state);
             }
             else
             {
                 var (handle, state) = handles[(op / 2) % handles.Count];
-                var first = disposed.Add(state);
                 handle.Dispose();
-                if (first && model.Count > 0 && model.Peek() == state)
-                {
-                    model.Pop();
-                }
+                model.Remove(state);
             }
 
-            matches &= sut.Scopes.SequenceEqual(model.Reverse().Cast<object>());
+            matches &= sut.Scopes.SequenceEqual(model.Cast<object>());
         }
 
         return matches;

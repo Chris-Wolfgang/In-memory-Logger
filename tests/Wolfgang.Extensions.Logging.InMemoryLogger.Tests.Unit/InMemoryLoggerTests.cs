@@ -255,13 +255,48 @@ public class InMemoryLoggerTests
 
 
     [Fact]
-    public void BeginScope_when_disposed_out_of_order_ignores_the_dispose()
+    public void BeginScope_when_disposed_out_of_order_removes_both_scopes()
     {
         var sut = new InMemoryLogger("TestCategory");
         var outer = sut.BeginScope("outer");
         var inner = sut.BeginScope("inner");
 
         outer.Dispose();
+
+        Assert.Equal(new object[] { "inner" }, sut.Scopes);
+
+        inner.Dispose();
+
+        Assert.Empty(sut.Scopes);
+    }
+
+
+
+    [Fact]
+    public void BeginScope_after_out_of_order_disposal_is_not_nested_under_the_disposed_scope()
+    {
+        var sut = new InMemoryLogger("TestCategory");
+        var outer = sut.BeginScope("outer");
+        var inner = sut.BeginScope("inner");
+        outer.Dispose();
+        inner.Dispose();
+
+        using var next = sut.BeginScope("next");
+
+        Assert.Equal(new object[] { "next" }, sut.Scopes);
+    }
+
+
+
+    [Fact]
+    public void BeginScope_when_middle_scope_is_disposed_first_keeps_the_outer_scope()
+    {
+        var sut = new InMemoryLogger("TestCategory");
+        using var outer = sut.BeginScope("outer");
+        var middle = sut.BeginScope("middle");
+        var inner = sut.BeginScope("inner");
+
+        middle.Dispose();
 
         Assert.Equal(new object[] { "outer", "inner" }, sut.Scopes);
 

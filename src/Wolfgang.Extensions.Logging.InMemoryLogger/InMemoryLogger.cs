@@ -129,6 +129,12 @@ public class InMemoryLogger : ILogger
     /// <param name="state">The identifier for the scope.</param>
     /// <typeparam name="TState">The type of the state.</typeparam>
     /// <returns>A disposable object that ends the logical operation scope on dispose.</returns>
+    /// <remarks>
+    /// Scopes may be disposed in any order. A disposed scope stops appearing in <see cref="Scopes"/>
+    /// at once; when an inner scope is disposed after its outer scope, both leave the stack, so
+    /// later scopes are not nested under a scope that was already disposed. Disposing a handle
+    /// more than once has no further effect.
+    /// </remarks>
     public IDisposable BeginScope<TState>(TState state) where TState : notnull
     {
         var parent = _scopeStack.Value;
@@ -225,18 +231,23 @@ public class InMemoryLogger : ILogger
                 return Array.Empty<object>();
             }
 
-            // Two walks of the parent chain: count, then fill from the innermost end, so the
-            // result is built in a single array without an intermediate list or a reverse.
-            var depth = 0;
+            // One walk of the parent chain from the innermost end, skipping scopes whose handle
+            // was disposed out of order (they stay linked until the scopes above them go), then
+            // reverse so the result runs from outermost to innermost. A single walk keeps the
+            // result consistent if another thread disposes a scope while this getter runs.
+            var live = new List<object>();
             for (var scope = current; scope != null; scope = scope.Parent)
             {
-                depth++;
+                if (!scope.IsDisposed)
+                {
+                    live.Add(scope.State);
+                }
             }
 
-            var scopes = new object[depth];
-            for (var scope = current; scope != null; scope = scope.Parent)
+            var scopes = new object[live.Count];
+            for (var i = 0; i < scopes.Length; i++)
             {
-                scopes[--depth] = scope.State;
+                scopes[i] = live[scopes.Length - 1 - i];
             }
 
             return scopes;
@@ -301,6 +312,10 @@ public class InMemoryLogger : ILogger
 
     private sealed class ScopeStack
     {
+        private int _disposed;
+
+
+
         public ScopeStack(object state, ScopeStack? parent)
         {
             State = state;
@@ -314,6 +329,20 @@ public class InMemoryLogger : ILogger
 
 
         public ScopeStack? Parent { get; }
+
+
+
+        public bool IsDisposed => Volatile.Read(ref _disposed) == 1;
+
+
+
+        /// <summary>
+        /// Marks the scope as disposed. Returns <see langword="true"/> only for the first call.
+        /// </summary>
+        public bool TryMarkDisposed()
+        {
+            return Interlocked.CompareExchange(ref _disposed, 1, 0) == 0;
+        }
     }
 
 
@@ -322,7 +351,6 @@ public class InMemoryLogger : ILogger
     {
         private readonly InMemoryLogger _logger;
         private readonly ScopeStack _scope;
-        private int _disposed;
 
 
 
@@ -336,14 +364,23 @@ public class InMemoryLogger : ILogger
 
         public void Dispose()
         {
-            // Only pop if this is the first dispose AND this scope is still the
-            // current top-of-stack. Out-of-order disposal is silently ignored to
-            // avoid corrupting the stack.
-            if (Interlocked.CompareExchange(ref _disposed, 1, 0) == 0
-                && ReferenceEquals(_logger._scopeStack.Value, _scope))
+            // The first dispose marks the scope. If it is the current top of the stack it is
+            // popped together with every ancestor directly beneath it that was already disposed
+            // out of order; otherwise it stays linked (so the scopes above it are not corrupted)
+            // but Scopes no longer reports it.
+            if (!_scope.TryMarkDisposed()
+                || !ReferenceEquals(_logger._scopeStack.Value, _scope))
             {
-                _logger._scopeStack.Value = _scope.Parent;
+                return;
             }
+
+            var top = _scope.Parent;
+            while (top != null && top.IsDisposed)
+            {
+                top = top.Parent;
+            }
+
+            _logger._scopeStack.Value = top;
         }
     }
 }
