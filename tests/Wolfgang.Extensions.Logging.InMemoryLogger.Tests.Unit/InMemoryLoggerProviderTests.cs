@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Extensions.Logging;
 using Xunit;
 
@@ -14,6 +15,18 @@ public class InMemoryLoggerProviderTests
 
         Assert.NotNull(logger);
         Assert.IsType<InMemoryLogger>(logger);
+    }
+
+
+
+    [Fact]
+    public void CreateLogger_when_categoryName_is_null_throws_ArgumentNullException()
+    {
+        using var sut = new InMemoryLoggerProvider();
+
+        var ex = Assert.Throws<ArgumentNullException>(() => sut.CreateLogger(null!));
+
+        Assert.Equal("categoryName", ex.ParamName);
     }
 
 

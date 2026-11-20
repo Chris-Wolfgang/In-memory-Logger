@@ -23,7 +23,7 @@ public class InMemoryLogger<T> : ILogger<T>
     /// </summary>
     /// <param name="minLogLevel">The minimum log level to log.</param>
     /// <param name="capacity">The initial capacity of the log entries collection.</param>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown when capacity is less than 1.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="capacity"/> is less than 1.</exception>
     /// <example>
     /// <code>
     /// using System.Text;

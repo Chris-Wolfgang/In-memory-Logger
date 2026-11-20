@@ -47,7 +47,8 @@ public sealed class InMemoryLoggerProvider : ILoggerProvider
 
 
     /// <summary>
-    /// Creates a new <see cref="InMemoryLogger"/> with the given category name.
+    /// Returns the <see cref="InMemoryLogger"/> for the given category name, creating it on the
+    /// first request; later calls with the same name return the same instance.
     /// </summary>
     /// <param name="categoryName">The category name for messages produced by the logger.</param>
     /// <returns>An <see cref="ILogger"/> instance.</returns>

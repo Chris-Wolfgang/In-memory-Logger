@@ -31,7 +31,7 @@ public class InMemoryLogger : ILogger
     /// <param name="minLogLevel">The minimum log level to log.</param>
     /// <param name="capacity">The initial capacity of the log entries collection.</param>
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="category"/> is <see langword="null"/>.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown when capacity is less than 1.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="capacity"/> is less than 1.</exception>
     /// <example>
     /// <code>
     /// using Microsoft.Extensions.Logging;
