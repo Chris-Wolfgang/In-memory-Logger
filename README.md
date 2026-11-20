@@ -103,7 +103,7 @@ This library targets:
 
 - **.NET Framework:** 4.6.2
 - **.NET Standard:** 2.0, 2.1
-- **.NET:** 8.0, 10.0
+- **.NET:** 8.0, 10.0, 11.0
 
 See the [NuGet package page](https://www.nuget.org/packages/Wolfgang.Extensions.Logging.InMemoryLogger/) for the authoritative per-TFM compatibility matrix.
 
@@ -138,7 +138,7 @@ This project is held to the canonical analyzer set used across all `Chris-Wolfga
 ## 🛠️ Building from Source
 
 ### Prerequisites
-- [.NET SDK](https://dotnet.microsoft.com/download) - the current release (10.0); see *Supported Frameworks* for the targets that are built
+- [.NET SDK](https://dotnet.microsoft.com/download) - the current release (11.0); see *Supported Frameworks* for the targets that are built
 - [PowerShell 7](https://github.com/PowerShell/PowerShell) (`pwsh`) for the scripts under `scripts/`
 
 ### Build Steps
