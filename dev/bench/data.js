@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1794543026313,
+  "lastUpdate": 1795181564768,
   "repoUrl": "https://github.com/Chris-Wolfgang/In-memory-Logger",
   "entries": {
     "BenchmarkDotNet": [
@@ -1066,6 +1066,60 @@ window.BENCHMARK_DATA = {
             "value": 4365.862060546875,
             "unit": "ns",
             "range": "± 19.05086543952926"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "210299580+Chris-Wolfgang@users.noreply.github.com",
+            "name": "Chris Wolfgang",
+            "username": "Chris-Wolfgang"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "bde1d4e277b757f55286846418c2fb034e136912",
+          "message": "docs(readme): state the five-leg test matrix (#394) (#422)\n\nCo-authored-by: Claude Opus 5.5 <noreply@anthropic.com>",
+          "timestamp": "2026-11-20T08:28:59-05:00",
+          "tree_id": "c60813bbf63e56eda78dbfe4b318914767f7146c",
+          "url": "https://github.com/Chris-Wolfgang/In-memory-Logger/commit/bde1d4e277b757f55286846418c2fb034e136912"
+        },
+        "date": 1795181563590,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerAppendBenchmarks.LogInformation",
+            "value": 62.40779186666666,
+            "unit": "ns",
+            "range": "± 2.58602177611411"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogBelowMinimum",
+            "value": 1.2476483955979347,
+            "unit": "ns",
+            "range": "± 0.00235008051091255"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.IsEnabled",
+            "value": 0.3264008288582166,
+            "unit": "ns",
+            "range": "± 0.003447282517153448"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.BeginScopeRoundtrip",
+            "value": 60.659961899121605,
+            "unit": "ns",
+            "range": "± 1.126524447128872"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogEntriesSnapshot",
+            "value": 3669.652016321818,
+            "unit": "ns",
+            "range": "± 167.21691326186888"
           }
         ]
       }
