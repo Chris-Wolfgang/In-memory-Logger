@@ -22,14 +22,12 @@ the limits are; it does not promise a bit-identical `.nupkg`.
   normalise either, so verify on the same OS family the release was built on. The package is
   packed by the `pack-and-validate` job of `release.yaml`, which runs on `windows-latest`; the
   `runnerOs` field of the release's `reproducible-build-manifest.json` (below) records it.
-- **The copyright year is part of the assembly.** `Directory.Build.props` builds the `Copyright`
-  string from the current UTC year, so a rebuild in a later year differs. Pass the release year
-  explicitly (below).
 
 ## Procedure
 
-1. Install the SDK versions used by `release.yaml` (the current .NET 10 SDK is enough for the
-   `src/` project; the older SDKs listed there are only needed to run the multi-target tests).
+1. Install the SDK versions used by `release.yaml` (the SDK pinned in the tag's
+   `global.json` is enough for the `src/` project, .NET 11 on current `main`; the older SDKs listed there are only needed to run the
+   multi-target tests).
 2. Check out the release tag in a **git worktree**, not a copied folder. A copy has no `.git`, so
    commit and SourceLink data are missing and the hashes differ for an unrelated reason.
 
@@ -40,11 +38,11 @@ the limits are; it does not promise a bit-identical `.nupkg`.
    cd ../verify
    ```
 
-3. Build and pack, passing the release year taken from the published assembly's copyright:
+3. Build and pack:
 
    ```bash
    dotnet restore
-   dotnet build --no-restore --configuration Release -p:Copyright="Copyright (c) <year> Chris Wolfgang"
+   dotnet build --no-restore --configuration Release
    dotnet pack src/Wolfgang.Extensions.Logging.InMemoryLogger --no-build --configuration Release --output ./out
    ```
 

@@ -33,13 +33,13 @@
 - `var` when the type is obvious from the right-hand side
 
 ## Target Frameworks
-- net462, netstandard2.0, netstandard2.1, net8.0, net10.0
+- net462, netstandard2.0, netstandard2.1, net8.0, net10.0, net11.0
 
 ## Build / Test
 - `dotnet restore`
 - `dotnet build -c Release`
 - `dotnet test -c Release --no-build`
-- CI gates: line coverage of 90% for `src/` and 98% for test assemblies (`CODECOV_MINIMUM` / `CODECOV_TEST_MINIMUM` in `pr.yaml`), DevSkim security scan, gitleaks secrets scan, CodeQL security-extended.
+- CI gates: line coverage of 95% for `src/` and 100% for test assemblies (`CODECOV_MINIMUM` / `CODECOV_TEST_MINIMUM` in `pr.yaml`), DevSkim security scan, gitleaks secrets scan, CodeQL security-extended.
 
 ## Release
 - Bump `<Version>` in `src/Wolfgang.Extensions.Logging.InMemoryLogger/Wolfgang.Extensions.Logging.InMemoryLogger.csproj`.
