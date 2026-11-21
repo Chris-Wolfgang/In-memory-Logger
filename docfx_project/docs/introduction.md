@@ -13,7 +13,7 @@ Wolfgang.Extensions.Logging.InMemoryLogger is a .NET library that provides `ILog
 - **Scope capture.** `BeginScope` records the supplied state object into the `Scopes` property so scope-aware code paths can be asserted on.
 - **Configurable.** Constructor parameters control the minimum log level (defaults to `Trace`) and the initial buffer capacity (defaults to `16`).
 - **Thread-safe.** Concurrent `Log` calls append safely.
-- **Multi-targeted.** Ships for `net462`, `netstandard2.0`, `netstandard2.1`, `net8.0`, and `net10.0`.
+- **Multi-targeted.** Ships for `net462`, `netstandard2.0`, `netstandard2.1`, `net8.0`, `net10.0`, and `net11.0`.
 
 ## Getting Help
 

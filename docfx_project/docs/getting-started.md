@@ -4,11 +4,11 @@ This guide will help you quickly get up and running with Wolfgang.Extensions.Log
 
 ## Prerequisites
 
-- The .NET 10.0 SDK is required to build the highest TFM.
+- The .NET 11 SDK is required to build the highest TFM (`global.json` pins 11.0.100).
 - Building the `net462` target additionally requires the .NET Framework 4.6.2 reference assemblies / targeting pack (typically installed via Visual Studio's ".NET desktop development" workload on Windows; the SDK alone does not include them, and `net462` builds are Windows-only).
-- The `netstandard2.0`, `netstandard2.1`, and `net8.0` targets build with the .NET 10 SDK alone on any OS.
+- The `netstandard2.0`, `netstandard2.1`, and `net8.0` targets build with the .NET 11 SDK alone on any OS.
 
-The library ships against `net462`, `netstandard2.0`, `netstandard2.1`, `net8.0`, and `net10.0`.
+The library ships against `net462`, `netstandard2.0`, `netstandard2.1`, `net8.0`, `net10.0`, and `net11.0`.
 
 ## Installation
 
