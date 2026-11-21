@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1795181564768,
+  "lastUpdate": 1795269163621,
   "repoUrl": "https://github.com/Chris-Wolfgang/In-memory-Logger",
   "entries": {
     "BenchmarkDotNet": [
@@ -1120,6 +1120,60 @@ window.BENCHMARK_DATA = {
             "value": 3669.652016321818,
             "unit": "ns",
             "range": "± 167.21691326186888"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "210299580+Chris-Wolfgang@users.noreply.github.com",
+            "name": "Chris Wolfgang",
+            "username": "Chris-Wolfgang"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6ed18b01020c0fca44a647be04ba190534303464",
+          "message": "build: keep the net8.0 asset on Microsoft.Extensions.Logging 10.0.x (#427) (#434)\n\nMicrosoft.Extensions.Logging 11.0.0 has no net8.0/net9.0 assets and its buildTransitive\ntargets warn on those TFMs, so every net8.0/net9.0 consumer of the unreleased package got\n\"doesn't support net8.0\" warnings. The net8.0 reference is now 10.0.15; every other TFM\nkeeps 11.0.0. Dependabot ignores semver-major bumps of the two packages so the grouped\nupdate does not push the net8.0 reference back to 11.x. The stale 10.0.14 fragment is\nreplaced. SuppressTfmSupportBuildWarnings stays in src: SourceLink 11.0.100's build-only\nSystem.IO.Hashing 11.0.0 warns on net8.0 otherwise (comment added).\n\nCo-authored-by: Claude Opus 5.5 <noreply@anthropic.com>",
+          "timestamp": "2026-11-21T08:50:01-05:00",
+          "tree_id": "cad0eec5ee7b2004da87744dbde99ee29ec07411",
+          "url": "https://github.com/Chris-Wolfgang/In-memory-Logger/commit/6ed18b01020c0fca44a647be04ba190534303464"
+        },
+        "date": 1795269162454,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerAppendBenchmarks.LogInformation",
+            "value": 60.96638133333334,
+            "unit": "ns",
+            "range": "± 0.8763477886142106"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogBelowMinimum",
+            "value": 1.2756247060994308,
+            "unit": "ns",
+            "range": "± 0.0331519969811887"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.IsEnabled",
+            "value": 0.3532741976281007,
+            "unit": "ns",
+            "range": "± 0.009136249969704562"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.BeginScopeRoundtrip",
+            "value": 48.12391324838003,
+            "unit": "ns",
+            "range": "± 0.40195375864699145"
+          },
+          {
+            "name": "Wolfgang.Extensions.Logging.InMemoryLogger.Benchmarks.InMemoryLoggerBenchmarks.LogEntriesSnapshot",
+            "value": 3012.680506388346,
+            "unit": "ns",
+            "range": "± 17.07849752621787"
           }
         ]
       }
