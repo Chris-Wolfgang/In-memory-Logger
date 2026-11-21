@@ -11,6 +11,15 @@ updates:
       dotnet-dependencies:
         patterns:
           - "*"
+    ignore:
+      # Microsoft.Extensions.Logging 11.x dropped net8.0/net9.0, so the src csproj keeps its
+      # net8.0 asset on the 10.0.x line (#427). Dependabot cannot tell the per-TFM references
+      # apart and would bump that one to 11.x too, so major versions of these packages move by
+      # hand, together with the TFM list. Minor and patch updates still flow.
+      - dependency-name: "Microsoft.Extensions.Logging"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "Microsoft.Extensions.Logging.Abstractions"
+        update-types: ["version-update:semver-major"]
 
   # Keep third-party GitHub Actions pinned in workflows up to date.
   - package-ecosystem: "github-actions"
