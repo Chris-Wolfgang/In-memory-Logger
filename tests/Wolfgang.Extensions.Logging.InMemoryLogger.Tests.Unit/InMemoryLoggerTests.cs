@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using Microsoft.Extensions.Logging;
 using Xunit;
 
@@ -289,6 +290,33 @@ public class InMemoryLoggerTests
 
 
     [Fact]
+    public void BeginScope_when_disposed_does_not_keep_the_scope_state_alive()
+    {
+        var sut = new InMemoryLogger("TestCategory");
+
+        var state = BeginAndDisposeScope(sut);
+        CollectGarbage();
+
+        // Scopes hides a disposed scope either way; only the stack unlinking it lets it be collected.
+        Assert.False(state.IsAlive);
+    }
+
+
+
+    [Fact]
+    public void BeginScope_when_disposed_out_of_order_does_not_keep_either_scope_state_alive()
+    {
+        var sut = new InMemoryLogger("TestCategory");
+
+        var (outer, inner) = BeginAndDisposeScopesOutOfOrder(sut);
+        CollectGarbage();
+
+        Assert.False(outer.IsAlive || inner.IsAlive);
+    }
+
+
+
+    [Fact]
     public void BeginScope_when_middle_scope_is_disposed_first_keeps_the_outer_scope()
     {
         var sut = new InMemoryLogger("TestCategory");
@@ -351,6 +379,43 @@ public class InMemoryLoggerTests
         var sut = new InMemoryLogger("TestCategory");
 
         Assert.Same(Array.Empty<object>(), sut.Scopes);
+    }
+
+
+
+    // NoInlining keeps every strong reference to the scope state inside these helpers' frames, so
+    // once they return only the logger's scope stack could still be holding it.
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    private static WeakReference BeginAndDisposeScope(InMemoryLogger sut)
+    {
+        var state = new object();
+        sut.BeginScope(state).Dispose();
+        return new WeakReference(state);
+    }
+
+
+
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    private static (WeakReference Outer, WeakReference Inner) BeginAndDisposeScopesOutOfOrder(InMemoryLogger sut)
+    {
+        var outerState = new object();
+        var innerState = new object();
+        var outer = sut.BeginScope(outerState);
+        var inner = sut.BeginScope(innerState);
+
+        outer.Dispose();
+        inner.Dispose();
+
+        return (new WeakReference(outerState), new WeakReference(innerState));
+    }
+
+
+
+    private static void CollectGarbage()
+    {
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
+        GC.Collect();
     }
 
 
