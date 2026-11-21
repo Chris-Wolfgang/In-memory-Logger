@@ -24,6 +24,8 @@ public class InMemoryLoggerProviderTests
     {
         using var sut = new InMemoryLoggerProvider();
 
+        // Assert.Throws runs the lambda synchronously, before sut is disposed at the end of the method.
+        // ReSharper disable once AccessToDisposedClosure
         var ex = Assert.Throws<ArgumentNullException>(() => sut.CreateLogger(null!));
 
         Assert.Equal("categoryName", ex.ParamName);
