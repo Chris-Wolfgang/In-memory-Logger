@@ -12,10 +12,11 @@
     <File Path="CONTRIBUTING.md" />
     <File Path="coverlet.runsettings" />
     <File Path="Directory.Build.props" />
+    <File Path="Directory.Build.targets" />
+    <File Path="global.json" />
     <File Path="LICENSE" />
     <File Path="README.md" />
     <File Path="SECURITY.md" />
-    <File Path="stryker-config.json" />
   </Folder>
   <Folder Name="/.root/.github/">
     <File Path=".github/CODEOWNERS" />
@@ -30,14 +31,20 @@
   </Folder>
   <Folder Name="/.root/.github/workflows/">
     <File Path=".github/workflows/actions-audit.yaml" />
+    <File Path=".github/workflows/aot-smoke.yaml" />
     <File Path=".github/workflows/benchmarks.yaml" />
     <File Path=".github/workflows/build-all-versions.yaml" />
     <File Path=".github/workflows/codeql.yaml" />
+    <File Path=".github/workflows/cross-platform-differential.yaml" />
     <File Path=".github/workflows/docfx.yaml" />
+    <File Path=".github/workflows/fuzz.yaml" />
     <File Path=".github/workflows/license-audit.yaml" />
+    <File Path=".github/workflows/pr-benchmarks.yaml" />
     <File Path=".github/workflows/pr.yaml" />
     <File Path=".github/workflows/protected-files.yaml" />
+    <File Path=".github/workflows/published-symbols.yaml" />
     <File Path=".github/workflows/release.yaml" />
+    <File Path=".github/workflows/reproducible-build.yaml" />
     <File Path=".github/workflows/sbom.yaml" />
     <File Path=".github/workflows/scorecard.yaml" />
     <File Path=".github/workflows/security-alerts.yml" />
