@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1794748097926,
+  "lastUpdate": 1795355058861,
   "repoUrl": "https://github.com/Chris-Wolfgang/In-memory-Logger",
   "entries": {
     "Mutation score": [
@@ -183,6 +183,33 @@ window.BENCHMARK_DATA = {
           "url": "https://github.com/Chris-Wolfgang/In-memory-Logger/commit/762d19633e9849acb756db26ce46686038023c8a"
         },
         "date": 1794748093323,
+        "tool": "customBiggerIsBetter",
+        "benches": [
+          {
+            "name": "Mutation score (tests/Wolfgang.Extensions.Logging.InMemoryLogger.Tests.Unit)",
+            "value": 100,
+            "unit": "%"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]",
+            "email": "49699333+dependabot[bot]@users.noreply.github.com"
+          },
+          "committer": {
+            "name": "GitHub",
+            "username": "web-flow",
+            "email": "noreply@github.com"
+          },
+          "id": "3088c805b54b192b6ceb9f73a8f9ac129342602a",
+          "message": "Bump the dotnet-dependencies group with 3 updates (#438)\n\nBumps cyclonedx from 6.3.1 to 6.3.2\nBumps dotnet-reportgenerator-globaltool from 5.6.0 to 5.6.1\nBumps SonarAnalyzer.CSharp from 10.36.0.15337 to 10.37.0.15768\n\n---\nupdated-dependencies:\n- dependency-name: cyclonedx\n  dependency-version: 6.3.2\n  dependency-type: direct:production\n  update-type: version-update:semver-patch\n  dependency-group: dotnet-dependencies\n- dependency-name: dotnet-reportgenerator-globaltool\n  dependency-version: 5.6.1\n  dependency-type: direct:production\n  update-type: version-update:semver-patch\n  dependency-group: dotnet-dependencies\n- dependency-name: SonarAnalyzer.CSharp\n  dependency-version: 10.37.0.15768\n  dependency-type: direct:production\n  update-type: version-update:semver-minor\n  dependency-group: dotnet-dependencies\n...\n\nSigned-off-by: dependabot[bot] <support@github.com>\nCo-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>\nCo-authored-by: Chris Wolfgang <210299580+Chris-Wolfgang@users.noreply.github.com>",
+          "timestamp": "2026-11-21T20:54:16Z",
+          "url": "https://github.com/Chris-Wolfgang/In-memory-Logger/commit/3088c805b54b192b6ceb9f73a8f9ac129342602a"
+        },
+        "date": 1795355055822,
         "tool": "customBiggerIsBetter",
         "benches": [
           {
