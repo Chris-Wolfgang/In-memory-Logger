@@ -6,5 +6,6 @@ the same pull request that introduces the decision.
 
 | ADR | Title | Status |
 |---|---|---|
+| [0000](0000-record-architecture-decisions.md) | Record architecture decisions | Accepted |
 | [0001](0001-pin-assembly-version.md) | Pin AssemblyVersion at 1.0.0.0 | Accepted |
 | [0002](0002-async-first-banned-symbols.md) | Ban blocking and legacy APIs with BannedSymbols.txt | Accepted |
