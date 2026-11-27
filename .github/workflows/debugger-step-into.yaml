@@ -324,15 +324,24 @@ jobs:
         run: |
           set -uo pipefail
           rm -f "$APP_DIR/out/${PACKAGE_ID}.pdb"
-          timeout 300 python3 "$RUNNER_TEMP/step_into.py" \
+          # The step's shell is `bash -e`; the `if` keeps the expected failure from ending it early.
+          if timeout 300 python3 "$RUNNER_TEMP/step_into.py" \
             "$RUNNER_TEMP/netcoredbg/netcoredbg" "$(command -v dotnet)" \
             "$APP_DIR/out/Consumer.dll" "$APP_DIR/Program.cs" 7 \
             "$RUNNER_TEMP/sourcelink.json" "https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/" \
-            > "$RUNNER_TEMP/negative.log" 2>&1
-          rc=$?
+            > "$RUNNER_TEMP/negative.log" 2>&1; then
+            rc=0
+          else
+            rc=$?
+          fi
           sed 's/^::error::/(expected) /' "$RUNNER_TEMP/negative.log"
           if [ "$rc" -eq 0 ]; then
             echo "::error::The step-into check passed without the PDB, so it cannot detect missing symbols."
             exit 1
           fi
-          echo "Negative control failed as it should (exit $rc)."
+          # It must fail for the right reason (the step stayed in the consumer), not a timeout or crash.
+          if ! grep -q 'Step-into did not enter the library' "$RUNNER_TEMP/negative.log"; then
+            echo "::error::The negative control failed for another reason (exit $rc); see the log above."
+            exit 1
+          fi
+          echo "Negative control failed as it should (exit $rc): the step stayed in the consumer."
