@@ -256,7 +256,12 @@ jobs:
           send(f"2-break-insert -f {program_cs}:{break_line}")
           wait_for(lambda l: l.startswith("2^done"), "the breakpoint")
           send("3-exec-run")
-          hit = wait_for(lambda l: l.startswith('*stopped,reason="breakpoint-hit"'), "the breakpoint hit")
+          # netcoredbg stops at the program's entry point first; continue from there to the breakpoint.
+          hit = wait_for(lambda l: l.startswith(('*stopped,reason="breakpoint-hit"', '*stopped,reason="entry-point-hit"')),
+                         "the breakpoint hit")
+          if hit.startswith('*stopped,reason="entry-point-hit"'):
+              send("6-exec-continue")
+              hit = wait_for(lambda l: l.startswith('*stopped,reason="breakpoint-hit"'), "the breakpoint hit")
           if field(hit, "line") != break_line:
               fail(f"Stopped at consumer line {field(hit, 'line')}, expected the breakpoint line {break_line}.")
           send("4-exec-step")
