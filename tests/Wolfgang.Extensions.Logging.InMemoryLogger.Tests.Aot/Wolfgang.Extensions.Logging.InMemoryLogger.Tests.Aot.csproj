@@ -24,8 +24,10 @@
     <PublishTrimmed>true</PublishTrimmed>
     <IsAotCompatible>true</IsAotCompatible>
     <TrimmerSingleWarn>false</TrimmerSingleWarn>
-    <!-- No test uses a real culture, so ICU is not needed. -->
-    <InvariantGlobalization>true</InvariantGlobalization>
+    <!-- Not invariant: the linked Globalization/CultureInvarianceTests create en-US, tr-TR, de-DE,
+         zh-CN, ar-SA and ja-JP cultures, which throw CultureNotFoundException in
+         globalization-invariant mode. The native binary loads ICU from the OS, as a JIT run does. -->
+    <InvariantGlobalization>false</InvariantGlobalization>
   </PropertyGroup>
 
   <ItemGroup>
