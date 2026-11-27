@@ -1,0 +1,333 @@
+name: Debugger step-into
+
+# Scripted debugger step-into test (#123; owner decision 2026-11-20: verifying the published
+# symbols is not enough on its own).
+#
+# sourcelink.yaml and published-symbols.yaml check each link of the chain a consumer's F11 depends
+# on (PDB present, PDB id matches the DLL, every SourceLink URL resolves). This workflow drives a
+# real debugger through the whole chain:
+#
+#   1. Get the package and its .snupkg: on a pull request, packed from the PR's source; on the
+#      schedule (or on demand), the published version from nuget.org and the NuGet symbol server.
+#   2. Build a scratch console consumer (outside the repository, so none of its build settings
+#      apply) that references the package and calls InMemoryLogger.IsEnabled. Put the PDB from
+#      the .snupkg next to the package DLL, as a debugger's symbol load would.
+#   3. Run the consumer under netcoredbg (Samsung's open-source .NET debugger, pinned by version
+#      and SHA-256) in MI mode, non-interactively: just-my-code off, a breakpoint on the consumer
+#      line that calls IsEnabled, run, then one step-into.
+#   4. The step must stop inside the library: file InMemoryLogger.cs, on the first statement of
+#      IsEnabled. The expected line is read from the source that the PDB's SourceLink map points
+#      to on raw.githubusercontent.com (fetched here, not taken from the checkout), and the
+#      stopped line's text must be that statement. Without usable symbols the step stays in the
+#      consumer (the debugger's equivalent of "decompiled code") and the job fails, printing the
+#      MI transcript.
+#   5. Negative control: the same run without the PDB must fail, so the check cannot pass
+#      vacuously.
+#
+# The package ships portable PDBs in a .snupkg, not embedded PDBs, so there is no embedded-PDB
+# fallback to exercise. Linux x64 only. Not a required check.
+
+on:
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '17 8 * * 1'   # Mondays at 08:17 UTC, after published-symbols.yaml
+  workflow_dispatch:
+    inputs:
+      source:
+        description: 'packed = pack the checked-out commit; published = the package on nuget.org'
+        type: choice
+        options: [published, packed]
+        default: published
+      version:
+        description: 'Published version to test (default: the latest stable version on nuget.org)'
+        type: string
+        required: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: debugger-step-into-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  step-into:
+    name: Debugger step-into (netcoredbg)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PACKAGE_ID: Wolfgang.Extensions.Logging.InMemoryLogger
+      # The packed path on a pull request; dispatch chooses; the schedule tests the published package.
+      SOURCE: ${{ github.event_name == 'pull_request' && 'packed' || inputs.source || 'published' }}
+      INPUT_VERSION: ${{ inputs.version }}
+      NETCOREDBG_VERSION: 3.2.0-1092
+      NETCOREDBG_SHA256: 080eb3b2d2152465f599d3b33d1ee6e747794e11cc0a3773ec689f5e5f2c5afa
+      DOTNET_NOLOGO: 'true'
+      DOTNET_CLI_TELEMETRY_OPTOUT: 'true'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@0f4a354dd5547a28c70b7853dbd95d5b67886e73 # v6.1.0
+        with:
+          dotnet-version: |
+            10.0.x
+            11.0.x
+
+      - name: Restore CI tools (sourcelink)
+        # Pinned in .config/dotnet-tools.json; never installed unversioned.
+        run: dotnet tool restore
+
+      - name: Get the package and its symbol package
+        id: package
+        run: |
+          set -euo pipefail
+          pkgs="$RUNNER_TEMP/pkgs"
+          mkdir -p "$pkgs"
+          id_lower="${PACKAGE_ID,,}"
+          if [ "$SOURCE" = "packed" ]; then
+            dotnet pack "src/${PACKAGE_ID}/${PACKAGE_ID}.csproj" -c Release -o "$pkgs"
+            nupkg=$(find "$pkgs" -maxdepth 1 -name "${PACKAGE_ID}.*.nupkg" ! -name '*.symbols.nupkg' | head -n 1)
+            version=$(basename "$nupkg" .nupkg)
+            version="${version#"${PACKAGE_ID}".}"
+          else
+            version="${INPUT_VERSION:-}"
+            if [ -z "$version" ]; then
+              # jq, not a pipe into python3: Scorecard reads `curl | <interpreter>` as download-then-run.
+              version=$(curl -fsS --retry 3 "https://api.nuget.org/v3-flatcontainer/${id_lower}/index.json" \
+                | jq -r '[.versions[] | select(contains("-") | not)] | last')
+            fi
+            curl -fsSL --retry 3 -o "$pkgs/${PACKAGE_ID}.${version}.nupkg" \
+              "https://api.nuget.org/v3-flatcontainer/${id_lower}/${version}/${id_lower}.${version}.nupkg"
+            curl -fsSL --retry 3 -o "$pkgs/${PACKAGE_ID}.${version}.snupkg" \
+              "https://www.nuget.org/api/v2/symbolpackage/${PACKAGE_ID}/${version}"
+          fi
+          snupkg="$pkgs/${PACKAGE_ID}.${version}.snupkg"
+          if [ ! -f "$snupkg" ]; then
+            echo "::error::No symbol package ${PACKAGE_ID}.${version}.snupkg ($SOURCE)."
+            exit 1
+          fi
+          mkdir -p "$RUNNER_TEMP/snupkg"
+          python3 -m zipfile -e "$snupkg" "$RUNNER_TEMP/snupkg"
+          pdb="$RUNNER_TEMP/snupkg/lib/net10.0/${PACKAGE_ID}.pdb"
+          if [ ! -f "$pdb" ]; then
+            echo "::error::The symbol package has no lib/net10.0 PDB."
+            exit 1
+          fi
+          echo "Testing ${PACKAGE_ID} ${version} ($SOURCE)"
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+          echo "pdb=${pdb}" >> "$GITHUB_OUTPUT"
+
+      - name: SourceLink map of the PDB
+        env:
+          PDB: ${{ steps.package.outputs.pdb }}
+        run: |
+          set -euo pipefail
+          dotnet sourcelink print-json "$PDB" | tee "$RUNNER_TEMP/sourcelink.json"
+
+      - name: Install netcoredbg (pinned, checksum verified)
+        run: |
+          set -euo pipefail
+          archive="$RUNNER_TEMP/netcoredbg.tar.gz"
+          curl -fsSL --retry 3 -o "$archive" \
+            "https://github.com/Samsung/netcoredbg/releases/download/${NETCOREDBG_VERSION}/netcoredbg-linux-amd64.tar.gz"
+          echo "${NETCOREDBG_SHA256}  ${archive}" | sha256sum -c -
+          tar -xzf "$archive" -C "$RUNNER_TEMP"
+          test -x "$RUNNER_TEMP/netcoredbg/netcoredbg"
+
+      - name: Build the scratch consumer
+        id: consumer
+        env:
+          VERSION: ${{ steps.package.outputs.version }}
+        run: |
+          set -euo pipefail
+          dir="$RUNNER_TEMP/consumer"
+          mkdir -p "$dir"
+          # The package comes only from the local folder, never from nuget.org (a packed build can
+          # carry a version number that is also published); everything else from nuget.org.
+          cat > "$dir/nuget.config" <<XML
+          <?xml version="1.0" encoding="utf-8"?>
+          <configuration>
+            <packageSources>
+              <clear />
+              <add key="local" value="$RUNNER_TEMP/pkgs" />
+              <add key="nuget.org" value="https://api.nuget.org/v3/index.json" />
+            </packageSources>
+            <packageSourceMapping>
+              <packageSource key="local">
+                <package pattern="${PACKAGE_ID}" />
+              </packageSource>
+              <packageSource key="nuget.org">
+                <package pattern="*" />
+              </packageSource>
+            </packageSourceMapping>
+          </configuration>
+          XML
+          cat > "$dir/Consumer.csproj" <<XML
+          <Project Sdk="Microsoft.NET.Sdk">
+            <PropertyGroup>
+              <OutputType>Exe</OutputType>
+              <TargetFramework>net10.0</TargetFramework>
+              <Nullable>enable</Nullable>
+              <ImplicitUsings>disable</ImplicitUsings>
+              <EnableSourceLink>false</EnableSourceLink>
+              <ContinuousIntegrationBuild>false</ContinuousIntegrationBuild>
+            </PropertyGroup>
+            <ItemGroup>
+              <PackageReference Include="${PACKAGE_ID}" Version="[${VERSION}]" />
+            </ItemGroup>
+          </Project>
+          XML
+          # Line 7 is the breakpoint line: the only call on it is InMemoryLogger.IsEnabled.
+          cat > "$dir/Program.cs" <<'CS'
+          using System;
+          using Microsoft.Extensions.Logging;
+          using Wolfgang.Extensions.Logging.InMemoryLogger;
+
+          var logger = new InMemoryLogger("step-into", LogLevel.Information);
+
+          var enabled = logger.IsEnabled(LogLevel.Warning);
+          Console.WriteLine(enabled ? "step-into consumer: enabled" : "step-into consumer: disabled");
+          CS
+          export NUGET_PACKAGES="$RUNNER_TEMP/nuget-packages"
+          dotnet build "$dir/Consumer.csproj" -c Debug -o "$dir/out"
+          test -f "$dir/out/${PACKAGE_ID}.dll"
+          echo "dir=${dir}" >> "$GITHUB_OUTPUT"
+
+      - name: Write the netcoredbg MI driver
+        run: |
+          cat > "$RUNNER_TEMP/step_into.py" <<'PY'
+          """Drives netcoredbg over GDB/MI: break on the consumer's IsEnabled call, step into it once,
+          and check that the stop is on IsEnabled's first statement in the SourceLink-fetched source."""
+          import json, queue, re, subprocess, sys, threading, time, urllib.request
+
+          netcoredbg, dotnet, app_dll, program_cs, break_line, sourcelink_json, expected_url_prefix = sys.argv[1:8]
+          TARGET_FILE = "InMemoryLogger.cs"
+          TARGET_SIGNATURE = re.compile(r"public\s+bool\s+IsEnabled\s*\(\s*LogLevel\s+logLevel\s*\)")
+
+          proc = subprocess.Popen([netcoredbg, "--interpreter=mi", "--", dotnet, app_dll],
+                                  stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                                  text=True, bufsize=1)
+          lines = queue.Queue()
+          threading.Thread(target=lambda: [lines.put(l.rstrip("\n")) for l in proc.stdout], daemon=True).start()
+
+          def fail(message):
+              print(f"::error::{message}")
+              try:
+                  proc.kill()
+              except OSError:
+                  pass
+              sys.exit(1)
+
+          def send(command):
+              print(f">> {command}", flush=True)
+              proc.stdin.write(command + "\n")
+              proc.stdin.flush()
+
+          def wait_for(predicate, what, timeout=180):
+              deadline = time.time() + timeout
+              while time.time() < deadline:
+                  try:
+                      line = lines.get(timeout=1)
+                  except queue.Empty:
+                      if proc.poll() is not None:
+                          fail(f"netcoredbg exited ({proc.returncode}) while waiting for {what}.")
+                      continue
+                  print(f"<< {line}", flush=True)
+                  if re.match(r"^\d*\^error", line):
+                      fail(f"netcoredbg returned an error while waiting for {what}: {line}")
+                  if line.startswith('*stopped,reason="exited') and "exited" not in what:
+                      fail(f"The consumer exited before {what}: the breakpoint or the step never stopped.")
+                  if predicate(line):
+                      return line
+              fail(f"Timed out after {timeout} s waiting for {what}.")
+
+          def field(record, name):
+              # The lookbehind keeps "line" from matching inside "end-line".
+              match = re.search(r'(?<![\w-])' + name + r'="((?:[^"\\]|\\.)*)"', record)
+              return match.group(1) if match else None
+
+          send("1-gdb-set just-my-code 0")
+          wait_for(lambda l: l.startswith("1^done"), "just-my-code off")
+          send(f"2-break-insert -f {program_cs}:{break_line}")
+          wait_for(lambda l: l.startswith("2^done"), "the breakpoint")
+          send("3-exec-run")
+          hit = wait_for(lambda l: l.startswith('*stopped,reason="breakpoint-hit"'), "the breakpoint hit")
+          if field(hit, "line") != break_line:
+              fail(f"Stopped at consumer line {field(hit, 'line')}, expected the breakpoint line {break_line}.")
+          send("4-exec-step")
+          step = wait_for(lambda l: l.startswith('*stopped,reason="end-stepping-range"'), "the step-into")
+          path = field(step, "fullname") or field(step, "file") or ""
+          line = field(step, "line")
+          func = field(step, "func") or ""
+          print(f"Step-into stopped at {path}:{line} ({func})")
+          send("5-gdb-exit")
+
+          if not path.replace("\\", "/").endswith("/" + TARGET_FILE):
+              fail(f"Step-into did not enter the library: it stopped at {path}:{line} ({func}). "
+                   "The debugger had no usable symbols for the package, so a consumer would see decompiled code.")
+
+          documents = json.load(open(sourcelink_json, encoding="utf-8"))["documents"]
+          url = None
+          for pattern, target in documents.items():
+              if pattern.endswith("*") and path.startswith(pattern[:-1]):
+                  url = target[:-1] + path[len(pattern) - 1:].replace("\\", "/")
+                  break
+              if pattern == path:
+                  url = target
+                  break
+          if url is None:
+              fail(f"The PDB's SourceLink map has no entry for {path}.")
+          if not url.startswith(expected_url_prefix):
+              fail(f"SourceLink maps {path} to {url}, not to {expected_url_prefix}...")
+          print(f"SourceLink URL: {url}")
+          with urllib.request.urlopen(url, timeout=60) as response:
+              source = response.read().decode("utf-8-sig").splitlines()
+
+          signature = next((i for i, text in enumerate(source) if TARGET_SIGNATURE.search(text)), None)
+          if signature is None:
+              fail(f"IsEnabled(LogLevel logLevel) not found in {url}.")
+          expected = next(i for i in range(signature + 1, len(source))
+                          if source[i].strip() not in ("", "{")) + 1
+          print(f"Expected line {expected}: {source[expected - 1].strip()}")
+          if line != str(expected):
+              fail(f"Step-into stopped at {TARGET_FILE}:{line}, expected line {expected} "
+                   f"({source[expected - 1].strip()!r}).")
+          print(f"OK: F11 from the consumer landed on {TARGET_FILE}:{line}, resolved through SourceLink: "
+                f"{source[expected - 1].strip()}")
+          PY
+
+      - name: Step into the package under netcoredbg
+        env:
+          APP_DIR: ${{ steps.consumer.outputs.dir }}
+          PDB: ${{ steps.package.outputs.pdb }}
+        run: |
+          set -euo pipefail
+          cp "$PDB" "$APP_DIR/out/"
+          timeout 300 python3 "$RUNNER_TEMP/step_into.py" \
+            "$RUNNER_TEMP/netcoredbg/netcoredbg" "$(command -v dotnet)" \
+            "$APP_DIR/out/Consumer.dll" "$APP_DIR/Program.cs" 7 \
+            "$RUNNER_TEMP/sourcelink.json" "https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/"
+
+      - name: Negative control - without the PDB the step-into must fail
+        env:
+          APP_DIR: ${{ steps.consumer.outputs.dir }}
+        run: |
+          set -uo pipefail
+          rm -f "$APP_DIR/out/${PACKAGE_ID}.pdb"
+          timeout 300 python3 "$RUNNER_TEMP/step_into.py" \
+            "$RUNNER_TEMP/netcoredbg/netcoredbg" "$(command -v dotnet)" \
+            "$APP_DIR/out/Consumer.dll" "$APP_DIR/Program.cs" 7 \
+            "$RUNNER_TEMP/sourcelink.json" "https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/" \
+            > "$RUNNER_TEMP/negative.log" 2>&1
+          rc=$?
+          sed 's/^::error::/(expected) /' "$RUNNER_TEMP/negative.log"
+          if [ "$rc" -eq 0 ]; then
+            echo "::error::The step-into check passed without the PDB, so it cannot detect missing symbols."
+            exit 1
+          fi
+          echo "Negative control failed as it should (exit $rc)."
