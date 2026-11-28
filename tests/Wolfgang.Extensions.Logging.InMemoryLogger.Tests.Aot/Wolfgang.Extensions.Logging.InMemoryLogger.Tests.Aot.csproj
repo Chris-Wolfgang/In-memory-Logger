@@ -24,8 +24,9 @@
     <PublishTrimmed>true</PublishTrimmed>
     <IsAotCompatible>true</IsAotCompatible>
     <TrimmerSingleWarn>false</TrimmerSingleWarn>
-    <!-- No test uses a real culture, so ICU is not needed. -->
-    <InvariantGlobalization>true</InvariantGlobalization>
+    <!-- ICU is required: the linked Tests.Unit/Globalization/CultureInvarianceTests run under real
+         cultures (tr-TR, de-DE, ...), which CultureInfo.GetCultureInfo rejects in invariant mode. -->
+    <InvariantGlobalization>false</InvariantGlobalization>
   </PropertyGroup>
 
   <ItemGroup>
