@@ -12,8 +12,19 @@
 
   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="10.1.1" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
     <PackageReference Include="xunit" Version="2.9.3" />
+  </ItemGroup>
+
+  <!-- Microsoft.NET.Test.Sdk 18.x fails the build on every framework below net8.0 ("doesn't
+       support net5.0"), so the .NET Framework and net5.0-net7.0 slots stay on 17.13.0, capped so a
+       grouped Dependabot bump cannot break them; net8.0+ takes 18.x, bumped by hand (see the
+       Microsoft.NET.Test.Sdk ignore in .github/dependabot.yml). -->
+  <ItemGroup Condition="!$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" allowedVersions="(,18.0.0)" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.12.0" />
   </ItemGroup>
 
   <!-- xunit.runner.visualstudio 3.x drops every framework below net8.0, so the .NET Framework and
