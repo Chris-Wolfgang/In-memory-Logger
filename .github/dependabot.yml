@@ -20,6 +20,12 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "Microsoft.Extensions.Logging.Abstractions"
         update-types: ["version-update:semver-major"]
+      # Microsoft.NET.Test.Sdk 18.x fails the build on net5.0-net7.0, so Tests.Unit and
+      # Tests.Integration keep those slots on 17.x next to an 18.x reference for .NET Framework and
+      # net8.0+ (#444). Dependabot would move the 17.x reference to 18.x too, so major versions move
+      # by hand. Minor and patch updates still flow.
+      - dependency-name: "Microsoft.NET.Test.Sdk"
+        update-types: ["version-update:semver-major"]
 
   # Keep third-party GitHub Actions pinned in workflows up to date.
   - package-ecosystem: "github-actions"

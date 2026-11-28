@@ -12,8 +12,18 @@
 
   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="10.1.1" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
     <PackageReference Include="xunit" Version="2.9.3" />
+  </ItemGroup>
+
+  <!-- Microsoft.NET.Test.Sdk 18.x fails the build on net5.0-net7.0 ("doesn't support net6.0"), so
+       those slots stay on the 17.x line; .NET Framework and net8.0+ take 18.x. Dependabot cannot tell
+       the two references apart, so major versions move by hand (.github/dependabot.yml ignore). -->
+  <ItemGroup Condition="'$(TargetFrameworkIdentifier)' == '.NETCoreApp' and !$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" allowedVersions="(,18.0.0)" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFrameworkIdentifier)' != '.NETCoreApp' or $([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.12.0" />
   </ItemGroup>
 
   <!-- xunit.runner.visualstudio 3.x drops every framework below net8.0, so the .NET Framework and
